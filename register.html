@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - UMKM Desa Depok</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            width: 500px;
+            max-width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-header {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3b1a 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            font-size: 1.6em;
+            margin-bottom: 5px;
+        }
+
+        .register-header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .register-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2c5f2d;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3b1a 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .login-link a {
+            color: #2c5f2d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>🏪 Daftar Akun UMKM</h1>
+            <p>Bergabunglah dengan platform UMKM Desa Depok</p>
+        </div>
+        <div class="register-body">
+            <div id="alert" class="alert"></div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>👤 Nama Lengkap</label>
+                    <input type="text" id="fullname" placeholder="Masukkan nama lengkap" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🏢 Nama UMKM (jika ada)</label>
+                    <input type="text" id="umkm_name" placeholder="Contoh: Keripik Bu Siti">
+                    <div class="info-text">Kosongkan jika bukan pelaku UMKM</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>📧 Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email aktif" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>👤 Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🔒 Password</label>
+                    <input type="password" id="password" placeholder="Minimal 6 karakter" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🔒 Konfirmasi Password</label>
+                    <input type="password" id="confirm_password" placeholder="Ketik ulang password" required>
+                </div>
+                
+                <button type="submit" class="btn-register">Daftar Sekarang</button>
+            </form>
+            
+            <div class="login-link">
+                <p>Sudah punya akun? <a href="login.html">Login Disini</a></p>
+                <p style="margin-top: 10px; font-size: 12px; color: #999;">
+                    Setelah mendaftar, akun Anda akan diverifikasi oleh Admin Desa
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const umkm_name = document.getElementById('umkm_name').value || null;
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirm_password = document.getElementById('confirm_password').value;
+            const alertDiv = document.getElementById('alert');
+            
+            // Validasi
+            if (password !== confirm_password) {
+                alertDiv.className = "alert alert-error show";
+                alertDiv.innerHTML = "❌ Password dan konfirmasi password tidak cocok!";
+                return;
+            }
+            
+            if (password.length < 6) {
+                alertDiv.className = "alert alert-error show";
+                alertDiv.innerHTML = "❌ Password minimal 6 karakter!";
+                return;
+            }
+            
+            // Ambil data user yang sudah ada
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Cek apakah username atau email sudah terdaftar
+            const existingUser = users.find(u => u.username === username || u.email === email);
+            
+            if (existingUser) {
+                alertDiv.className = "alert alert-error show";
+                alertDiv.innerHTML = "❌ Username atau email sudah terdaftar!";
+                return;
+            }
+            
+            // Buat user baru
+            const newUser = {
+                id: users.length + 1,
+                name: fullname,
+                username: username,
+                email: email,
+                password: password,
+                role: umkm_name ? "umkm" : "user",
+                umkm_name: umkm_name,
+                status: "pending", // menunggu verifikasi admin
+                created_at: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Tampilkan pesan sukses
+            alertDiv.className = "alert alert-success show";
+            alertDiv.innerHTML = "✅ Pendaftaran berhasil! Silakan login setelah diverifikasi admin.";
+            
+            // Reset form
+            document.getElementById('registerForm').reset();
+            
+            // Redirect ke login setelah 2 detik
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
