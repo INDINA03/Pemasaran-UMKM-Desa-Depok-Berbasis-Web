@@ -1,0 +1,86 @@
+<?php
+include 'config/database.php';
+include 'includes/header.php';
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$category_id = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+
+// Query dasar
+$sql = "SELECT p.*, c.name as category_name 
+        FROM products p 
+        LEFT JOIN categories c ON p.category_id = c.id 
+        WHERE p.name LIKE :search";
+
+$params = [':search' => "%$search%"];
+
+// Filter kategori (bagian yang rusak tadi saya perbaiki)
+if ($category_id > 0) {
+    $sql .= " AND p.category_id = :category_id";
+    $params[':category_id'] = $category_id;
+}
+
+$sql .= " ORDER BY p.created_at DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$products = $stmt->fetchAll();
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM Desa Depok - Kandeman, Batang</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Produk UMKM Desa Depok - Kecamatan Kandeman, Kabupaten Batang</h1>
+        
+        <!-- Form Pencarian -->
+        <form method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Cari produk..." value="<?= htmlspecialchars($search) ?>">
+            <select name="category">
+                <option value="0">Semua Kategori</option>
+                <?php
+                $catStmt = $pdo->query("SELECT * FROM categories ORDER BY name");
+                while ($cat = $catStmt->fetch()) {
+                    $selected = ($category_id == $cat['id']) ? 'selected' : '';
+                    echo "<option value='{$cat['id']}' $selected>" . htmlspecialchars($cat['name']) . "</option>";
+                }
+                ?>
+            </select>
+            <button type="submit">Cari</button>
+        </form>
+
+        <!-- Daftar Produk -->
+        <div class="product-grid">
+            <?php if (count($products) > 0): ?>
+                <?php foreach ($products as $product): ?>
+                    <div class="product-card">
+                        <?php if ($product['image'] && file_exists("assets/uploads/" . $product['image'])): ?>
+                            <img src="assets/uploads/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+                        <?php else: ?>
+                            <img src="assets/uploads/default.jpg" alt="No Image">
+                        <?php endif; ?>
+                        
+                        <h3><?= htmlspecialchars($product['name']) ?></h3>
+                        <p class="price">Rp <?= number_format($product['price'], 0, ',', '.') ?></p>
+                        <p class="description"><?= htmlspecialchars(substr($product['description'], 0, 100)) ?>...</p>
+                        <p><strong>UMKM:</strong> <?= htmlspecialchars($product['umkm_name']) ?></p>
+                        <p><strong>Kontak:</strong> <?= htmlspecialchars($product['contact']) ?></p>
+                        <p><small>Kategori: <?= htmlspecialchars($product['category_name']) ?></small></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-product">
+                    <p>Belum ada produk UMKM.</p>
+                    <p>Silakan cek kembali nanti.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <?php include 'includes/footer.php'; ?>
+</body>
+</html>
