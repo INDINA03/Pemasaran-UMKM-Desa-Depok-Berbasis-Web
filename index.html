@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM Desa Depok - Kandeman, Batang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3b1a 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Search Form */
+        .search-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-form input,
+        .search-form select {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-form input:focus,
+        .search-form select:focus {
+            outline: none;
+            border-color: #2c5f2d;
+        }
+
+        .search-form button {
+            background: #2c5f2d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-form button:hover {
+            background: #1a3b1a;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-card h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 1.4em;
+            color: #2c5f2d;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .umkm-name {
+            color: #2c5f2d;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .contact {
+            color: #ff9800;
+            margin: 5px 0;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2c5f2d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .no-product {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            grid-column: 1 / -1;
+        }
+
+        .no-product p {
+            font-size: 1.2em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏪 UMKM Desa Depok</h1>
+        <p>Kecamatan Kandeman • Kabupaten Batang • Jawa Tengah</p>
+        <p style="font-size: 0.9em; margin-top: 5px;">Mendukung Ekonomi Kreatif Desa Depok</p>
+    </div>
+
+    <div class="container">
+        <!-- Form Pencarian -->
+        <form class="search-form" id="searchForm">
+            <input type="text" id="searchInput" placeholder="🔍 Cari produk UMKM..." autocomplete="off">
+            <select id="categorySelect">
+                <option value="0">📂 Semua Kategori</option>
+                <option value="1">🍔 Makanan & Minuman</option>
+                <option value="2">👗 Fashion & Aksesoris</option>
+                <option value="3">🛋️ Kerajinan Tangan</option>
+                <option value="4">🌿 Pertanian & Perkebunan</option>
+                <option value="5">🐟 Perikanan & Peternakan</option>
+            </select>
+            <button type="submit">Cari Produk</button>
+        </form>
+
+        <!-- Daftar Produk -->
+        <div class="product-grid" id="productGrid">
+            <!-- Produk akan dimuat di sini oleh JavaScript -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">📞 Pengaduan & Informasi: 0857-XXXX-XXXX | Email: umkm@desadepok.id</p>
+    </div>
+
+    <script>
+        // Data UMKM Desa Depok (contoh data statis)
+        const products = [
+            {
+                id: 1,
+                name: "Keripik Tempe Kriuk",
+                description: "Keripik tempe homemade renyah dengan bumbu spesial, tanpa pengawet. Cocok untuk camilan keluarga.",
+                price: 15000,
+                image: "https://via.placeholder.com/300x220/2c5f2d/white?text=Keripik+Tempe",
+                umkm_name: "Bu Siti Snack",
+                contact: "0812-3456-7890",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 2,
+                name: "Batik Tulis Depok",
+                description: "Batik tulis khas Desa Depok dengan motif daun dan bunga, bahan katun premium.",
+                price: 250000,
+                image: "https://via.placeholder.com/300x220/ff9800/white?text=Batik+Tulis",
+                umkm_name: "Rumah Batik Depok",
+                contact: "0857-1234-5678",
+                category_id: 2,
+                category_name: "Fashion & Aksesoris"
+            },
+            {
+                id: 3,
+                name: "Tas Anyam Mendong",
+                description: "Tas anyaman dari serat mendong alami, kuat dan ramah lingkungan.",
+                price: 75000,
+                image: "https://via.placeholder.com/300x220/2196f3/white?text=Tas+Anyam",
+                umkm_name: "Kreasi Mandiri Depok",
+                contact: "0896-5432-1098",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 4,
+                name: "Madu Hutan Depok",
+                description: "Madu murni dari hutan sekitar Desa Depok, khasiat tinggi untuk kesehatan.",
+                price: 120000,
+                image: "https://via.placeholder.com/300x220/f44336/white?text=Madu+Hutan",
+                umkm_name: "Tani Madu Sejahtera",
+                contact: "0813-9876-5432",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 5,
+                name: "Pisang Goreng Crispy",
+                description: "Pisang goreng dengan topping keju dan coklat, renyah di luar lembut di dalam.",
+                price: 10000,
+                image: "https://via.placeholder.com/300x220/9c27b0/white?text=Pisang+Goreng",
+                umkm_name: "Cemilan Depok Maknyus",
+                contact: "0856-7890-1234",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 6,
+                name: "Lukisan Kaca Depok",
+                description: "Lukisan kaca dengan motif tradisional, cocok untuk hiasan dinding.",
+                price: 150000,
+                image: "https://via.placeholder.com/300x220/795548/white?text=Lukisan+Kaca",
+                umkm_name: "Seni Kaca Depok",
+                contact: "0877-6543-2109",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 7,
+                name: "Ikan Lele Segar",
+                description: "Ikan lele segar hasil budidaya warga Depok, langsung dari kolam.",
+                price: 25000,
+                image: "https://via.placeholder.com/300x220/4caf50/white?text=Ikan+Lele",
+                umkm_name: "Lele Jaya Depok",
+                contact: "0819-3456-7890",
+                category_id: 5,
+                category_name: "Perikanan & Peternakan"
+            },
+            {
+                id: 8,
+                name: "Kerajinan Bambu",
+                description: "Berbagai kerajinan dari bambu: tampah, besek, hiasan dinding.",
+                price: 35000,
+                image: "https://via.placeholder.com/300x220/8bc34a/white?text=Kerajinan+Bambu",
+                umkm_name: "Bambu Kreasi Depok",
+                contact: "0852-1234-5678",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            }
+        ];
+
+        // Fungsi untuk menampilkan produk
+        function displayProducts(filteredProducts) {
+            const productGrid = document.getElementById('productGrid');
+            
+            if (filteredProducts.length === 0) {
+                productGrid.innerHTML = `
+                    <div class="no-product">
+                        <p>😞 Belum ada produk UMKM yang ditemukan.</p>
+                        <p>Silakan coba kata kunci lain atau hubungi admin desa.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="description">${product.description}</div>
+                        <div class="umkm-name">🏪 ${product.umkm_name}</div>
+                        <div class="contact">📞 ${product.contact}</div>
+                        <div class="category">📁 ${product.category_name}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fungsi filter produk
+        function filterProducts() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const categoryId = parseInt(document.getElementById('categorySelect').value);
+
+            const filtered = products.filter(product => {
+                const matchSearch = product.name.toLowerCase().includes(searchText) ||
+                                   product.description.toLowerCase().includes(searchText) ||
+                                   product.umkm_name.toLowerCase().includes(searchText);
+                const matchCategory = categoryId === 0 || product.category_id === categoryId;
+                return matchSearch && matchCategory;
+            });
+
+            displayProducts(filtered);
+        }
+
+        // Event listener
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterProducts();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.getElementById('categorySelect').addEventListener('change', filterProducts);
+
+        // Tampilkan semua produk saat pertama kali load
+        displayProducts(products);
+    </script>
+</body>
+</html>
