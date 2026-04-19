@@ -102,11 +102,15 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .product-card img {
+        .product-image {
             width: 100%;
             height: 220px;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
 
         .product-info {
@@ -187,6 +191,11 @@
             .product-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .product-image {
+                height: 180px;
+                font-size: 60px;
+            }
         }
     </style>
 </head>
@@ -220,14 +229,15 @@
     </div>
 
     <script>
-        // Data UMKM Desa Depok dengan gambar dari Unsplash (gratis dan reliable)
+        // Data UMKM Desa Depok dengan ikon emoji (PASTI MUNCUL)
         const products = [
             {
                 id: 1,
                 name: "Keripik Tempe Kriuk",
                 description: "Keripik tempe homemade renyah dengan bumbu spesial, tanpa pengawet. Cocok untuk camilan keluarga.",
                 price: 15000,
-                image: "https://images.unsplash.com/photo-1580477667995-2b94f01c9516?w=400&h=300&fit=crop",
+                icon: "🍟",
+                bgGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
                 umkm_name: "Bu Siti Snack",
                 contact: "0812-3456-7890",
                 category_id: 1,
@@ -238,7 +248,8 @@
                 name: "Batik Tulis Depok",
                 description: "Batik tulis khas Desa Depok dengan motif daun dan bunga, bahan katun premium.",
                 price: 250000,
-                image: "https://images.unsplash.com/photo-1589216532372-1c2a367900d9?w=400&h=300&fit=crop",
+                icon: "👘",
+                bgGradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
                 umkm_name: "Rumah Batik Depok",
                 contact: "0857-1234-5678",
                 category_id: 2,
@@ -249,7 +260,8 @@
                 name: "Tas Anyam Mendong",
                 description: "Tas anyaman dari serat mendong alami, kuat dan ramah lingkungan.",
                 price: 75000,
-                image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=300&fit=crop",
+                icon: "👜",
+                bgGradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
                 umkm_name: "Kreasi Mandiri Depok",
                 contact: "0896-5432-1098",
                 category_id: 3,
@@ -260,7 +272,8 @@
                 name: "Madu Hutan Depok",
                 description: "Madu murni dari hutan sekitar Desa Depok, khasiat tinggi untuk kesehatan.",
                 price: 120000,
-                image: "https://images.unsplash.com/photo-1587049352851-8d4e89133911?w=400&h=300&fit=crop",
+                icon: "🍯",
+                bgGradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
                 umkm_name: "Tani Madu Sejahtera",
                 contact: "0813-9876-5432",
                 category_id: 1,
@@ -271,7 +284,8 @@
                 name: "Pisang Goreng Crispy",
                 description: "Pisang goreng dengan topping keju dan coklat, renyah di luar lembut di dalam.",
                 price: 10000,
-                image: "https://images.unsplash.com/photo-1599535598919-71c9f21b33a5?w=400&h=300&fit=crop",
+                icon: "🍌",
+                bgGradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
                 umkm_name: "Cemilan Depok Maknyus",
                 contact: "0856-7890-1234",
                 category_id: 1,
@@ -282,7 +296,8 @@
                 name: "Lukisan Kaca Depok",
                 description: "Lukisan kaca dengan motif tradisional, cocok untuk hiasan dinding.",
                 price: 150000,
-                image: "https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?w=400&h=300&fit=crop",
+                icon: "🎨",
+                bgGradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
                 umkm_name: "Seni Kaca Depok",
                 contact: "0877-6543-2109",
                 category_id: 3,
@@ -293,7 +308,8 @@
                 name: "Ikan Lele Segar",
                 description: "Ikan lele segar hasil budidaya warga Depok, langsung dari kolam.",
                 price: 25000,
-                image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop",
+                icon: "🐟",
+                bgGradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
                 umkm_name: "Lele Jaya Depok",
                 contact: "0819-3456-7890",
                 category_id: 5,
@@ -304,11 +320,36 @@
                 name: "Kerajinan Bambu",
                 description: "Berbagai kerajinan dari bambu: tampah, besek, hiasan dinding.",
                 price: 35000,
-                image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?w=400&h=300&fit=crop",
+                icon: "🎋",
+                bgGradient: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
                 umkm_name: "Bambu Kreasi Depok",
                 contact: "0852-1234-5678",
                 category_id: 3,
                 category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 9,
+                name: "Kopi Bubuk Depok",
+                description: "Kopi bubuk asli dari biji kopi pilihan, aroma dan rasa khas.",
+                price: 45000,
+                icon: "☕",
+                bgGradient: "linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)",
+                umkm_name: "Kopi Depok Jaya",
+                contact: "0812-9876-5432",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 10,
+                name: "Sambal Pecel Depok",
+                description: "Sambal pecel homemade, terbuat dari kacang tanah pilihan dan rempah asli.",
+                price: 20000,
+                icon: "🌶️",
+                bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+                umkm_name: "Sambel Ibu Siti",
+                contact: "0857-1111-2222",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
             }
         ];
 
@@ -327,7 +368,9 @@
 
             productGrid.innerHTML = filteredProducts.map(product => `
                 <div class="product-card">
-                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://placehold.co/400x300/2c5f2d/white?text=${encodeURIComponent(product.name)}'">
+                    <div class="product-image" style="background: ${product.bgGradient}">
+                        ${product.icon}
+                    </div>
                     <div class="product-info">
                         <h3>${product.name}</h3>
                         <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
