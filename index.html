@@ -9,84 +9,128 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
-        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         .logo { display: flex; align-items: center; gap: 10px; }
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
-        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a { text-decoration: none; color: #333; font-weight: 500; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white; }
-        .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
+        .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; position: relative; }
         .hero h1 { font-size: 2.5em; margin-bottom: 15px; }
-        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
-        .stat-number { font-size: 2.5em; font-weight: 700; }
+        .hero p { font-size: 1.1em; opacity: 0.9; }
+        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; }
+        .stat-number { font-size: 2em; font-weight: 700; }
         .container { max-width: 1200px; margin: 0 auto; padding: 50px 5%; }
         .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
         .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
         .search-wrapper { flex: 2; position: relative; }
         .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
         .search-wrapper input { width: 100%; padding: 14px 15px 14px 45px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; }
-        .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .search-wrapper input:focus { outline: none; border-color: #2c5f2d; }
+        .category-wrapper { flex: 1; position: relative; }
+        .category-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .category-wrapper select { width: 100%; padding: 14px 15px 14px 40px; border: 2px solid #e0e0e0; border-radius: 12px; background: white; font-size: 16px; cursor: pointer; }
+        .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-search:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
         .section-title { text-align: center; margin: 50px 0 30px; }
-        .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
-        .section-title h2 { font-size: 2em; color: #1a3b1a; }
+        .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; font-size: 0.85em; }
+        .section-title h2 { font-size: 2em; color: #1a3b1a; margin-bottom: 10px; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.3s; cursor: pointer; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .product-image { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 80px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .product-badge { position: absolute; background: rgba(255,255,255,0.95); padding: 5px 12px; border-radius: 20px; font-size: 0.7em; font-weight: 600; margin: 15px; color: #2c5f2d; }
+        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; font-size: 85px; position: relative; }
         .product-info { padding: 20px; }
-        .product-info h3 { font-size: 1.3em; color: #1a3b1a; }
-        .price { font-size: 1.4em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
-        .description { color: #666; font-size: 0.85em; margin: 10px 0; line-height: 1.5; }
-        .umkm-name, .contact { display: flex; align-items: center; gap: 8px; margin: 8px 0; font-size: 0.9em; }
-        .umkm-name { color: #2c5f2d; font-weight: 500; }
-        .contact { color: #ff9800; }
-        .category-tag { background: #e8f5e9; color: #2c5f2d; padding: 5px 12px; border-radius: 20px; display: inline-block; margin-top: 10px; font-size: 0.75em; }
+        .product-info h3 { font-size: 1.3em; color: #1a3b1a; margin-bottom: 8px; }
+        .price { font-size: 1.5em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
+        .description { color: #666; line-height: 1.5; margin: 10px 0; font-size: 0.9em; }
+        .umkm-name { display: flex; align-items: center; gap: 8px; color: #2c5f2d; font-weight: 500; margin: 10px 0; }
+        .contact { display: flex; align-items: center; gap: 8px; color: #ff9800; margin: 5px 0; font-size: 0.9em; }
+        .category-tag { display: inline-flex; align-items: center; gap: 5px; background: #e8f5e9; color: #2c5f2d; padding: 5px 12px; border-radius: 20px; font-size: 0.75em; margin-top: 10px; }
         .whatsapp-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white; padding: 8px 18px; border-radius: 10px; text-decoration: none; margin-top: 15px; font-size: 0.85em; font-weight: 500; transition: 0.3s; }
-        .whatsapp-btn:hover { background: #128C7E; }
-        .footer { background: #1a1a2e; color: white; padding: 40px 5% 20px; margin-top: 60px; text-align: center; }
-        .footer-bottom { font-size: 0.85em; opacity: 0.7; }
-        .fab-admin { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 100; }
-        @media (max-width: 768px) { .hero h1 { font-size: 1.5em; } .search-form { flex-direction: column; } .hero-stats { gap: 20px; } }
+        .whatsapp-btn:hover { background: #128C7E; transform: scale(1.02); }
+        .no-product { text-align: center; padding: 60px; background: white; border-radius: 20px; grid-column: 1 / -1; }
+        .footer { background: #1a1a2e; color: white; padding: 40px 5% 20px; margin-top: 60px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; font-size: 0.85em; opacity: 0.7; }
+        .fab-admin { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 5px 20px rgba(0,0,0,0.2); transition: 0.3s; z-index: 100; }
+        .fab-admin:hover { transform: scale(1.1); }
+        @media (max-width: 768px) { .hero h1 { font-size: 1.5em; } .search-form { flex-direction: column; } .hero-stats { flex-direction: column; gap: 15px; } .product-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo"><div class="logo-icon">🏪</div><div class="logo-text"><h2>UMKM Desa Depok</h2><p>Kec. Kandeman • Kab. Batang</p></div></div>
-        <div class="nav-links"><a href="#">Beranda</a><a href="#">Tentang</a><a href="#">Kontak</a><a href="login.html" class="btn-outline">Login</a><a href="admin.html" class="btn-fill">Kelola UMKM</a></div>
+        <div class="logo">
+            <div class="logo-icon">🏪</div>
+            <div class="logo-text">
+                <h2>UMKM Desa Depok</h2>
+                <p>Kec. Kandeman • Kab. Batang</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#">Beranda</a>
+            <a href="#">Tentang</a>
+            <a href="#">Kontak</a>
+            <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login</a>
+            <a href="admin.html" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
+        </div>
     </nav>
 
     <section class="hero">
         <h1>Pusat Kuliner & Oleh-Oleh<br>Desa Depok</h1>
-        <p>Bukan sekadar kenyang, tapi pengalaman kuliner yang tak terlupakan</p>
-        <div class="hero-stats"><div class="stat-item"><div class="stat-number" id="totalProducts">0</div><div>Produk</div></div><div class="stat-item"><div class="stat-number" id="totalUMKM">0</div><div>UMKM</div></div><div class="stat-item"><div class="stat-number" id="totalCategories">0</div><div>Kategori</div></div></div>
+        <p>Nikmati kelezatan bakso, mie ayam ceker, dan es teh segar dari UMKM kami</p>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-number" id="totalProducts">0</div><div>Produk</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalUMKM">0</div><div>UMKM</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalCategories">0</div><div>Kategori</div></div>
+        </div>
     </section>
 
     <div class="container">
         <div class="search-section">
             <form class="search-form" id="searchForm">
-                <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Cari produk... (bakso, mie ayam, es teh)"></div>
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari produk... (bakso, mie ayam, es teh)">
+                </div>
+                <div class="category-wrapper">
+                    <i class="fas fa-filter"></i>
+                    <select id="categorySelect">
+                        <option value="0">Semua Kategori</option>
+                        <option value="1">🍔 Makanan & Minuman</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari</button>
             </form>
         </div>
 
-        <div class="section-title"><span class="badge"><i class="fas fa-fire"></i> Menu Favorit</span><h2 id="judulProduk">Produk UMKM Desa Depok</h2><p>Bakso Kenyal • Mie Ayam Ceker Empuk • Es Teh Segar</p></div>
+        <div class="section-title">
+            <span class="badge"><i class="fas fa-fire"></i> Menu Favorit</span>
+            <h2>Produuuk UMKM Desa Depok</h2>
+            <p>Bakso Kenyal • Mie Ayam Ceker Empuk • Es Teh Segar</p>
+        </div>
+
         <div class="product-grid" id="productGrid"></div>
     </div>
 
-    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p><p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p></div></footer>
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
+            <p style="margin-top: 10px;"><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
+        </div>
+    </footer>
 
     <a href="admin.html" class="fab-admin" title="Kelola Produk"><i class="fas fa-cog"></i></a>
 
     <script>
-        // ==================== PRODUK LENGKAP (BAKSO, MIE AYAM CEKER, ES TEH) ====================
+        // ==================== PRODUK YANG DITAMPILKAN (HANYA 5 PRODUK) ====================
         const products = [
             {
                 id: 1,
                 name: "Bakso Biasa Istimewa",
-                description: "Bakso sapi pilihan dengan tekstur kenyal dan lembut. Dibuat dari daging sapi segar 90%, tanpa pengawet. Disajikan dengan kuah kaldu sapi gurih, mie, tahu, dan pangsit goreng.",
+                description: "Bakso sapi pilihan dengan tekstur kenyal dan lembut. Dibuat dari daging sapi segar 90%, tanpa pengawet. Disajikan dengan kuah kaldu sapi gurih, mie, tahu, dan pangsit goreng. Cocok untuk sarapan atau makan siang.",
                 price: 15000,
                 icon: "🍜",
                 bgGradient: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
@@ -122,7 +166,7 @@
             {
                 id: 4,
                 name: "Mie Ayam Ceker Depok Gurih",
-                description: "Mie ayam dengan topping ceker ayam super empuk meresap hingga ke tulang! Dimasak 3 jam dengan 12 bumbu rahasia. Mie kenyal, kuah kaldu kental, ditambah ayam suwir, sawi, pangsit, dan sambal pedas homemade.",
+                description: "Mie ayam dengan topping ceker ayam super empuk meresap hingga ke tulang! Dimasak 3 jam dengan 12 bumbu rahasia. Mie kenyal, kuah kaldu kental, ditambah ayam suwir, sawi, pangsit, dan sambal pedas homemade. Wajib coba!",
                 price: 18000,
                 icon: "🍗",
                 bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
@@ -145,9 +189,10 @@
             }
         ];
 
-        // Simpan ke localStorage agar admin bisa baca juga
+        // Simpan ke localStorage agar konsisten dengan admin
         localStorage.setItem('umkm_products', JSON.stringify(products));
 
+        // ==================== FUNGSI TAMPILAN ====================
         function updateStats() {
             document.getElementById('totalProducts').innerText = products.length;
             const uniqueUMKM = [...new Set(products.map(p => p.umkm_name))].length;
@@ -157,23 +202,43 @@
         }
 
         function displayProducts(productsToShow) {
-            const grid = document.getElementById('productGrid');
-            if (!grid) return;
+            const productGrid = document.getElementById('productGrid');
+            
             if (productsToShow.length === 0) {
-                grid.innerHTML = '<div class="no-product" style="text-align:center; padding:60px;"><i class="fas fa-utensils" style="font-size:50px;color:#ccc;"></i><p style="margin-top:15px;">Produk tidak ditemukan</p></div>';
+                productGrid.innerHTML = `
+                    <div class="no-product">
+                        <i class="fas fa-utensils" style="font-size: 50px; color: #ccc;"></i>
+                        <h3 style="margin-top: 15px;">Produk tidak ditemukan</h3>
+                        <p>Coba kata kunci lain seperti: bakso, mie ayam, atau es teh</p>
+                    </div>
+                `;
                 return;
             }
-            grid.innerHTML = productsToShow.map(p => `
+
+            productGrid.innerHTML = productsToShow.map(product => `
                 <div class="product-card">
-                    <div class="product-image" style="background: ${p.bgGradient}">${p.icon}</div>
+                    <div class="product-badge">
+                        <i class="fas fa-star" style="color: #ff9800;"></i> Menu Andalan
+                    </div>
+                    <div class="product-image" style="background: ${product.bgGradient}">
+                        ${product.icon}
+                    </div>
                     <div class="product-info">
-                        <h3>${p.name}</h3>
-                        <div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
-                        <div class="description">${p.description.substring(0, 100)}${p.description.length > 100 ? '...' : ''}</div>
-                        <div class="umkm-name"><i class="fas fa-store"></i> ${p.umkm_name}</div>
-                        <div class="contact"><i class="fab fa-whatsapp"></i> ${p.contact}</div>
-                        <div class="category-tag"><i class="fas fa-tag"></i> ${p.category_name}</div>
-                        <a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</a>
+                        <h3>${product.name}</h3>
+                        <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="description">${product.description.substring(0, 100)}${product.description.length > 100 ? '...' : ''}</div>
+                        <div class="umkm-name">
+                            <i class="fas fa-store"></i> ${product.umkm_name}
+                        </div>
+                        <div class="contact">
+                            <i class="fab fa-whatsapp"></i> ${product.contact}
+                        </div>
+                        <div class="category-tag">
+                            <i class="fas fa-tag"></i> ${product.category_name}
+                        </div>
+                        <a href="https://wa.me/${product.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                        </a>
                     </div>
                 </div>
             `).join('');
@@ -181,17 +246,29 @@
 
         function filterProducts() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(p => 
-                p.name.toLowerCase().includes(searchText) || 
-                p.description.toLowerCase().includes(searchText) || 
-                p.umkm_name.toLowerCase().includes(searchText)
-            );
+            const categoryId = parseInt(document.getElementById('categorySelect').value);
+
+            const filtered = products.filter(product => {
+                const matchSearch = product.name.toLowerCase().includes(searchText) ||
+                                   product.description.toLowerCase().includes(searchText) ||
+                                   product.umkm_name.toLowerCase().includes(searchText);
+                const matchCategory = categoryId === 0 || product.category_id === categoryId;
+                return matchSearch && matchCategory;
+            });
+
             displayProducts(filtered);
         }
 
-        document.getElementById('searchForm').addEventListener('submit', (e) => { e.preventDefault(); filterProducts(); });
-        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        // Event listeners
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterProducts();
+        });
 
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.getElementById('categorySelect').addEventListener('change', filterProducts);
+
+        // Inisialisasi
         updateStats();
         displayProducts(products);
     </script>
