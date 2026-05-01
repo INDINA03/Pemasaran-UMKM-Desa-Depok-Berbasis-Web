@@ -27,13 +27,10 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 50px 5%; }
         .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
         .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
-        .search-wrapper { flex: 2; position: relative; }
+        .search-wrapper { flex: 3; position: relative; }
         .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
         .search-wrapper input { width: 100%; padding: 14px 15px 14px 45px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; }
         .search-wrapper input:focus { outline: none; border-color: #2c5f2d; }
-        .category-wrapper { flex: 1; position: relative; }
-        .category-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
-        .category-wrapper select { width: 100%; padding: 14px 15px 14px 40px; border: 2px solid #e0e0e0; border-radius: 12px; background: white; font-size: 16px; cursor: pointer; }
         .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-search:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
         .section-title { text-align: center; margin: 50px 0 30px; }
@@ -71,10 +68,10 @@
             </div>
         </div>
         <div class="nav-links">
-            <a href="#">Beranda</a>
-            <a href="#">Tentang</a>
-            <a href="#">Kontak</a>
-            <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login</a>
+            <a href="#" onclick="alert('Halaman Beranda sedang dalam pengembangan'); return false;">Beranda</a>
+            <a href="#" onclick="alert('Halaman Tentang sedang dalam pengembangan'); return false;">Tentang</a>
+            <a href="#" onclick="alert('Halaman Kontak sedang dalam pengembangan'); return false;">Kontak</a>
+            <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
             <a href="admin.html" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
         </div>
     </nav>
@@ -95,21 +92,14 @@
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Cari">
                 </div>
-                <div class="category-wrapper">
-                    <i class="fas fa-filter"></i>
-                    <select id="categorySelect">
-                        <option value="0">Semua Kategori</option>
-                        <option value="1">🍔 Makanan & Minuman</option>
-                    </select>
-                </div>
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari Produk</button>
             </form>
         </div>
 
         <div class="section-title">
-            <span class="badge"><i class="fas fa-fire"></i> Produk Unggulan</span>
-            <h2>Produk UMKM Pilihan Desa Depok</h2>
-            <p>Langsung dari tangan-tangan terampil warga Desa Depok</p>
+            <span class="badge"><i class="fas fa-fire"></i> Menu Andalan</span>
+            <h2>Produk Kuliner UMKM Desa Depok</h2>
+            <p>Bakso Kenyal • Mie Ayam Ceker Empuk • Es Teh Segar</p>
         </div>
 
         <div class="product-grid" id="productGrid"></div>
@@ -125,7 +115,7 @@
     <a href="admin.html" class="fab-admin" title="Kelola Produk"><i class="fas fa-cog"></i></a>
 
     <script>
-        // ==================== PRODUK YANG DITAMPILKAN ====================
+        // ==================== PRODUK YANG DITAMPILKAN (KULINER) ====================
         const products = [
             {
                 id: 1,
@@ -245,14 +235,12 @@
 
         function filterProducts() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const categoryId = parseInt(document.getElementById('categorySelect').value);
 
             const filtered = products.filter(product => {
                 const matchSearch = product.name.toLowerCase().includes(searchText) ||
                                    product.description.toLowerCase().includes(searchText) ||
                                    product.umkm_name.toLowerCase().includes(searchText);
-                const matchCategory = categoryId === 0 || product.category_id === categoryId;
-                return matchSearch && matchCategory;
+                return matchSearch;
             });
 
             displayProducts(filtered);
@@ -265,7 +253,6 @@
         });
 
         document.getElementById('searchInput').addEventListener('input', filterProducts);
-        document.getElementById('categorySelect').addEventListener('change', filterProducts);
 
         // Inisialisasi
         updateStats();
