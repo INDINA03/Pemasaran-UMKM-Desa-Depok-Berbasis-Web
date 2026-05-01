@@ -17,6 +17,28 @@
             min-height: 100vh;
         }
 
+        /* Navbar Login */
+        .navbar {
+            background: rgba(0,0,0,0.3);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
         .header {
             background: linear-gradient(135deg, #2c5f2d 0%, #1a3b1a 100%);
             color: white;
@@ -95,6 +117,7 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -109,7 +132,6 @@
             align-items: center;
             justify-content: center;
             font-size: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
@@ -179,6 +201,31 @@
             margin-top: 50px;
         }
 
+        /* Tombol Admin Floating */
+        .admin-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2c5f2d;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: 0.3s;
+            z-index: 100;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.1);
+            background: #1a3b1a;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5em;
@@ -200,6 +247,11 @@
     </style>
 </head>
 <body>
+    <!-- Navbar Login -->
+    <div class="navbar" id="navbar">
+        <a href="login.html">🔐 Login Administrator</a>
+    </div>
+
     <div class="header">
         <h1>Selamat Datang di Sistem Informasi Pemasaran UMKM Desa Depok Berbasis Website</h1>
         <p>Kecamatan Kandeman • Kabupaten Batang • Jawa Tengah</p>
@@ -208,7 +260,7 @@
 
     <div class="container">
         <form class="search-form" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Cari" autocomplete="on">
+            <input type="text" id="searchInput" placeholder="🔍 Cari produk..." autocomplete="on">
             <button type="submit">Cari Produk</button>
         </form>
 
@@ -216,139 +268,85 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2026` Sistem Informasi Pemasaran UMKM Desa Depok Berbasis Website | Kecamatan Kandeman | Kabupaten Batang</p>
+        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok Berbasis Website | Kecamatan Kandeman | Kabupaten Batang</p>
         <p style="margin-top: 10px; font-size: 0.9em;">📞 Pengaduan & Informasi: 0857-4871-0963 | Email: umkm@desadepok.id</p>
     </div>
 
+    <!-- Tombol Admin Floating -->
+    <a href="admin.html" class="admin-btn" title="Kelola Produk">⚙️</a>
+
     <script>
-        // Data UMKM Desa Depok dengan ikon emoji (PASTI MUNCUL)
-        const products = [
+        // Data produk default (jika belum ada di localStorage)
+        const defaultProducts = [
             {
                 id: 1,
-                name: "Keripik Tempe Kriuk",
-                description: "Keripik tempe homemade renyah dengan bumbu spesial, tanpa pengawet. Cocok untuk camilan keluarga.",
-                price: 15000,
-                icon: "🍟",
+                name: "Bakso Biasa",
+                description: "Bakso sapi pilihan dengan tekstur kenyal dan lembut di setiap gigitan. Dibuat dari daging sapi segar pilihan tanpa campuran bahan pengawet. Cocok disantap hangat dengan kuah kaldu sapi yang gurih alami. Dilengkapi dengan mie, tahu, dan pangsit goreng sebagai pelengkap. Bakso biasa kami menjadi favorit keluarga karena rasa yang autentik dan harga yang terjangkau.",
+                price: 5000,
                 bgGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-                umkm_name: "Bu Siti Snack",
+                umkm_name: "Warung Bakso Bu Luluk",
                 contact: "0812-3456-7890",
-                category_id: 1,
-                category_name: "Makanan & Minuman"
             },
             {
                 id: 2,
-                name: "Batik Tulis Depok",
-                description: "Batik tulis khas Desa Depok dengan motif daun dan bunga, bahan katun premium.",
-                price: 250000,
-                icon: "👘",
+                name: "Bakso Urat",
+                description: "Bakso urat spesial dengan tambahan urat sapi pilihan yang memberikan tekstur lebih kenyal dan kres-kres saat digigit. Cocok bagi Anda yang menyukai sensasi makan bakso dengan tekstur lebih padat dan bergetah. Setiap bakso urat kami mengandung serat urat sapi asli yang kaya akan kolagen alami. Disajikan dengan kuah kaldu tulang sapi yang dimasak perlahan selama 4 jam.",
+                price: 10000,
                 bgGradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-                umkm_name: "Rumah Batik Depok",
-                contact: "0857-1234-5678",
-                category_id: 2,
-                category_name: "Fashion & Aksesoris"
+                umkm_name: "Warung Bakso Bu Luluk",
+                contact: "0812-3456-7890",
             },
             {
                 id: 3,
-                name: "Tas Anyam Mendong",
-                description: "Tas anyaman dari serat mendong alami, kuat dan ramah lingkungan.",
-                price: 75000,
-                icon: "👜",
+                name: "Bakso Jumbo",
+                description: "Bakso jumbo dengan ukuran 3x lipat dari bakso biasa, cocok untuk Anda yang memiliki selera makan besar! Setiap porsi berisi 3 butir bakso raksasa dengan diameter mencapai 5-7 cm. Dibuat dari daging sapi segar tanpa campuran, dipadu dengan bumbu rahasia turun-temurun. Bakso jumbo kami sangat mengenyangkan dan bisa dinikmati berdua. Kuah kaldu sapi yang kental dan kaya rempah menambah kenikmatan.",
+                price: 15000,
                 bgGradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-                umkm_name: "Kreasi Mandiri Depok",
-                contact: "0896-5432-1098",
-                category_id: 3,
-                category_name: "Kerajinan Tangan"
+                umkm_name: "Warung Bakso Bu Luluk",
+                contact: "0812-3456-7890",
             },
             {
                 id: 4,
-                name: "Madu Hutan Depok",
-                description: "Madu murni dari hutan sekitar Desa Depok, khasiat tinggi untuk kesehatan.",
-                price: 120000,
-                icon: "🍯",
+                name: "Mie Ayam Ceker",
+                description: "Mie Ayam Ceker spesial dengan topping ceker ayam yang empuk meresap hingga ke tulang! Dimasak dengan bumbu rahasia selama berjam-jam sehingga ceker menjadi super lembut dan mudah dilepaskan dari tulangnya. Mie kenyal pilihan disiram kuah kaldu ayam kental yang gurih alami, ditambah potongan ayam suwir, sawi hijau segar, pangsit goreng renyah, dan taburan bawang goreng. Satu porsi Mie Ayam Ceker kami memberikan sensasi gurih, pedas, dan umami yang bikin nagih!
+
+",
+                price: 12000,
                 bgGradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
-                umkm_name: "Tani Madu Sejahtera",
+                umkm_name: "Mie Ayam Bu Annis",
                 contact: "0813-9876-5432",
-                category_id: 1,
-                category_name: "Makanan & Minuman"
             },
             {
                 id: 5,
-                name: "Pisang Goreng Crispy",
-                description: "Pisang goreng dengan topping keju dan coklat, renyah di luar lembut di dalam.",
-                price: 10000,
-                icon: "🍌",
+                name: "Es Teh",
+                description: "Es Teh Manis yang menyegarkan dengan cita rasa teh asli pilihan yang tidak pahit! Disajikan dingin dengan es batu kristal, ditambah perasan lemon segar (bisa request) dan gula aren asli yang memberikan rasa manis alami tidak bikin eneg. Teh yang kami gunakan adalah teh hitam premium berkualitas tinggi yang diseduh dengan teknik khusus agar aroma dan rasa teh keluar maksimal tanpa meninggalkan rasa pahit. Setiap gelas disajikan dengan potongan lemon segar dan daun mint yang membuat segar setiap tegukan. Cocok untuk segala suasana, apalagi saat cuaca panas!
+
+",
+                price: 3000,
                 bgGradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-                umkm_name: "Cemilan Depok Maknyus",
-                contact: "0856-7890-1234",
-                category_id: 1,
-                category_name: "Makanan & Minuman"
+                umkm_name: "Mie Ayam Bu Annis",
+                contact: "0813-9876-5432",
             },
-            {
-                id: 6,
-                name: "Lukisan Kaca Depok",
-                description: "Lukisan kaca dengan motif tradisional, cocok untuk hiasan dinding.",
-                price: 150000,
-                icon: "🎨",
-                bgGradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
-                umkm_name: "Seni Kaca Depok",
-                contact: "0877-6543-2109",
-                category_id: 3,
-                category_name: "Kerajinan Tangan"
-            },
-            {
-                id: 7,
-                name: "Ikan Lele Segar",
-                description: "Ikan lele segar hasil budidaya warga Depok, langsung dari kolam.",
-                price: 25000,
-                icon: "🐟",
-                bgGradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-                umkm_name: "Lele Jaya Depok",
-                contact: "0819-3456-7890",
-                category_id: 5,
-                category_name: "Perikanan & Peternakan"
-            },
-            {
-                id: 8,
-                name: "Kerajinan Bambu",
-                description: "Berbagai kerajinan dari bambu: tampah, besek, hiasan dinding.",
-                price: 35000,
-                icon: "🎋",
-                bgGradient: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
-                umkm_name: "Bambu Kreasi Depok",
-                contact: "0852-1234-5678",
-                category_id: 3,
-                category_name: "Kerajinan Tangan"
-            },
-            {
-                id: 9,
-                name: "Kopi Bubuk Depok",
-                description: "Kopi bubuk asli dari biji kopi pilihan, aroma dan rasa khas.",
-                price: 45000,
-                icon: "☕",
-                bgGradient: "linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)",
-                umkm_name: "Kopi Depok Jaya",
-                contact: "0812-9876-5432",
-                category_id: 1,
-                category_name: "Makanan & Minuman"
-            },
-            {
-                id: 10,
-                name: "Sambal Pecel Depok",
-                description: "Sambal pecel homemade, terbuat dari kacang tanah pilihan dan rempah asli.",
-                price: 20000,
-                icon: "🌶️",
-                bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
-                umkm_name: "Sambel Ibu Siti",
-                contact: "0857-1111-2222",
-                category_id: 1,
-                category_name: "Makanan & Minuman"
-            }
         ];
 
-        function displayProducts(filteredProducts) {
+        let products = [];
+
+        // Load produk dari localStorage (sinkron dengan admin panel)
+        function loadProducts() {
+            const stored = localStorage.getItem('umkm_products');
+            if (stored) {
+                products = JSON.parse(stored);
+            } else {
+                products = defaultProducts;
+                localStorage.setItem('umkm_products', JSON.stringify(products));
+            }
+            displayProducts(products);
+        }
+
+        function displayProducts(productsToShow) {
             const productGrid = document.getElementById('productGrid');
             
-            if (filteredProducts.length === 0) {
+            if (productsToShow.length === 0) {
                 productGrid.innerHTML = `
                     <div class="no-product">
                         <p>😞 Belum ada produk UMKM yang ditemukan.</p>
@@ -358,15 +356,15 @@
                 return;
             }
 
-            productGrid.innerHTML = filteredProducts.map(product => `
+            productGrid.innerHTML = productsToShow.map(product => `
                 <div class="product-card">
                     <div class="product-image" style="background: ${product.bgGradient}">
-                        ${product.icon}
+                        ${product.icon || '📦'}
                     </div>
                     <div class="product-info">
                         <h3>${product.name}</h3>
                         <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
-                        <div class="description">${product.description}</div>
+                        <div class="description">${product.description.substring(0, 100)}${product.description.length > 100 ? '...' : ''}</div>
                         <div class="umkm-name">🏪 ${product.umkm_name}</div>
                         <div class="contact">📞 ${product.contact}</div>
                         <div class="category">📁 ${product.category_name}</div>
@@ -390,6 +388,26 @@
             displayProducts(filtered);
         }
 
+        // Cek apakah user sudah login
+        function checkLoginStatus() {
+            const currentUser = localStorage.getItem('currentUser');
+            const navbar = document.getElementById('navbar');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                navbar.innerHTML = `
+                    <span style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 20px;">👤 ${user.name}</span>
+                    <a href="admin.html">⚙️ Kelola Produk</a>
+                    <a href="#" onclick="logout()">🚪 Logout</a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        // Event listener
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             filterProducts();
@@ -398,7 +416,9 @@
         document.getElementById('searchInput').addEventListener('input', filterProducts);
         document.getElementById('categorySelect').addEventListener('change', filterProducts);
 
-        displayProducts(products);
+        // Inisialisasi
+        loadProducts();
+        checkLoginStatus();
     </script>
 </body>
 </html>
