@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator - Kelola Produk UMKM Desa Depok</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3b1a 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Form Tambah Produk */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-card h2 {
+            color: #2c5f2d;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5f2d;
+        }
+
+        .btn-submit {
+            background: #2c5f2d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: #1a3b1a;
+        }
+
+        /* Tabel Produk */
+        .table-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .btn-edit {
+            background: #ff9800;
+            color: white;
+            padding: 5px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn-delete {
+            background: #f44336;
+            color: white;
+            padding: 5px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-edit:hover {
+            background: #e68900;
+        }
+
+        .btn-delete:hover {
+            background: #d32f2f;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .badge-icon {
+            display: inline-block;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Administrator UMKM Desa Depok</h2>
+        <div>
+            <a href="index.html">Lihat Website</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="alert" class="alert"></div>
+
+        <!-- Form Tambah/Edit Produk -->
+        <div class="form-card">
+            <h2 id="formTitle">➕ Tambah Produk Baru</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId" value="">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nama Produk</label>
+                        <input type="text" id="productName" required placeholder="Contoh: Keripik Tempe Kriuk">
+                    </div>
+                    <div class="form-group">
+                        <label>Harga (Rp)</label>
+                        <input type="number" id="productPrice" required placeholder="15000">
+                    </div>
+                    <div class="form-group">
+                        <label>Nama UMKM</label>
+                        <input type="text" id="umkmName" required placeholder="Contoh: Bu Siti Snack">
+                    </div>
+                    <div class="form-group">
+                        <label>Kontak (No. HP)</label>
+                        <input type="text" id="contact" required placeholder="0812-3456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="categoryId">
+                            <option value="1">🍔 Makanan & Minuman</option>
+                            <option value="2">👗 Fashion & Aksesoris</option>
+                            <option value="3">🛋️ Kerajinan Tangan</option>
+                            <option value="4">🌿 Pertanian & Perkebunan</option>
+                            <option value="5">🐟 Perikanan & Peternakan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Emoji/Ikon</label>
+                        <input type="text" id="icon" placeholder="🍟" maxlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi</label>
+                        <textarea id="description" rows="3" placeholder="Deskripsi produk..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">💾 Simpan Produk</button>
+            </form>
+        </div>
+
+        <!-- Daftar Produk -->
+        <div class="table-card">
+            <h2>📦 Daftar Produk UMKM</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Ikon</th>
+                        <th>Nama Produk</th>
+                        <th>UMKM</th>
+                        <th>Harga</th>
+                        <th>Kategori</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Data produk default
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "Keripik Tempe Kriuk",
+                description: "Keripik tempe homemade renyah dengan bumbu spesial, tanpa pengawet. Cocok untuk camilan keluarga.",
+                price: 15000,
+                icon: "🍟",
+                bgGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                umkm_name: "Bu Siti Snack",
+                contact: "0812-3456-7890",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 2,
+                name: "Batik Tulis Depok",
+                description: "Batik tulis khas Desa Depok dengan motif daun dan bunga, bahan katun premium.",
+                price: 250000,
+                icon: "👘",
+                bgGradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                umkm_name: "Rumah Batik Depok",
+                contact: "0857-1234-5678",
+                category_id: 2,
+                category_name: "Fashion & Aksesoris"
+            },
+            {
+                id: 3,
+                name: "Tas Anyam Mendong",
+                description: "Tas anyaman dari serat mendong alami, kuat dan ramah lingkungan.",
+                price: 75000,
+                icon: "👜",
+                bgGradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+                umkm_name: "Kreasi Mandiri Depok",
+                contact: "0896-5432-1098",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 4,
+                name: "Madu Hutan Depok",
+                description: "Madu murni dari hutan sekitar Desa Depok, khasiat tinggi untuk kesehatan.",
+                price: 120000,
+                icon: "🍯",
+                bgGradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+                umkm_name: "Tani Madu Sejahtera",
+                contact: "0813-9876-5432",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 5,
+                name: "Pisang Goreng Crispy",
+                description: "Pisang goreng dengan topping keju dan coklat, renyah di luar lembut di dalam.",
+                price: 10000,
+                icon: "🍌",
+                bgGradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+                umkm_name: "Cemilan Depok Maknyus",
+                contact: "0856-7890-1234",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 6,
+                name: "Lukisan Kaca Depok",
+                description: "Lukisan kaca dengan motif tradisional, cocok untuk hiasan dinding.",
+                price: 150000,
+                icon: "🎨",
+                bgGradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+                umkm_name: "Seni Kaca Depok",
+                contact: "0877-6543-2109",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 7,
+                name: "Ikan Lele Segar",
+                description: "Ikan lele segar hasil budidaya warga Depok, langsung dari kolam.",
+                price: 25000,
+                icon: "🐟",
+                bgGradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+                umkm_name: "Lele Jaya Depok",
+                contact: "0819-3456-7890",
+                category_id: 5,
+                category_name: "Perikanan & Peternakan"
+            },
+            {
+                id: 8,
+                name: "Kerajinan Bambu",
+                description: "Berbagai kerajinan dari bambu: tampah, besek, hiasan dinding.",
+                price: 35000,
+                icon: "🎋",
+                bgGradient: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+                umkm_name: "Bambu Kreasi Depok",
+                contact: "0852-1234-5678",
+                category_id: 3,
+                category_name: "Kerajinan Tangan"
+            },
+            {
+                id: 9,
+                name: "Kopi Bubuk Depok",
+                description: "Kopi bubuk asli dari biji kopi pilihan, aroma dan rasa khas.",
+                price: 45000,
+                icon: "☕",
+                bgGradient: "linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)",
+                umkm_name: "Kopi Depok Jaya",
+                contact: "0812-9876-5432",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            },
+            {
+                id: 10,
+                name: "Sambal Pecel Depok",
+                description: "Sambal pecel homemade, terbuat dari kacang tanah pilihan dan rempah asli.",
+                price: 20000,
+                icon: "🌶️",
+                bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+                umkm_name: "Sambel Ibu Siti",
+                contact: "0857-1111-2222",
+                category_id: 1,
+                category_name: "Makanan & Minuman"
+            }
+        ];
+
+        // Inisialisasi localStorage
+        let products = [];
+
+        function loadProducts() {
+            const stored = localStorage.getItem('umkm_products');
+            if (stored) {
+                products = JSON.parse(stored);
+            } else {
+                products = defaultProducts;
+                localStorage.setItem('umkm_products', JSON.stringify(products));
+            }
+        }
+
+        function saveProducts() {
+            localStorage.setItem('umkm_products', JSON.stringify(products));
+        }
+
+        function getCategoryName(categoryId) {
+            const categories = {
+                1: "Makanan & Minuman",
+                2: "Fashion & Aksesoris",
+                3: "Kerajinan Tangan",
+                4: "Pertanian & Perkebunan",
+                5: "Perikanan & Peternakan"
+            };
+            return categories[categoryId] || "Lainnya";
+        }
+
+        function getGradient(categoryId) {
+            const gradients = {
+                1: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                2: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                3: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+                4: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+                5: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)"
+            };
+            return gradients[categoryId] || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+        }
+
+        function displayProductTable() {
+            const tbody = document.getElementById('productTableBody');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Belum ada produk. Silakan tambah produk baru.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = products.map((product, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td class="badge-icon">${product.icon || '📦'}</td>
+                    <td>${product.name}</td>
+                    <td>${product.umkm_name}</td>
+                    <td>Rp ${product.price.toLocaleString('id-ID')}</td>
+                    <td>${product.category_name}</td>
+                    <td>
+                        <button class="btn-edit" onclick="editProduct(${product.id})">✏️ Edit</button>
+                        <button class="btn-delete" onclick="deleteProduct(${product.id})">🗑️ Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Simpan ke localStorage dan update index.html
+        function syncToIndex() {
+            // Data sudah tersimpan di localStorage
+            // index.html akan membaca dari localStorage yang sama
+            console.log('Produk tersimpan, index.html akan otomatis terbaca');
+        }
+
+        function addProduct(event) {
+            event.preventDefault();
+            
+            const id = document.getElementById('productId').value;
+            const categoryId = parseInt(document.getElementById('categoryId').value);
+            
+            const product = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('productName').value,
+                description: document.getElementById('description').value || "Produk unggulan UMKM Desa Depok",
+                price: parseInt(document.getElementById('productPrice').value),
+                icon: document.getElementById('icon').value || "📦",
+                bgGradient: getGradient(categoryId),
+                umkm_name: document.getElementById('umkmName').value,
+                contact: document.getElementById('contact').value,
+                category_id: categoryId,
+                category_name: getCategoryName(categoryId)
+            };
+
+            if (id) {
+                // Edit produk
+                const index = products.findIndex(p => p.id == id);
+                if (index !== -1) {
+                    products[index] = product;
+                }
+                showAlert('✅ Produk berhasil diupdate!', 'success');
+            } else {
+                // Tambah produk baru
+                products.push(product);
+                showAlert('✅ Produk berhasil ditambahkan!', 'success');
+            }
+
+            saveProducts();
+            displayProductTable();
+            resetForm();
+            syncToIndex();
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('umkmName').value = product.umkm_name;
+                document.getElementById('contact').value = product.contact;
+                document.getElementById('categoryId').value = product.category_id;
+                document.getElementById('icon').value = product.icon;
+                document.getElementById('description').value = product.description;
+                
+                document.getElementById('formTitle').innerHTML = '✏️ Edit Produk';
+                document.querySelector('.btn-submit').innerHTML = '💾 Update Produk';
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                displayProductTable();
+                resetForm();
+                showAlert('🗑️ Produk berhasil dihapus!', 'success');
+                syncToIndex();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('productId').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('umkmName').value = '';
+            document.getElementById('contact').value = '';
+            document.getElementById('categoryId').value = '1';
+            document.getElementById('icon').value = '';
+            document.getElementById('description').value = '';
+            
+            document.getElementById('formTitle').innerHTML = '➕ Tambah Produk Baru';
+            document.querySelector('.btn-submit').innerHTML = '💾 Simpan Produk';
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alert');
+            alertDiv.className = `alert alert-${type} show`;
+            alertDiv.innerHTML = message;
+            
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 3000);
+        }
+
+        // Event listener
+        document.getElementById('productForm').addEventListener('submit', addProduct);
+
+        // Load data
+        loadProducts();
+        displayProductTable();
+    </script>
+</body>
+</html>
