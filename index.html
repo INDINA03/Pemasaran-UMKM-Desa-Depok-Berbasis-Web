@@ -10,13 +10,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
         .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05); flex-wrap: wrap; gap: 15px; }
-        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
         .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; cursor: pointer; }
-        .nav-links a:hover { color: #2c5f2d; }
+        .nav-links a:hover, .nav-links a.active { color: #2c5f2d; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
@@ -33,6 +33,127 @@
         .search-wrapper input:focus { outline: none; border-color: #2c5f2d; }
         .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-search:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
+
+        /* ========== FEATURES SECTION STYLE ========== */
+        .features-section {
+            padding: 60px 0 30px;
+            position: relative;
+        }
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-header .badge-feature {
+            display: inline-block;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            color: #2c5f2d;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .section-header h2 {
+            font-size: 2rem;
+            color: #1a3b1a;
+            margin-bottom: 10px;
+        }
+        .section-header .subtitle {
+            color: #666;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2c5f2d, #ffd166, #2c5f2d);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(44,95,45,0.15);
+        }
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f0f7f0, #e8f5e9);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover .feature-icon {
+            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
+            transform: scale(1.05) rotate(5deg);
+        }
+        .feature-icon i, .feature-icon span {
+            font-size: 40px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover .feature-icon i,
+        .feature-card:hover .feature-icon span {
+            color: white !important;
+        }
+        .feature-card h3 {
+            font-size: 1.3rem;
+            color: #1a3b1a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        .feature-number {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(44,95,45,0.08);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover .feature-number {
+            color: rgba(44,95,45,0.15);
+            transform: scale(1.1);
+        }
+        /* End Features Section */
+
         .section-title { text-align: center; margin: 50px 0 30px; }
         .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; font-size: 0.85em; }
         .section-title h2 { font-size: 1.8em; color: #1a3b1a; margin-bottom: 10px; }
@@ -55,29 +176,61 @@
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; font-size: 0.85em; opacity: 0.7; }
         .fab-admin { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; text-decoration: none; box-shadow: 0 5px 20px rgba(0,0,0,0.2); transition: 0.3s; z-index: 100; }
         .fab-admin:hover { transform: scale(1.1); }
-        @media (max-width: 768px) { .hero h1 { font-size: 1.5em; } .search-form { flex-direction: column; } .hero-stats { flex-direction: column; gap: 15px; } .product-grid { grid-template-columns: 1fr; } .nav-links { justify-content: center; } }
+        
+        @media (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        }
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 1.5em; } 
+            .search-form { flex-direction: column; } 
+            .hero-stats { flex-direction: column; gap: 15px; } 
+            .product-grid { grid-template-columns: 1fr; } 
+            .nav-links { justify-content: center; }
+            .features-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 1.5rem; }
+            .feature-card { padding: 25px 20px; }
+        }
+        
+        /* Animasi fade-in */
+        .feature-card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
-    <div class="logo">
-        <div class="logo-icon">🏪</div>
-        <div class="logo-text">
-            <h2>UMKM Desa Depok</h2>
-            <p>Kec. Kandeman - Kab. Batang</p>
+        <div class="logo" onclick="location.href='index.php'">
+            <div class="logo-icon">🏪</div>
+            <div class="logo-text">
+                <h2>UMKM Desa Depok</h2>
+                <p>Kec. Kandeman - Kab. Batang</p>
+            </div>
         </div>
-    </div>
-    <div class="nav-links">
-        <a href="beranda.html">Beranda</a>
-        <a href="tentang.html">Tentang</a>
-        <a href="kontak.html">Kontak</a>
-        <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-        <a href="admin.html" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
-    </div>
-</nav>
+        <div class="nav-links">
+            <a href="index.php" class="active">Beranda</a>
+            <a href="tentang.php">Tentang</a>
+            <a href="kontak.php">Kontak</a>
+            <a href="login.php" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
+            <a href="admin.php" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
+        </div>
+    </nav>
 
     <section class="hero">
         <h1>Selamat Datang di Sistem Informasi Pemasaran UMKM Berbasis Website</h1>
+        <p style="margin-top: 10px; opacity: 0.9;">Temukan berbagai produk kuliner unggulan dari warga Desa Depok</p>
         <div class="hero-stats">
             <div class="stat-item"><div class="stat-number" id="totalProducts">0</div><div>Produk</div></div>
             <div class="stat-item"><div class="stat-number" id="totalUMKM">0</div><div>UMKM</div></div>
@@ -90,13 +243,70 @@
             <form class="search-form" id="searchForm">
                 <div class="search-wrapper">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Cari">
+                    <input type="text" id="searchInput" placeholder="Cari produk, UMKM, atau deskripsi...">
                 </div>
+                <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari</button>
             </form>
         </div>
 
+        <!-- ========== FEATURES SECTION ========== -->
+        <section class="features-section">
+            <div class="features-container">
+                <div class="section-header">
+                    <div class="badge-feature">
+                        <i class="fas fa-star"></i> Why Choose Us?
+                    </div>
+                    <h2>Kenapa Harus Belanja di <span style="color: #2c5f2d;">UMKM Desa Depok</span>?</h2>
+                    <div class="subtitle">Nikmati kemudahan berbelanja produk lokal berkualitas dari warga Desa Depok</div>
+                </div>
+                
+                <div class="features-grid">
+                    <!-- Feature 1: Kuliner Lezat -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <span style="font-size: 45px;">🍜</span>
+                        </div>
+                        <h3>Kuliner Lezat</h3>
+                        <p>Bakso kenyal, mie ayam ceker empuk, es teh segar, dan aneka makanan khas Depok yang menggugah selera.</p>
+                        <div class="feature-number">01</div>
+                    </div>
+                    
+                    <!-- Feature 2: Langsung dari UMKM -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-holding-heart" style="color: #2c5f2d;"></i>
+                        </div>
+                        <h3>Langsung dari UMKM</h3>
+                        <p>Produk langsung dari tangan-tangan terampil warga Desa Depok tanpa perantara, lebih segar dan autentik.</p>
+                        <div class="feature-number">02</div>
+                    </div>
+                    
+                    <!-- Feature 3: Pesan Mudah -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                        </div>
+                        <h3>Pesan Mudah</h3>
+                        <p>Pesan langsung via WhatsApp, tersedia layanan antar untuk area Kandeman, Batang, dan sekitarnya.</p>
+                        <div class="feature-number">03</div>
+                    </div>
+                    
+                    <!-- Feature 4: Harga Terjangkau -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tags" style="color: #ff9800;"></i>
+                        </div>
+                        <h3>Harga Terjangkau</h3>
+                        <p>Harga bersahabat dengan kualitas terbaik, cocok untuk keluarga. Lebih hemat belanja langsung ke UMKM!</p>
+                        <div class="feature-number">04</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="section-title">
-            <h2>Produk Kuliner UMKM Desa Depok</h2>
+            <div class="badge"><i class="fas fa-utensils"></i> Menu Pilihan</div>
+            <h2>Produk Kuliner Unggulan Desa Depok</h2>
         </div>
 
         <div class="product-grid" id="productGrid"></div>
@@ -109,11 +319,11 @@
         </div>
     </footer>
 
-    <a href="admin.html" class="fab-admin" title="Kelola Produk"><i class="fas fa-cog"></i></a>
+    <a href="admin.php" class="fab-admin" title="Kelola Produk"><i class="fas fa-cog"></i></a>
 
     <script>
         // ==================== PRODUK YANG DITAMPILKAN (KULINER) ====================
-        const products = [
+        let products = [
             {
                 id: 1,
                 name: "Bakso Biasa Istimewa",
@@ -176,8 +386,15 @@
             }
         ];
 
-        // Simpan ke localStorage
-        localStorage.setItem('umkm_products', JSON.stringify(products));
+        // Load data dari localStorage jika ada (untuk sinkronisasi dengan admin)
+        function loadProducts() {
+            const stored = localStorage.getItem('umkm_products');
+            if (stored) {
+                products = JSON.parse(stored);
+            } else {
+                localStorage.setItem('umkm_products', JSON.stringify(products));
+            }
+        }
 
         function updateStats() {
             document.getElementById('totalProducts').innerText = products.length;
@@ -185,6 +402,12 @@
             document.getElementById('totalUMKM').innerText = uniqueUMKM;
             const uniqueCat = [...new Set(products.map(p => p.category_name))].length;
             document.getElementById('totalCategories').innerText = uniqueCat;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         function displayProducts(productsToShow) {
@@ -210,19 +433,19 @@
                         ${product.icon}
                     </div>
                     <div class="product-info">
-                        <h3>${product.name}</h3>
+                        <h3>${escapeHtml(product.name)}</h3>
                         <div class="price">Rp ${product.price.toLocaleString('id-ID')}</div>
-                        <div class="description">${product.description.substring(0, 100)}${product.description.length > 100 ? '...' : ''}</div>
+                        <div class="description">${escapeHtml(product.description.substring(0, 100))}${product.description.length > 100 ? '...' : ''}</div>
                         <div class="umkm-name">
-                            <i class="fas fa-store"></i> ${product.umkm_name}
+                            <i class="fas fa-store"></i> ${escapeHtml(product.umkm_name)}
                         </div>
                         <div class="contact">
                             <i class="fab fa-whatsapp"></i> ${product.contact}
                         </div>
                         <div class="category-tag">
-                            <i class="fas fa-tag"></i> ${product.category_name}
+                            <i class="fas fa-tag"></i> ${escapeHtml(product.category_name)}
                         </div>
-                        <a href="https://wa.me/${product.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn">
+                        <a href="https://wa.me/${product.contact.replace(/[^0-9]/g, '')}?text=Halo%2C%20saya%20tertarik%20dengan%20${encodeURIComponent(product.name)}%20dari%20website%20UMKM%20Desa%20Depok" target="_blank" class="whatsapp-btn">
                             <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
                         </a>
                     </div>
@@ -234,10 +457,10 @@
             const searchText = document.getElementById('searchInput').value.toLowerCase();
 
             const filtered = products.filter(product => {
-                const matchSearch = product.name.toLowerCase().includes(searchText) ||
-                                   product.description.toLowerCase().includes(searchText) ||
-                                   product.umkm_name.toLowerCase().includes(searchText);
-                return matchSearch;
+                return product.name.toLowerCase().includes(searchText) ||
+                       product.description.toLowerCase().includes(searchText) ||
+                       product.umkm_name.toLowerCase().includes(searchText) ||
+                       product.category_name.toLowerCase().includes(searchText);
             });
 
             displayProducts(filtered);
@@ -252,6 +475,7 @@
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
         // Inisialisasi
+        loadProducts();
         updateStats();
         displayProducts(products);
     </script>
