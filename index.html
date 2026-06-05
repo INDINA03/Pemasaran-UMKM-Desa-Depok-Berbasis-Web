@@ -1,6 +1,5 @@
 <?php
 // index.php - Halaman Beranda UMKM Desa Depok
-$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -22,12 +21,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .nav-links a, .nav-links span { text-decoration: none; font-weight: 500; transition: 0.3s; }
         .nav-links a { color: #333; }
         .nav-links a:hover { color: #2c5f2d; }
-        .nav-links span.active-nav, .nav-links a.active-nav {
-            color: #2c5f2d;
-            border-bottom: 2px solid #2c5f2d;
-            padding-bottom: 5px;
-        }
-        .nav-links span.active-nav { cursor: default; }
+        .nav-links span { color: #2c5f2d; border-bottom: 2px solid #2c5f2d; padding-bottom: 5px; cursor: default; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
@@ -72,24 +66,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
     <div class="nav-links">
-        <?php if($current_page == 'index.php'): ?>
-            <span class="active-nav">Beranda</span>
-        <?php else: ?>
-            <a href="index.php">Beranda</a>
-        <?php endif; ?>
-        
-        <?php if($current_page == 'tentang.php'): ?>
-            <span class="active-nav">Tentang</span>
-        <?php else: ?>
-            <a href="tentang.php">Tentang</a>
-        <?php endif; ?>
-        
-        <?php if($current_page == 'kontak.php'): ?>
-            <span class="active-nav">Kontak</span>
-        <?php else: ?>
-            <a href="kontak.php">Kontak</a>
-        <?php endif; ?>
-        
+        <!-- Hanya satu kali, Beranda berupa teks (tidak bisa diklik) -->
+        <span>Beranda</span>
+        <a href="tentang.php">Tentang</a>
+        <a href="kontak.php">Kontak</a>
         <a href="login.php" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
         <a href="admin.php" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
     </div>
