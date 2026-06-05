@@ -35,8 +35,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .hero h1 { font-size: 2em; margin-bottom: 15px; }
         .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
         .stat-number { font-size: 2.5em; font-weight: 700; }
-        .lang-switch { margin-top: 30px; display: flex; justify-content: center; gap: 15px; }
-        .lang-switch button { background: rgba(255,255,255,0.2); border: none; padding: 5px 15px; border-radius: 20px; color: white; cursor: pointer; }
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
         .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
         .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
@@ -104,10 +102,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <div class="stat-item"><div class="stat-number" id="totalUMKM">0</div><div>UMKM</div></div>
         <div class="stat-item"><div class="stat-number" id="totalCategories">0</div><div>Kategori</div></div>
     </div>
-    <div class="lang-switch">
-        <button onclick="ubahBahasa('id')">Indonesia</button>
-        <button onclick="ubahBahasa('en')">English</button>
-    </div>
 </section>
 
 <div class="container">
@@ -131,6 +125,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <footer class="footer">
     <p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p>
+    <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
 </footer>
 
 <script>
@@ -163,7 +158,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <h3>${p.name}</h3>
                     <div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
                     <div class="description">${p.description}</div>
-                    <a href="https://wa.me/${p.contact.replace(/\D/g,'')}" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan</a>
+                    <a href="https://wa.me/${p.contact.replace(/\D/g,'')}" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</a>
                 </div>
             </div>
         `).join('');
@@ -173,27 +168,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         let cari = document.getElementById('searchInput').value.toLowerCase();
         let filter = products.filter(p => p.name.toLowerCase().includes(cari) || p.description.toLowerCase().includes(cari));
         tampilkanProduk(filter);
-    }
-
-    function ubahBahasa(lang) {
-        let judul = document.querySelector('.hero h1');
-        let subJudul = document.querySelector('.section-title h2');
-        let placeholder = document.getElementById('searchInput');
-        let tombolCari = document.querySelector('.btn-search');
-        let badge = document.querySelector('.badge');
-        if(lang === 'en') {
-            judul.innerText = 'Welcome to UMKM Information System';
-            subJudul.innerText = 'Featured Culinary Products';
-            placeholder.placeholder = 'Search product...';
-            tombolCari.innerHTML = '<i class="fas fa-search"></i> Search';
-            badge.innerHTML = '<i class="fas fa-utensils"></i> Featured Menu';
-        } else {
-            judul.innerText = 'Selamat Datang di Sistem Informasi Pemasaran UMKM Berbasis Website';
-            subJudul.innerText = 'Produk Kuliner UMKM Desa Depok';
-            placeholder.placeholder = 'Cari produk, UMKM, atau deskripsi...';
-            tombolCari.innerHTML = '<i class="fas fa-search"></i> Cari';
-            badge.innerHTML = '<i class="fas fa-utensils"></i> Menu Pilihan';
-        }
     }
 
     document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); filterProduk(); });
