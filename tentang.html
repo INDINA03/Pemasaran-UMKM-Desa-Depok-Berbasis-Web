@@ -15,10 +15,9 @@
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
         .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a, .nav-links span { text-decoration: none; font-weight: 500; transition: 0.3s; }
-        .nav-links a { color: #333; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; }
         .nav-links a:hover { color: #2c5f2d; }
-        .nav-links span { color: #2c5f2d; border-bottom: 2px solid #2c5f2d; padding-bottom: 5px; cursor: default; }
+        .nav-links .active { color: #2c5f2d; font-weight: 600; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
@@ -30,13 +29,16 @@
         .about-card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
         .visi-misi { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
         .visi-card, .misi-card { background: #f8f9fa; border-radius: 15px; padding: 25px; }
+        .visi-card h3, .misi-card h3 { color: #2c5f2d; margin-bottom: 15px; }
+        .misi-card ul { padding-left: 20px; color: #555; line-height: 1.8; }
         .feature-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 25px; margin: 30px 0; }
         .feature-card { background: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
         .feature-card:hover { transform: translateY(-5px); }
         .feature-icon { font-size: 50px; margin-bottom: 15px; }
         .feature-card h3 { color: #2c5f2d; margin-bottom: 10px; }
+        .feature-card p { color: #666; font-size: 0.9rem; }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
-        @media (max-width: 768px) { .feature-grid { grid-template-columns: 1fr; } .visi-misi { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .feature-grid { grid-template-columns: 1fr; } .visi-misi { grid-template-columns: 1fr; } .hero-small h1 { font-size: 1.5em; } }
     </style>
 </head>
 <body>
@@ -47,7 +49,7 @@
         </div>
         <div class="nav-links">
             <a href="index.html">Beranda</a>
-            <span>Tentang</span>
+            <a href="tentang.html" class="active">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
             <a href="admin.html" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
@@ -61,32 +63,36 @@
 
     <div class="container">
         <div class="about-card">
-            <h2>🏡 Profil Desa Depok</h2>
+            <h2><i class="fas fa-map-marker-alt"></i> Profil Desa Depok</h2>
             <p>Desa Depok adalah salah satu desa yang terletak di Kecamatan Kandeman, Kabupaten Batang, Jawa Tengah. Desa ini memiliki potensi besar di bidang kuliner, kerajinan tangan, dan produk-produk unggulan lainnya yang dikelola oleh warga setempat.</p>
 
-            <h2>📢 Apa itu UMKM Desa Depok?</h2>
+            <h2><i class="fas fa-question-circle"></i> Apa itu UMKM Desa Depok?</h2>
             <p>UMKM Desa Depok adalah platform digital yang menghubungkan produk unggulan warga Desa Depok, Kecamatan Kandeman, Kabupaten Batang dengan pembeli. Kami membantu pelaku UMKM lokal memasarkan produknya secara online agar lebih dikenal masyarakat luas.</p>
+            <p>Dengan website ini, Anda dapat melihat berbagai produk kuliner, kerajinan tangan, dan produk unggulan lainnya yang dibuat dengan penuh dedikasi oleh warga Desa Depok.</p>
 
-            <h2>🎯 Tujuan Website</h2>
-            <p>Website ini dibuat untuk membantu pelaku UMKM di Desa Depok dalam memasarkan produknya secara online. Diharapkan produk-produk unggulan Desa Depok dapat dikenal lebih luas oleh masyarakat Kabupaten Batang dan sekitarnya.</p>
+            <h2><i class="fas fa-bullseye"></i> Tujuan Website</h2>
+            <p>Website ini dibuat untuk membantu pelaku UMKM di Desa Depok dalam memasarkan produknya secara online. Dengan adanya platform ini, diharapkan produk-produk unggulan Desa Depok dapat dikenal lebih luas oleh masyarakat Kabupaten Batang dan sekitarnya.</p>
 
             <div class="visi-misi">
                 <div class="visi-card"><h3>✨ Visi</h3><p>Menjadikan Desa Depok sebagai sentra UMKM unggulan di Kabupaten Batang yang mandiri, kreatif, dan berdaya saing tinggi.</p></div>
-                <div class="misi-card"><h3>📋 Misi</h3><ul style="padding-left:20px"><li>Memasarkan produk UMKM Desa Depok secara digital</li><li>Memberdayakan pelaku UMKM lokal melalui pelatihan</li><li>Meningkatkan kesejahteraan warga</li><li>Melestarikan produk khas Desa Depok</li></ul></div>
+                <div class="misi-card"><h3>📋 Misi</h3><ul><li>Memasarkan produk UMKM Desa Depok secara digital</li><li>Memberdayakan pelaku UMKM lokal melalui pelatihan dan pendampingan</li><li>Meningkatkan kesejahteraan warga Desa Depok melalui sektor UMKM</li><li>Melestarikan produk khas dan kerajinan tradisional Desa Depok</li></ul></div>
             </div>
 
-            <h2>🍜 Kenapa Memilih UMKM Desa Depok?</h2>
+            <h2><i class="fas fa-star"></i> Kenapa Memilih UMKM Desa Depok?</h2>
             <div class="feature-grid">
-                <div class="feature-card"><div class="feature-icon">🍜</div><h3>Kuliner Lezat</h3><p>Bakso kenyal, mie ayam ceker, es teh segar</p></div>
-                <div class="feature-card"><div class="feature-icon">🤝</div><h3>Langsung dari UMKM</h3><p>Tanpa perantara, lebih segar</p></div>
-                <div class="feature-card"><div class="feature-icon">🚚</div><h3>Pesan Mudah</h3><p>Via WhatsApp, antar area Kandeman</p></div>
-                <div class="feature-card"><div class="feature-icon">⭐</div><h3>Harga Terjangkau</h3><p>Cocok untuk keluarga</p></div>
+                <div class="feature-card"><div class="feature-icon">🍜</div><h3>Kuliner Lezat</h3><p>Bakso kenyal, mie ayam ceker empuk, es teh segar, dan aneka makanan khas Depok.</p></div>
+                <div class="feature-card"><div class="feature-icon">🤝</div><h3>Langsung dari UMKM</h3><p>Produk langsung dari tangan-tangan terampil warga Desa Depok tanpa perantara.</p></div>
+                <div class="feature-card"><div class="feature-icon">🚚</div><h3>Pesan Mudah</h3><p>Pesan langsung via WhatsApp, tersedia layanan antar untuk area Kandeman dan sekitarnya.</p></div>
+                <div class="feature-card"><div class="feature-icon">⭐</div><h3>Harga Terjangkau</h3><p>Harga bersahabat dengan kualitas terbaik, cocok untuk keluarga.</p></div>
             </div>
+
+            <h2><i class="fas fa-users"></i> Tim Pengelola</h2>
+            <p>Sistem Informasi Pemasaran UMKM Desa Depok dikelola oleh Pemerintah Desa Depok bersama dengan para pelaku UMKM setempat. Kami berkomitmen untuk terus mengembangkan platform ini demi kemajuan ekonomi desa.</p>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p>
+        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
         <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
     </footer>
 </body>
