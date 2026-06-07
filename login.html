@@ -47,7 +47,7 @@
             const password = document.getElementById('password').value;
             if(username === 'admin' && password === 'admin123') {
                 localStorage.setItem('admin_logged_in', 'true');
-                window.location.href = 'admin.html';
+                window.location.href = 'dashboard.html';
             } else {
                 const errDiv = document.getElementById('errorMsg');
                 errDiv.style.display = 'block';
