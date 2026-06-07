@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola UMKM | Admin</title>
+    <title>Kelola UMKM | Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Poppins',sans-serif; background:#f0f4f8; }
-        .admin-nav { background:#1a1a2e; color:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-        .admin-nav a { color:white; margin-left:20px; text-decoration:none; }
-        .logout-btn { background:#c62828; padding:8px 20px; border-radius:8px; }
-        .container { max-width:1200px; margin:0 auto; padding:30px 5%; }
-        .stats { display:flex; gap:20px; margin-bottom:30px; flex-wrap:wrap; }
-        .stat-box { background:white; flex:1; padding:20px; text-align:center; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-        .btn-add { background:#2c5f2d; color:white; padding:10px 25px; border:none; border-radius:10px; cursor:pointer; margin-bottom:20px; }
-        .product-table { background:white; border-radius:15px; overflow-x:auto; }
-        table { width:100%; border-collapse:collapse; }
-        th, td { padding:12px 15px; text-align:left; border-bottom:1px solid #eee; }
-        th { background:#2c5f2d; color:white; }
-        .btn-edit { background:#ff9800; color:white; padding:5px 12px; border-radius:5px; border:none; cursor:pointer; margin-right:5px; }
-        .btn-delete { background:#c62828; color:white; padding:5px 12px; border-radius:5px; border:none; cursor:pointer; }
-        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1000; }
-        .modal-content { background:white; border-radius:20px; padding:30px; width:90%; max-width:500px; }
-        .modal-content input, .modal-content textarea, .modal-content select { width:100%; padding:10px; margin-bottom:15px; border:2px solid #e0e0e0; border-radius:8px; }
-        .btn-save { background:#2c5f2d; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; }
-        .btn-cancel { background:#999; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; margin-left:10px; }
-        .footer { background:#1a1a2e; color:white; text-align:center; padding:20px; margin-top:40px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
+        .admin-nav { background: #1a1a2e; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .admin-nav h2 { font-size: 1.2em; }
+        .admin-nav a { color: white; text-decoration: none; margin-left: 20px; }
+        .admin-nav a:hover { text-decoration: underline; }
+        .logout-btn { background: #c62828; padding: 8px 20px; border-radius: 8px; }
+        .logout-btn:hover { text-decoration: none !important; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 5%; }
+        .stats { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+        .stat-box { background: white; flex: 1; padding: 25px; text-align: center; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .stat-box h3 { font-size: 2em; color: #2c5f2d; }
+        .btn-add { background: #2c5f2d; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; margin-bottom: 20px; font-weight: 600; transition: 0.3s; }
+        .btn-add:hover { background: #1a3b1a; transform: translateY(-2px); }
+        .product-table { background: white; border-radius: 15px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #2c5f2d; color: white; }
+        .btn-edit { background: #ff9800; color: white; padding: 5px 12px; border-radius: 5px; border: none; cursor: pointer; margin-right: 5px; transition: 0.3s; }
+        .btn-delete { background: #c62828; color: white; padding: 5px 12px; border-radius: 5px; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-edit:hover, .btn-delete:hover { transform: scale(1.02); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
+        .modal-content h3 { color: #2c5f2d; margin-bottom: 20px; }
+        .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 10px; margin-bottom: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
+        .modal-content input:focus, .modal-content textarea:focus, .modal-content select:focus { outline: none; border-color: #2c5f2d; }
+        .btn-save { background: #2c5f2d; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-cancel { background: #999; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-left: 10px; }
+        .footer { background: #1a1a2e; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 0.85rem; }
+        @media (max-width: 768px) { th, td { font-size: 0.8rem; padding: 8px; } .stats { flex-direction: column; } }
     </style>
 </head>
 <body>
     <nav class="admin-nav">
         <h2><i class="fas fa-store"></i> Dashboard Admin UMKM Desa Depok</h2>
-        <div>
-            <span>Halo, admin</span>
-            <a href="index.html"><i class="fas fa-home"></i> Lihat Website</a>
-            <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <div><span>Halo, Admin</span><a href="index.html"><i class="fas fa-home"></i> Lihat Website</a><a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
     </nav>
 
     <div class="container">
@@ -70,14 +75,11 @@
                 <option value="Kerajinan Tangan">Kerajinan Tangan</option>
                 <option value="Produk Unggulan Lainnya">Produk Unggulan Lainnya</option>
             </select>
-            <div>
-                <button class="btn-save" onclick="saveProduct()">Simpan</button>
-                <button class="btn-cancel" onclick="closeModal()">Batal</button>
-            </div>
+            <div><button class="btn-save" onclick="saveProduct()">Simpan</button><button class="btn-cancel" onclick="closeModal()">Batal</button></div>
         </div>
     </div>
 
-    <footer class="footer"><p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p></footer>
+    <footer class="footer"><p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p></footer>
 
     <script>
         let products = [];
@@ -88,11 +90,11 @@
             if(stored) products = JSON.parse(stored);
             else {
                 products = [
-                    {id:1,name:"Bakso Biasa Istimewa",description:"Bakso sapi pilihan kenyal.",price:15000,icon:"🍜",bgGradient:gradients[0],umkm_name:"Bakso Mak Siti",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
-                    {id:2,name:"Bakso Urat",description:"Bakso urat spesial.",price:20000,icon:"🥩",bgGradient:gradients[1],umkm_name:"Bakso Mak Siti",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
-                    {id:3,name:"Bakso Jumbo",description:"Bakso jumbo 3x lipat.",price:35000,icon:"🍲",bgGradient:gradients[2],umkm_name:"Bakso Mak Siti",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
-                    {id:4,name:"Mie Ayam Ceker",description:"Mie ayam ceker empuk.",price:18000,icon:"🍗",bgGradient:gradients[3],umkm_name:"Mie Ayam Mak Siti",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
-                    {id:5,name:"Es Teh Manis",description:"Es teh segar.",price:3000,icon:"🧋",bgGradient:gradients[4],umkm_name:"UMKM Minuman",contact:"0857-4871-0963",category_name:"Minuman"}
+                    {id:1,name:"Bakso Biasa Istimewa",description:"Bakso sapi pilihan kenyal dan lembut.",price:15000,icon:"🍜",bgGradient:gradients[0],umkm_name:"Bakso Mak Siti Depok",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
+                    {id:2,name:"Bakso Urat Super Kenyal",description:"Bakso urat spesial dengan tekstur kenyal.",price:20000,icon:"🥩",bgGradient:gradients[1],umkm_name:"Bakso Mak Siti Depok",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
+                    {id:3,name:"Bakso Jumbo Raja Depok",description:"Bakso jumbo 3x lipat dari ukuran biasa.",price:35000,icon:"🍲",bgGradient:gradients[2],umkm_name:"Bakso Mak Siti Depok",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
+                    {id:4,name:"Mie Ayam Ceker Depok Gurih",description:"Mie ayam dengan topping ceker ayam empuk.",price:18000,icon:"🍗",bgGradient:gradients[3],umkm_name:"Mie Ayam Ceker Mak Siti",contact:"0857-4871-0963",category_name:"Makanan & Minuman"},
+                    {id:5,name:"Es Teh Manis Depok Segar",description:"Es teh manis dengan gula aren asli.",price:3000,icon:"🧋",bgGradient:gradients[4],umkm_name:"UMKM Minuman Depok Segar",contact:"0857-4871-0963",category_name:"Makanan & Minuman"}
                 ];
                 localStorage.setItem('umkm_products', JSON.stringify(products));
             }
@@ -100,22 +102,11 @@
             updateStats();
         }
 
-        function saveToLocalStorage() {
-            localStorage.setItem('umkm_products', JSON.stringify(products));
-        }
+        function saveToLocalStorage() { localStorage.setItem('umkm_products', JSON.stringify(products)); }
 
         function updateTable() {
             const tbody = document.getElementById('productTableBody');
-            tbody.innerHTML = products.map(p => `
-                <tr>
-                    <td>${p.id}</td>
-                    <td>${p.name}</td>
-                    <td>Rp ${p.price.toLocaleString('id-ID')}</td>
-                    <td>${p.umkm_name}</td>
-                    <td>${p.category_name}</td>
-                    <td><button class="btn-edit" onclick="editProduct(${p.id})">Edit</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">Hapus</button></td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = products.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>Rp ${p.price.toLocaleString('id-ID')}</td><td>${p.umkm_name}</td><td>${p.category_name}</td><td><button class="btn-edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button> <button class="btn-delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button></td></tr>`).join('');
         }
 
         function updateStats() {
@@ -166,12 +157,8 @@
                 contact: document.getElementById('productContact').value,
                 category_name: document.getElementById('productCategory').value
             };
-            if(id) {
-                const index = products.findIndex(p => p.id === parseInt(id));
-                products[index] = newProduct;
-            } else {
-                products.push(newProduct);
-            }
+            if(id) { const index = products.findIndex(p => p.id === parseInt(id)); products[index] = newProduct; } 
+            else { products.push(newProduct); }
             saveToLocalStorage();
             updateTable();
             updateStats();
@@ -180,12 +167,12 @@
         }
 
         function deleteProduct(id) {
-            if(confirm('Yakin hapus produk ini?')) {
+            if(confirm('Yakin ingin menghapus produk ini?')) {
                 products = products.filter(p => p.id !== id);
                 saveToLocalStorage();
                 updateTable();
                 updateStats();
-                alert('Produk dihapus!');
+                alert('Produk berhasil dihapus!');
             }
         }
 
