@@ -3,236 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin | UMKM Desa Depok</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Login Admin - UMKM Desa Depok</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0b3d0b 0%, #1a5e1a 50%, #2c8c2c 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Background pattern */
-        body::before {
-            content: "🏪";
-            position: absolute;
-            font-size: 400px;
-            opacity: 0.05;
-            bottom: -100px;
-            right: -100px;
-            pointer-events: none;
-        }
-        body::after {
-            content: "🌾";
-            position: absolute;
-            font-size: 350px;
-            opacity: 0.05;
-            top: -80px;
-            left: -80px;
-            pointer-events: none;
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            width: 440px;
-            max-width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            z-index: 10;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            background: linear-gradient(135deg, #1e4a1e, #0f2f0f);
-            padding: 35px 30px;
-            text-align: center;
-            color: white;
-        }
-        .login-header .icon {
-            font-size: 64px;
-            margin-bottom: 15px;
-            display: inline-block;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .login-header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .login-header p {
-            font-size: 14px;
-            opacity: 0.85;
-        }
-
-        .login-body {
-            padding: 35px 30px;
-        }
-
-        .input-group {
-            margin-bottom: 25px;
-            position: relative;
-        }
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-            font-size: 18px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 14px 15px 14px 48px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 15px;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: #2c5f2d;
-            box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.2);
-        }
-
-        .btn-login {
-            width: 100%;
-            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .alert {
-            padding: 12px 15px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-        }
-        .alert-error {
-            background: #fee2e2;
-            color: #b91c1c;
-            display: flex;
-            border-left: 4px solid #b91c1c;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .back-link a {
-            color: #2c5f2d;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            .login-body { padding: 25px 20px; }
-            .login-header { padding: 25px 20px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .login-card { background: white; border-radius: 32px; width: 400px; max-width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.3); overflow: hidden; }
+        .login-header { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 30px; text-align: center; }
+        .login-header h1 { font-size: 28px; }
+        .login-body { padding: 35px 30px; }
+        .input-group { margin-bottom: 25px; position: relative; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
+        .input-group input { width: 100%; padding: 14px 15px 14px 48px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 15px; }
+        .btn-login { width: 100%; background: #2c5f2d; color: white; padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; }
+        .alert { padding: 12px; border-radius: 14px; margin-bottom: 20px; display: none; background: #fee; color: #c33; }
+        .back-link { text-align: center; margin-top: 20px; }
+        .back-link a { color: #2c5f2d; text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="login-card">
-        <div class="login-header">
-            <div class="icon">🏪</div>
-            <h1>Admin Area</h1>
-            <p>Sistem Informasi Pemasaran UMKM Desa Depok</p>
-        </div>
+        <div class="login-header"><h1><i class="fas fa-lock"></i> Login Admin</h1><p>Sistem Informasi UMKM Desa Depok</p></div>
         <div class="login-body">
             <div id="alert" class="alert"></div>
             <form id="loginForm">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" placeholder="Username" autocomplete="off" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn-login">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
+                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="username" placeholder="Username" required></div>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="password" placeholder="Password" required></div>
+                <button type="submit" class="btn-login">Login</button>
             </form>
-            <div class="back-link">
-                <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
-            </div>
+            <div class="back-link"><a href="index.html">← Kembali ke Beranda</a></div>
         </div>
     </div>
-
     <script>
-        // Cek session existing
-        if (localStorage.getItem('adminLoggedIn') === 'true') {
-            window.location.href = "dashboard.html";
-        }
-
+        // Tidak ada redirect otomatis meskipun sudah login, tetap tampilkan form login.
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const alertDiv = document.getElementById('alert');
-
-            if (username === 'admin' && password === 'admin123') {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if (u === 'admin' && p === 'admin123') {
                 localStorage.setItem('adminLoggedIn', 'true');
-                localStorage.setItem('adminUsername', username);
-                localStorage.setItem('adminLoginTime', Date.now());
+                localStorage.setItem('adminUsername', u);
                 window.location.href = "dashboard.html";
             } else {
-                alertDiv.className = 'alert alert-error';
-                alertDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Username atau password salah!';
-                document.getElementById('password').value = '';
-                setTimeout(() => {
-                    alertDiv.className = 'alert';
-                }, 3000);
+                document.getElementById('alert').innerHTML = '<i class="fas fa-exclamation-circle"></i> Username atau password salah!';
+                document.getElementById('alert').style.display = 'block';
             }
         });
     </script>
