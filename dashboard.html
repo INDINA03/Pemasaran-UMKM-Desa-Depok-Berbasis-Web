@@ -23,7 +23,7 @@
         .stat-number { font-size: 2.5em; font-weight: 700; color: #2c5f2d; }
         .stat-label { color: #666; margin-top: 8px; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 25px; margin-top: 20px; }
-        .menu-card { background: white; padding: 30px; border-radius: 20px; text-align: center; text-decoration: none; color: #333; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .menu-card { background: white; padding: 30px; border-radius: 20px; text-align: center; text-decoration: none; color: #333; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: block; }
         .menu-card:hover { transform: translateY(-5px); background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; }
         .menu-card i { font-size: 3em; margin-bottom: 15px; display: block; }
         .menu-card h3 { margin-bottom: 10px; }
@@ -48,9 +48,7 @@
             <h2><i class="fas fa-user-shield"></i> Halo, <span id="adminName">Admin</span>!</h2>
             <p>Selamat datang di Dashboard Sistem Informasi Pemasaran UMKM Desa Depok, Kecamatan Kandeman, Kabupaten Batang.</p>
         </div>
-        <div class="stats-grid" id="statsGrid">
-            <!-- stat dinamis -->
-        </div>
+        <div class="stats-grid" id="statsGrid"></div>
         <h3><i class="fas fa-cog"></i> Menu Manajemen</h3>
         <div class="menu-grid">
             <a href="admin.html" class="menu-card">
@@ -79,15 +77,20 @@
         <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
     </div>
     <script>
-        // Cek login
-        if (!localStorage.getItem('adminLoggedIn') || localStorage.getItem('adminLoggedIn') !== 'true') {
-            window.location.href = "login.html";
-        }
-        // Tampilkan nama admin
-        const username = localStorage.getItem('adminUsername') || 'Admin';
-        document.getElementById('adminName').innerText = username;
+        // PENGECEKAN SESSION YANG STABIL
+        (function() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn');
+            if (isLoggedIn !== 'true') {
+                // Redirect ke login jika tidak ada session
+                window.location.href = "login.html";
+                return;
+            }
+            // Tampilkan nama admin
+            const username = localStorage.getItem('adminUsername') || 'Admin';
+            document.getElementById('adminName').innerText = username;
+        })();
 
-        // Ambil data produk dari localStorage
+        // Ambil data dari localStorage dan hitung statistik
         function loadStats() {
             const products = JSON.parse(localStorage.getItem('umkm_products')) || [];
             const umkmList = JSON.parse(localStorage.getItem('umkm_list')) || [];
@@ -95,15 +98,17 @@
             const totalUMKM = umkmList.length;
             const totalKategori = new Set(products.map(p => p.category_name)).size;
             const totalHarga = products.reduce((sum, p) => sum + (p.price || 0), 0);
-            document.getElementById('statsGrid').innerHTML = `
+            const statsHtml = `
                 <div class="stat-card"><div class="stat-number">${totalProduk}</div><div class="stat-label">Total Produk UMKM</div></div>
                 <div class="stat-card"><div class="stat-number">${totalUMKM}</div><div class="stat-label">Total Pelaku UMKM</div></div>
                 <div class="stat-card"><div class="stat-number">${totalKategori}</div><div class="stat-label">Kategori Produk</div></div>
                 <div class="stat-card"><div class="stat-number">Rp ${totalHarga.toLocaleString('id-ID')}</div><div class="stat-label">Total Nilai Produk</div></div>
             `;
+            document.getElementById('statsGrid').innerHTML = statsHtml;
         }
         loadStats();
 
+        // Logout
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('adminLoggedIn');
