@@ -36,14 +36,16 @@
         </div>
     </div>
     <script>
-        // Tidak ada redirect otomatis meskipun sudah login, tetap tampilkan form login.
+        // Tidak ada redirect otomatis. Form login selalu tampil meskipun sebelumnya sudah login.
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
             if (u === 'admin' && p === 'admin123') {
+                // Set session
                 localStorage.setItem('adminLoggedIn', 'true');
                 localStorage.setItem('adminUsername', u);
+                // Redirect ke dashboard setelah login sukses
                 window.location.href = "dashboard.html";
             } else {
                 document.getElementById('alert').innerHTML = '<i class="fas fa-exclamation-circle"></i> Username atau password salah!';
