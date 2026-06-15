@@ -17,15 +17,18 @@
         
         .nav-links {
             display: flex;
-            gap: 45px;          /* jarak antar menu lebih besar */
+            gap: 30px;
             align-items: center;
             flex-wrap: wrap;
         }
         .nav-links a {
+            display: inline-flex;
+            align-items: center;
             text-decoration: none;
             color: #333;
             font-weight: 500;
             transition: 0.3s;
+            line-height: 1;
             padding-bottom: 5px;
         }
         .nav-links a:hover { color: #2c5f2d; }
@@ -36,14 +39,16 @@
         }
         .btn-outline {
             border: 2px solid #2c5f2d;
-            padding: 8px 30px;    /* lebih lebar */
-            border-radius: 25px;
+            padding: 8px 22px;
+            border-radius: 40px;
             background: transparent;
-            margin-left: 15px;     /* jarak ekstra dari menu Kontak */
+            margin-left: 10px;
+            /* Pastikan tidak ada border-bottom tambahan dari class active */
+            border-bottom: 2px solid #2c5f2d;
         }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
+        /* Hilangkan padding-bottom yang mengganggu pada tombol */
         .nav-links a.btn-outline {
-            border-bottom: none !important;
             padding-bottom: 8px;
         }
         
@@ -75,7 +80,6 @@
             .search-form { flex-direction: column; }
             .product-grid { grid-template-columns: 1fr; }
             .nav-links { gap: 20px; justify-content: center; }
-            .btn-outline { margin-left: 0; padding: 8px 20px; }
         }
     </style>
 </head>
