@@ -14,7 +14,13 @@
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
-        .nav-links { display: flex; gap: 35px; align-items: center; flex-wrap: wrap; }
+        
+        .nav-links {
+            display: flex;
+            gap: 45px;          /* jarak antar menu lebih besar */
+            align-items: center;
+            flex-wrap: wrap;
+        }
         .nav-links a {
             text-decoration: none;
             color: #333;
@@ -30,17 +36,18 @@
         }
         .btn-outline {
             border: 2px solid #2c5f2d;
-            padding: 8px 22px;
+            padding: 8px 30px;    /* lebih lebar */
             border-radius: 25px;
             background: transparent;
-            margin-left: 10px; /* tambahan jarak khusus */
+            margin-left: 15px;     /* jarak ekstra dari menu Kontak */
         }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .nav-links a.btn-outline {
             border-bottom: none !important;
             padding-bottom: 8px;
         }
-        /* Hero dan lainnya (singkat) */
+        
+        /* Hero dan konten lainnya (sama seperti sebelumnya) */
         .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
         .hero h1 { font-size: 2em; margin-bottom: 15px; }
         .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
@@ -68,7 +75,7 @@
             .search-form { flex-direction: column; }
             .product-grid { grid-template-columns: 1fr; }
             .nav-links { gap: 20px; justify-content: center; }
-            .btn-outline { margin-left: 0; }
+            .btn-outline { margin-left: 0; padding: 8px 20px; }
         }
     </style>
 </head>
@@ -88,7 +95,7 @@
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
         </div>
     </nav>
-    <!-- konten hero dll sama seperti sebelumnya -->
+
     <section class="hero">
         <h1>Selamat Datang di Sistem Informasi Pemasaran UMKM Berbasis Website</h1>
         <div class="hero-stats">
@@ -97,6 +104,7 @@
             <div class="stat-item"><div class="stat-number" id="totalCategories">1</div><div>Kategori</div></div>
         </div>
     </section>
+
     <div class="container">
         <div class="search-section">
             <form class="search-form" id="searchForm">
@@ -107,10 +115,12 @@
         <div class="section-title"><div class="badge"><i class="fas fa-utensils"></i> Menu Pilihan</div><h2>Produk Kuliner UMKM Desa Depok</h2></div>
         <div class="product-grid" id="productGrid"></div>
     </div>
+
     <footer class="footer">
         <p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p>
         <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
     </footer>
+
     <script>
         let products = [
             { id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan kenyal.", price:15000, icon:"🍜", bgGradient:"linear-gradient(135deg, #ff9a9e, #fecfef)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
