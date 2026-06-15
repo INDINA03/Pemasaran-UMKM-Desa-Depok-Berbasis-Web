@@ -14,12 +14,21 @@
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
-        .nav-links { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         .nav-links a {
+            display: inline-flex;
+            align-items: center;
             text-decoration: none;
             color: #333;
             font-weight: 500;
             transition: 0.3s;
+            line-height: 1;
             padding-bottom: 5px;
         }
         .nav-links a:hover { color: #2c5f2d; }
@@ -31,14 +40,16 @@
         .btn-outline {
             border: 2px solid #2c5f2d;
             padding: 8px 22px;
-            border-radius: 25px;
+            border-radius: 40px;
             background: transparent;
+            margin-left: 10px;
+            border-bottom: 2px solid #2c5f2d;
         }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .nav-links a.btn-outline {
-            border-bottom: none !important;
             padding-bottom: 8px;
         }
+        
         .hero-small { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
         .hero-small h1 { font-size: 2.5em; margin-bottom: 15px; }
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
@@ -55,7 +66,11 @@
         .btn-submit { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 12px 30px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
-        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } .hero-small h1 { font-size: 1.5em; } .nav-links { gap: 15px; justify-content: center; } }
+        @media (max-width: 768px) { 
+            .contact-grid { grid-template-columns: 1fr; } 
+            .hero-small h1 { font-size: 1.5em; } 
+            .nav-links { gap: 20px; justify-content: center; }
+        }
     </style>
 </head>
 <body>
