@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang - UMKM Desa Depok</title>
+    <title>Tentang | UMKM Desa Depok</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -14,112 +14,54 @@
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
-        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; }
+        .nav-links { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: 0.3s;
+            padding-bottom: 5px;
+        }
         .nav-links a:hover { color: #2c5f2d; }
-        .nav-links .active { color: #2c5f2d; border-bottom: 2px solid #2c5f2d; padding-bottom: 5px; }
-        .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
+        .nav-links a.active {
+            color: #2c5f2d;
+            font-weight: 600;
+            border-bottom: 3px solid #2c5f2d;
+        }
+        .btn-outline {
+            border: 2px solid #2c5f2d;
+            padding: 8px 22px;
+            border-radius: 25px;
+            background: transparent;
+        }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
-        .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        .nav-links a.btn-outline {
+            border-bottom: none !important;
+            padding-bottom: 8px;
+        }
         .hero-small { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
         .hero-small h1 { font-size: 2.5em; margin-bottom: 15px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
         .about-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
-        .about-card h2 { color: #1a3b1a; margin: 25px 0 15px; font-size: 1.5rem; }
-        .about-card h2:first-of-type { margin-top: 0; }
+        .about-card h2 { color: #1a3b1a; margin: 25px 0 15px; }
         .about-card p { color: #555; line-height: 1.8; margin-bottom: 15px; }
-        
-        /* VISI MISI */
         .visi-misi { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
-        .visi-card, .misi-card { background: #f8f9fa; border-radius: 15px; padding: 25px; transition: 0.3s; }
-        .visi-card:hover, .misi-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-        .visi-card h3, .misi-card h3 { color: #2c5f2d; margin-bottom: 15px; font-size: 1.3rem; }
+        .visi-card, .misi-card { background: #f8f9fa; border-radius: 15px; padding: 25px; }
+        .visi-card h3, .misi-card h3 { color: #2c5f2d; margin-bottom: 15px; }
         .misi-card ul { padding-left: 20px; color: #555; line-height: 1.8; }
-        .misi-card li { margin-bottom: 8px; }
-        
-        /* ========== FEATURE GRID & CARD (YANG DIMINTA) ========== */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            margin: 30px 0;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 1px solid #eef2f0;
-            cursor: pointer;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 35px rgba(44, 95, 45, 0.12);
-            border-color: rgba(44, 95, 45, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 55px;
-            margin-bottom: 18px;
-            display: inline-block;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.2rem;
-            color: #2c5f2d;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        
-        .feature-card p {
-            color: #666;
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-        
-        /* TIM PENGELOLA */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 20px;
-        }
-        .team-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .team-card:hover { transform: translateY(-5px); }
-        .team-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 35px; }
-        .team-card h4 { color: #1a3b1a; margin-bottom: 5px; }
-        .team-card p { font-size: 0.85rem; color: #888; }
-        
+        .feature-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 25px; margin: 30px 0; }
+        .feature-card { background: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-icon { font-size: 50px; margin-bottom: 15px; }
+        .feature-card h3 { color: #2c5f2d; margin-bottom: 10px; }
+        .feature-card p { color: #666; font-size: 0.9rem; }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
-        .footer-bottom { opacity: 0.7; font-size: 0.85rem; }
-        
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .team-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) { 
-            .hero-small h1 { font-size: 1.8em; } 
-            .visi-misi { grid-template-columns: 1fr; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .team-grid { grid-template-columns: 1fr; }
-            .about-card { padding: 25px; }
-        }
+        @media (max-width: 768px) { .feature-grid { grid-template-columns: 1fr; } .visi-misi { grid-template-columns: 1fr; } .hero-small h1 { font-size: 1.5em; } .nav-links { gap: 15px; justify-content: center; } }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo" onclick="location.href='index.php'">
+        <div class="logo" onclick="location.href='index.html'">
             <div class="logo-icon">🏪</div>
             <div class="logo-text">
                 <h2>UMKM Desa Depok</h2>
@@ -127,11 +69,10 @@
             </div>
         </div>
         <div class="nav-links">
-              <a href="index.html">Beranda</a>
-              <a href="tentang.html" class="active">Tentang</a>
-              <a href="kontak.html">Kontak</a>
-              <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-              <a href="dashboard.html" class="btn-fill"><i class="fas fa-chart-line"></i> Dashboard</a>
+            <a href="index.html">Beranda</a>
+            <a href="tentang.html" class="active">Tentang</a>
+            <a href="kontak.html">Kontak</a>
+            <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
         </div>
     </nav>
 
@@ -142,88 +83,37 @@
 
     <div class="container">
         <div class="about-card">
-            <!-- PROFIL DESA -->
-            <h2><i class="fas fa-map-marker-alt" style="color: #2c5f2d; margin-right: 10px;"></i> Profil Desa Depok</h2>
+            <h2><i class="fas fa-map-marker-alt"></i> Profil Desa Depok</h2>
             <p>Desa Depok adalah salah satu desa yang terletak di Kecamatan Kandeman, Kabupaten Batang, Jawa Tengah. Desa ini memiliki potensi besar di bidang kuliner, kerajinan tangan, dan produk-produk unggulan lainnya yang dikelola oleh warga setempat.</p>
 
-            <!-- APA ITU UMKM -->
-            <h2><i class="fas fa-question-circle" style="color: #2c5f2d; margin-right: 10px;"></i> Apa itu UMKM Desa Depok?</h2>
+            <h2><i class="fas fa-question-circle"></i> Apa itu UMKM Desa Depok?</h2>
             <p>UMKM Desa Depok adalah platform digital yang menghubungkan produk unggulan warga Desa Depok, Kecamatan Kandeman, Kabupaten Batang dengan pembeli. Kami membantu pelaku UMKM lokal memasarkan produknya secara online agar lebih dikenal masyarakat luas.</p>
             <p>Dengan website ini, Anda dapat melihat berbagai produk kuliner, kerajinan tangan, dan produk unggulan lainnya yang dibuat dengan penuh dedikasi oleh warga Desa Depok.</p>
-            
-            <!-- TUJUAN WEBSITE -->
-            <h2><i class="fas fa-bullseye" style="color: #2c5f2d; margin-right: 10px;"></i> Tujuan Website</h2>
+
+            <h2><i class="fas fa-bullseye"></i> Tujuan Website</h2>
             <p>Website ini dibuat untuk membantu pelaku UMKM di Desa Depok dalam memasarkan produknya secara online. Dengan adanya platform ini, diharapkan produk-produk unggulan Desa Depok dapat dikenal lebih luas oleh masyarakat Kabupaten Batang dan sekitarnya.</p>
-            
-            <!-- VISI & MISI -->
+
             <div class="visi-misi">
-                <div class="visi-card">
-                    <h3>✨ Visi</h3>
-                    <p>Menjadikan Desa Depok sebagai sentra UMKM unggulan di Kabupaten Batang yang mandiri, kreatif, dan berdaya saing tinggi.</p>
-                </div>
-                <div class="misi-card">
-                    <h3>📋 Misi</h3>
-                    <ul>
-                        <li>Memasarkan produk UMKM Desa Depok secara digital</li>
-                        <li>Memberdayakan pelaku UMKM lokal melalui pelatihan dan pendampingan</li>
-                        <li>Meningkatkan kesejahteraan warga Desa Depok melalui sektor UMKM</li>
-                        <li>Melestarikan produk khas dan kerajinan tradisional Desa Depok</li>
-                    </ul>
-                </div>
+                <div class="visi-card"><h3>✨ Visi</h3><p>Menjadikan Desa Depok sebagai sentra UMKM unggulan di Kabupaten Batang yang mandiri, kreatif, dan berdaya saing tinggi.</p></div>
+                <div class="misi-card"><h3>📋 Misi</h3><ul><li>Memasarkan produk UMKM Desa Depok secara digital</li><li>Memberdayakan pelaku UMKM lokal melalui pelatihan dan pendampingan</li><li>Meningkatkan kesejahteraan warga Desa Depok melalui sektor UMKM</li><li>Melestarikan produk khas dan kerajinan tradisional Desa Depok</li></ul></div>
             </div>
 
-            <!-- KEUNGGULAN (FEATURE GRID) - INI YANG DITANYAKAN -->
-            <h2><i class="fas fa-star" style="color: #2c5f2d; margin-right: 10px;"></i> Kenapa Memilih UMKM Desa Depok?</h2>
+            <h2><i class="fas fa-star"></i> Kenapa Memilih UMKM Desa Depok?</h2>
             <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🍜</div>
-                    <h3>Kuliner Lezat</h3>
-                    <p>Bakso kenyal, mie ayam ceker empuk, es teh segar, dan aneka makanan khas Depok.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🤝</div>
-                    <h3>Langsung dari UMKM</h3>
-                    <p>Produk langsung dari tangan-tangan terampil warga Desa Depok tanpa perantara.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚚</div>
-                    <h3>Pesan Mudah</h3>
-                    <p>Pesan langsung via WhatsApp, tersedia layanan antar untuk area Kandeman dan sekitarnya.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⭐</div>
-                    <h3>Harga Terjangkau</h3>
-                    <p>Harga bersahabat dengan kualitas terbaik, cocok untuk keluarga.</p>
-                </div>
+                <div class="feature-card"><div class="feature-icon">🍜</div><h3>Kuliner Lezat</h3><p>Bakso kenyal, mie ayam ceker empuk, es teh segar, dan aneka makanan khas Depok.</p></div>
+                <div class="feature-card"><div class="feature-icon">🤝</div><h3>Langsung dari UMKM</h3><p>Produk langsung dari tangan-tangan terampil warga Desa Depok tanpa perantara.</p></div>
+                <div class="feature-card"><div class="feature-icon">🚚</div><h3>Pesan Mudah</h3><p>Pesan langsung via WhatsApp, tersedia layanan antar untuk area Kandeman dan sekitarnya.</p></div>
+                <div class="feature-card"><div class="feature-icon">⭐</div><h3>Harga Terjangkau</h3><p>Harga bersahabat dengan kualitas terbaik, cocok untuk keluarga.</p></div>
             </div>
 
-            <!-- TIM PENGELOLA -->
-            <h2><i class="fas fa-users" style="color: #2c5f2d; margin-right: 10px;"></i> Tim Pengelola</h2>
+            <h2><i class="fas fa-users"></i> Tim Pengelola</h2>
             <p>Sistem Informasi Pemasaran UMKM Desa Depok dikelola oleh Pemerintah Desa Depok bersama dengan para pelaku UMKM setempat. Kami berkomitmen untuk terus mengembangkan platform ini demi kemajuan ekonomi desa.</p>
-            
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fas fa-user-tie"></i></div>
-                    <h4>Kepala Desa Depok</h4>
-                    <p>Pengawas & Pembina</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fas fa-chalkboard-user"></i></div>
-                    <h4>Tim Pengelola</h4>
-                    <p>Admin & Operator Website</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fas fa-store"></i></div>
-                    <h4>Pelaku UMKM</h4>
-                    <p>Pengrajin & Produsen</p>
-                </div>
-            </div>
         </div>
     </div>
 
     <footer class="footer">
         <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
-        <p style="margin-top: 10px; font-size: 0.8em;"><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
+        <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
     </footer>
 </body>
 </html>
