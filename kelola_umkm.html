@@ -103,93 +103,13 @@
     </div>
 
     <script>
-        let products = [];
-        const gradients = ["linear-gradient(135deg, #ff9a9e, #fecfef)","linear-gradient(135deg, #fa709a, #fee140)","linear-gradient(135deg, #f6d365, #fda085)","linear-gradient(135deg, #a8edea, #fed6e3)","linear-gradient(135deg, #ffecd2, #fcb69f)"];
-
-        function loadProducts() {
-            const stored = localStorage.getItem('umkm_products');
-            if(stored) products = JSON.parse(stored);
-            else {
-                products = [
-                    {id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan kenyal dan lembut.", price:15000, icon:"🍜", bgGradient:gradients[0], umkm_name:"Bakso Mak Siti Depok", contact:"0857-4871-0963", category_name:"Makanan & Minuman"},
-                    {id:2, name:"Bakso Urat Super Kenyal", description:"Bakso urat spesial dengan tekstur kenyal.", price:20000, icon:"🥩", bgGradient:gradients[1], umkm_name:"Bakso Mak Siti Depok", contact:"0857-4871-0963", category_name:"Makanan & Minuman"},
-                    {id:3, name:"Bakso Jumbo Raja Depok", description:"Bakso jumbo 3x lipat dari ukuran biasa.", price:35000, icon:"🍲", bgGradient:gradients[2], umkm_name:"Bakso Mak Siti Depok", contact:"0857-4871-0963", category_name:"Makanan & Minuman"},
-                    {id:4, name:"Mie Ayam Ceker Depok Gurih", description:"Mie ayam dengan topping ceker ayam empuk.", price:18000, icon:"🍗", bgGradient:gradients[3], umkm_name:"Mie Ayam Ceker Mak Siti", contact:"0857-4871-0963", category_name:"Makanan & Minuman"},
-                    {id:5, name:"Es Teh Manis Depok Segar", description:"Es teh manis dengan gula aren asli.", price:3000, icon:"🧋", bgGradient:gradients[4], umkm_name:"UMKM Minuman Depok Segar", contact:"0857-4871-0963", category_name:"Makanan & Minuman"}
-                ];
-                localStorage.setItem('umkm_products', JSON.stringify(products));
-            }
-            updateTable();
+    function checkLogin() {
+        const isLoggedIn = localStorage.getItem('admin_logged_in');
+        if(isLoggedIn !== 'true') {
+            window.location.href = 'login.html';
         }
-
-        function saveToLocalStorage() { localStorage.setItem('umkm_products', JSON.stringify(products)); }
-        function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-
-        function updateTable() {
-            const tbody = document.getElementById('productTableBody');
-            if(products.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px;">Belum ada produk. Silakan tambah produk baru.</td></tr>'; return; }
-            tbody.innerHTML = products.map(p => `<tr><td>${p.id}</td><td style="font-size:28px;">${p.icon || '🍜'}</td><td><strong>${escapeHtml(p.name)}</strong><br><small style="color:#666;">${escapeHtml(p.description.substring(0,50))}...</small></td><td style="color:#2c5f2d; font-weight:600;">Rp ${p.price.toLocaleString('id-ID')}</td><td>${escapeHtml(p.umkm_name)}</td><td><span style="background:#e8f5e9; padding:3px 10px; border-radius:15px;">${escapeHtml(p.category_name)}</span></td><td><button class="btn-edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i> Edit</button> <button class="btn-delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i> Hapus</button></td></tr>`).join('');
-        }
-
-        function openAddModal() {
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Produk Baru';
-            document.getElementById('productId').value = '';
-            document.getElementById('productName').value = '';
-            document.getElementById('productDesc').value = '';
-            document.getElementById('productPrice').value = '';
-            document.getElementById('productIcon').value = '🍜';
-            document.getElementById('productUmkm').value = '';
-            document.getElementById('productContact').value = '';
-            document.getElementById('productCategory').value = 'Makanan & Minuman';
-            document.getElementById('productModal').style.display = 'flex';
-        }
-
-        function editProduct(id) {
-            const p = products.find(x => x.id === id);
-            if(p) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Produk';
-                document.getElementById('productId').value = p.id;
-                document.getElementById('productName').value = p.name;
-                document.getElementById('productDesc').value = p.description;
-                document.getElementById('productPrice').value = p.price;
-                document.getElementById('productIcon').value = p.icon;
-                document.getElementById('productUmkm').value = p.umkm_name;
-                document.getElementById('productContact').value = p.contact;
-                document.getElementById('productCategory').value = p.category_name;
-                document.getElementById('productModal').style.display = 'flex';
-            }
-        }
-
-        function saveProduct() {
-            const id = document.getElementById('productId').value;
-            const newProduct = {
-                id: id ? parseInt(id) : Date.now(),
-                name: document.getElementById('productName').value,
-                description: document.getElementById('productDesc').value,
-                price: parseInt(document.getElementById('productPrice').value),
-                icon: document.getElementById('productIcon').value || '🍜',
-                bgGradient: gradients[Math.floor(Math.random()*gradients.length)],
-                umkm_name: document.getElementById('productUmkm').value,
-                contact: document.getElementById('productContact').value,
-                category_name: document.getElementById('productCategory').value
-            };
-            if(id) { const idx = products.findIndex(p => p.id === parseInt(id)); products[idx] = newProduct; }
-            else { products.push(newProduct); }
-            saveToLocalStorage(); updateTable(); closeModal(); alert('Produk berhasil disimpan!');
-        }
-
-        function deleteProduct(id) {
-            if(confirm('Yakin ingin menghapus produk ini?')) {
-                products = products.filter(p => p.id !== id);
-                saveToLocalStorage(); updateTable(); alert('Produk berhasil dihapus!');
-            }
-        }
-
-        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
-        window.onclick = function(e) { if(e.target === document.getElementById('productModal')) closeModal(); };
-        function checkLogin() { if(localStorage.getItem('admin_logged_in') !== 'true') window.location.href = 'login.html'; }
-        checkLogin();
-        loadProducts();
+    }
+    checkLogin();
     </script>
 </body>
 </html>
