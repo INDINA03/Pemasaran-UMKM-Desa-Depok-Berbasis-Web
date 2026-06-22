@@ -44,32 +44,13 @@
     </div>
     <div class="footer"><p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok</p></div>
     <script>
-        // Jika belum login, redirect ke login.html
-        if (localStorage.getItem('adminLoggedIn') !== 'true') {
-            window.location.href = "login.html";
-        }
-        document.getElementById('adminName').innerText = localStorage.getItem('adminUsername') || 'Admin';
-        function loadStats() {
-            const products = JSON.parse(localStorage.getItem('umkm_products')) || [];
-            const umkmList = JSON.parse(localStorage.getItem('umkm_list')) || [];
-            const totalProduk = products.length;
-            const totalUMKM = umkmList.length;
-            const totalKategori = new Set(products.map(p=>p.category_name)).size;
-            const totalHarga = products.reduce((s,p)=>s+(p.price||0),0);
-            document.getElementById('statsGrid').innerHTML = `
-                <div class="stat-card"><div class="stat-number">${totalProduk}</div><div>Total Produk</div></div>
-                <div class="stat-card"><div class="stat-number">${totalUMKM}</div><div>Total UMKM</div></div>
-                <div class="stat-card"><div class="stat-number">${totalKategori}</div><div>Kategori</div></div>
-                <div class="stat-card"><div class="stat-number">Rp ${totalHarga.toLocaleString('id-ID')}</div><div>Total Nilai</div></div>
-            `;
-        }
-        loadStats();
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminUsername');
-            window.location.href = "login.html";
-        });
+    function checkLogin() {
+    const isLoggedIn = localStorage.getItem('admin_logged_in');
+    if(isLoggedIn !== 'true') {
+        window.location.href = 'login.html';
+    }
+    }
+    checkLogin();
     </script>
 </body>
 </html>
