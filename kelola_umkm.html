@@ -105,11 +105,16 @@
     <script>
     function checkLogin() {
         const isLoggedIn = localStorage.getItem('admin_logged_in');
-        if(isLoggedIn !== 'true') {
+        if (isLoggedIn !== 'true') {
             window.location.href = 'login.html';
         }
     }
     checkLogin();
+
+    function logout() {
+        localStorage.removeItem('admin_logged_in');
+        window.location.href = 'login.html';
+    }
     </script>
 </body>
 </html>
