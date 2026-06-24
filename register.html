@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* ... (sama seperti sebelumnya) ... */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .register-container { background: white; border-radius: 20px; padding: 40px; width: 90%; max-width: 450px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
@@ -51,8 +50,6 @@
         .terms input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: #2c5f2d; }
         .terms a { color: #2c5f2d; text-decoration: none; font-weight: 500; }
         .terms a:hover { text-decoration: underline; }
-        .info-box { background: #e8f5e9; padding: 12px 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #2c5f2d; font-size: 0.85em; color: #1a3b1a; }
-        .info-box i { color: #2c5f2d; margin-right: 8px; }
         @media (max-width: 480px) { .register-container { padding: 25px; } }
     </style>
 </head>
@@ -64,11 +61,7 @@
             <p>Buat akun untuk mengelola UMKM Desa Depok</p>
         </div>
 
-        <!-- INFO AKUN DEFAULT -->
-        <div class="info-box">
-            <i class="fas fa-info-circle"></i>
-            <strong>Akun Default:</strong> Username: <strong>admin</strong> | Password: <strong>admin123</strong>
-        </div>
+        <!-- INFO BOX SUDAH DIHAPUS -->
 
         <div id="alert" class="alert"></div>
 
@@ -137,7 +130,7 @@
                     fullname: 'Administrator Desa Depok',
                     email: 'admin@desadepok.id',
                     phone: '08123456789',
-                    password: 'admin123', // 8 karakter
+                    password: 'admin123',
                     registeredAt: new Date().toISOString(),
                     role: 'admin',
                     isDefault: true
