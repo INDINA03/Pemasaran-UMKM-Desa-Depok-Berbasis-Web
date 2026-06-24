@@ -7,223 +7,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* ... (sama seperti sebelumnya) ... */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .register-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .register-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .register-icon {
-            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            color: white;
-            font-size: 30px;
-        }
-        .register-header h1 {
-            color: #2c5f2d;
-            font-size: 1.5em;
-        }
-        .register-header p {
-            color: #666;
-            font-size: 0.9em;
-        }
-        .form-group {
-            margin-bottom: 18px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #333;
-            font-weight: 500;
-            font-size: 0.9em;
-        }
-        .form-group label i {
-            margin-right: 8px;
-            color: #2c5f2d;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-family: inherit;
-            transition: 0.3s;
-            font-size: 14px;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: #2c5f2d;
-            box-shadow: 0 0 0 3px rgba(44,95,45,0.1);
-        }
-        .form-group input.error {
-            border-color: #c62828;
-        }
-        .form-group input.success {
-            border-color: #2c5f2d;
-        }
-        .form-group .hint {
-            display: block;
-            font-size: 0.75em;
-            color: #888;
-            margin-top: 4px;
-        }
-        .form-group .error-text {
-            display: none;
-            font-size: 0.8em;
-            color: #c62828;
-            margin-top: 4px;
-        }
-        .form-group .error-text.show {
-            display: block;
-        }
-        .btn-register {
-            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
-            color: white;
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(44,95,45,0.3);
-        }
-        .btn-register:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .alert {
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            font-size: 0.9em;
-        }
-        .alert.error {
-            background: #ffebee;
-            color: #c62828;
-            display: block;
-            border-left: 4px solid #c62828;
-        }
-        .alert.success {
-            background: #e8f5e9;
-            color: #2c5f2d;
-            display: block;
-            border-left: 4px solid #2c5f2d;
-        }
-        .alert i {
-            margin-right: 8px;
-        }
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .back-link a {
-            color: #2c5f2d;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-        .login-link {
-            text-align: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        .login-link a {
-            color: #2c5f2d;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-        .password-strength {
-            height: 4px;
-            border-radius: 4px;
-            margin-top: 6px;
-            background: #e0e0e0;
-            transition: 0.3s;
-            overflow: hidden;
-        }
-        .password-strength .bar {
-            height: 100%;
-            width: 0%;
-            transition: 0.3s;
-            border-radius: 4px;
-        }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .register-container { background: white; border-radius: 20px; padding: 40px; width: 90%; max-width: 450px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .register-header { text-align: center; margin-bottom: 30px; }
+        .register-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 30px; }
+        .register-header h1 { color: #2c5f2d; font-size: 1.5em; }
+        .register-header p { color: #666; font-size: 0.9em; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #333; font-weight: 500; font-size: 0.9em; }
+        .form-group label i { margin-right: 8px; color: #2c5f2d; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-family: inherit; transition: 0.3s; font-size: 14px; }
+        .form-group input:focus { outline: none; border-color: #2c5f2d; box-shadow: 0 0 0 3px rgba(44,95,45,0.1); }
+        .form-group input.error { border-color: #c62828; }
+        .form-group input.success { border-color: #2c5f2d; }
+        .form-group .hint { display: block; font-size: 0.75em; color: #888; margin-top: 4px; }
+        .form-group .error-text { display: none; font-size: 0.8em; color: #c62828; margin-top: 4px; }
+        .form-group .error-text.show { display: block; }
+        .btn-register { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-register:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
+        .btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .alert { padding: 12px 15px; border-radius: 10px; margin-bottom: 20px; display: none; font-size: 0.9em; }
+        .alert.error { background: #ffebee; color: #c62828; display: block; border-left: 4px solid #c62828; }
+        .alert.success { background: #e8f5e9; color: #2c5f2d; display: block; border-left: 4px solid #2c5f2d; }
+        .alert i { margin-right: 8px; }
+        .back-link { text-align: center; margin-top: 20px; }
+        .back-link a { color: #2c5f2d; text-decoration: none; font-size: 0.9em; }
+        .back-link a:hover { text-decoration: underline; }
+        .login-link { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
+        .login-link a { color: #2c5f2d; text-decoration: none; font-weight: 600; }
+        .login-link a:hover { text-decoration: underline; }
+        .password-strength { height: 4px; border-radius: 4px; margin-top: 6px; background: #e0e0e0; transition: 0.3s; overflow: hidden; }
+        .password-strength .bar { height: 100%; width: 0%; transition: 0.3s; border-radius: 4px; }
         .password-strength .bar.weak { width: 30%; background: #c62828; }
         .password-strength .bar.medium { width: 60%; background: #f9a825; }
         .password-strength .bar.strong { width: 100%; background: #2c5f2d; }
-        .strength-text {
-            font-size: 0.75em;
-            margin-top: 3px;
-            display: block;
-        }
+        .strength-text { font-size: 0.75em; margin-top: 3px; display: block; }
         .strength-text.weak { color: #c62828; }
         .strength-text.medium { color: #f9a825; }
         .strength-text.strong { color: #2c5f2d; }
-
-        /* Syarat & Ketentuan */
-        .terms {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin: 15px 0;
-            font-size: 0.85em;
-            color: #555;
-        }
-        .terms input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            cursor: pointer;
-            accent-color: #2c5f2d;
-        }
-        .terms a {
-            color: #2c5f2d;
-            text-decoration: none;
-            font-weight: 500;
-        }
+        .terms { display: flex; align-items: flex-start; gap: 10px; margin: 15px 0; font-size: 0.85em; color: #555; }
+        .terms input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; accent-color: #2c5f2d; }
+        .terms a { color: #2c5f2d; text-decoration: none; font-weight: 500; }
         .terms a:hover { text-decoration: underline; }
-
-        @media (max-width: 480px) {
-            .register-container { padding: 25px; }
-        }
+        .info-box { background: #e8f5e9; padding: 12px 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #2c5f2d; font-size: 0.85em; color: #1a3b1a; }
+        .info-box i { color: #2c5f2d; margin-right: 8px; }
+        @media (max-width: 480px) { .register-container { padding: 25px; } }
     </style>
 </head>
 <body>
-
     <div class="register-container">
         <div class="register-header">
             <div class="register-icon"><i class="fas fa-user-plus"></i></div>
@@ -231,82 +64,114 @@
             <p>Buat akun untuk mengelola UMKM Desa Depok</p>
         </div>
 
-        <!-- Alert untuk pesan -->
+        <!-- INFO AKUN DEFAULT -->
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <strong>Akun Default:</strong> Username: <strong>admin</strong> | Password: <strong>admin123</strong>
+        </div>
+
         <div id="alert" class="alert"></div>
 
-        <form id="registerForm" novalidate>
-            <!-- Username -->
+        <form id="registerForm" novalidate autocomplete="off">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Username</label>
-                <input type="text" id="username" placeholder="Masukkan username" minlength="3" required>
+                <input type="text" id="username" placeholder="Masukkan username" minlength="3" required autocomplete="off">
                 <span class="hint">Minimal 3 karakter</span>
                 <span class="error-text" id="usernameError">Username minimal 3 karakter</span>
             </div>
-
-            <!-- Nama Lengkap (TAMBAHAN) -->
             <div class="form-group">
                 <label><i class="fas fa-id-card"></i> Nama Lengkap</label>
-                <input type="text" id="fullname" placeholder="Masukkan nama lengkap" required>
+                <input type="text" id="fullname" placeholder="Masukkan nama lengkap" required autocomplete="off">
                 <span class="hint">Nama lengkap untuk admin</span>
             </div>
-
-            <!-- Email (TAMBAHAN) -->
             <div class="form-group">
                 <label><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="email" placeholder="Masukkan email aktif" required>
+                <input type="email" id="email" placeholder="Masukkan email aktif" required autocomplete="off">
                 <span class="hint">Gunakan email yang aktif untuk verifikasi</span>
                 <span class="error-text" id="emailError">Masukkan email yang valid</span>
             </div>
-
-            <!-- No HP (TAMBAHAN) -->
             <div class="form-group">
                 <label><i class="fas fa-phone"></i> Nomor HP</label>
-                <input type="tel" id="phone" placeholder="Masukkan nomor HP" required>
+                <input type="tel" id="phone" placeholder="Masukkan nomor HP" required autocomplete="off">
                 <span class="hint">Contoh: 08123456789</span>
             </div>
-
-            <!-- Password -->
             <div class="form-group">
                 <label><i class="fas fa-lock"></i> Password</label>
-                <input type="password" id="password" placeholder="Masukkan password" minlength="6" required>
+                <input type="password" id="password" placeholder="Masukkan password" minlength="6" required autocomplete="new-password">
                 <span class="hint">Minimal 6 karakter (huruf & angka)</span>
-                <div class="password-strength">
-                    <div class="bar" id="strengthBar"></div>
-                </div>
+                <div class="password-strength"><div class="bar" id="strengthBar"></div></div>
                 <span class="strength-text" id="strengthText"></span>
                 <span class="error-text" id="passwordError">Password minimal 6 karakter</span>
             </div>
-
-            <!-- Konfirmasi Password -->
             <div class="form-group">
                 <label><i class="fas fa-check-circle"></i> Konfirmasi Password</label>
-                <input type="password" id="confirmPassword" placeholder="Ulangi password" required>
+                <input type="password" id="confirmPassword" placeholder="Ulangi password" required autocomplete="off">
                 <span class="error-text" id="confirmError">Password tidak cocok</span>
             </div>
-
-            <!-- Syarat & Ketentuan (TAMBAHAN) -->
             <div class="terms">
                 <input type="checkbox" id="termsCheckbox" required>
                 <label for="termsCheckbox" style="font-weight: normal; cursor: pointer;">
                     Saya menyetujui <a href="#" onclick="alert('Syarat & Ketentuan akan menyusul'); return false;">Syarat & Ketentuan</a> dan <a href="#" onclick="alert('Kebijakan Privasi akan menyusul'); return false;">Kebijakan Privasi</a>
                 </label>
             </div>
-
-            <button type="submit" class="btn-register" id="registerBtn">
-                <i class="fas fa-user-plus"></i> Daftar
-            </button>
+            <button type="submit" class="btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> Daftar</button>
         </form>
-
-        <div class="back-link">
-            <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
-        </div>
-        <div class="login-link">
-            <i class="fas fa-sign-in-alt"></i> Sudah punya akun? <a href="login.html">Login di sini</a>
-        </div>
+        <div class="back-link"><a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a></div>
+        <div class="login-link"><i class="fas fa-sign-in-alt"></i> Sudah punya akun? <a href="login.html">Login di sini</a></div>
     </div>
 
     <script>
-        // === ELEMEN ===
+        // ============================================
+        // 1. BUAT AKUN ADMIN DEFAULT (HANYA PERTAMA)
+        // ============================================
+        function createDefaultAdmin() {
+            const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
+            
+            // Cek apakah akun admin sudah ada
+            const adminExists = users.some(u => u.username === 'admin');
+            
+            if (!adminExists) {
+                // Buat akun admin default
+                users.push({
+                    username: 'admin',
+                    fullname: 'Administrator Desa Depok',
+                    email: 'admin@desadepok.id',
+                    phone: '08123456789',
+                    password: 'admin123', // 8 karakter
+                    registeredAt: new Date().toISOString(),
+                    role: 'admin',
+                    isDefault: true
+                });
+                localStorage.setItem('umkm_users', JSON.stringify(users));
+                console.log('✅ Akun admin default berhasil dibuat!');
+                console.log('📝 Username: admin | Password: admin123');
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        createDefaultAdmin();
+
+        // ============================================
+        // 2. RESET FORM AGAR KOSONG (TIDAK AUTOFILL)
+        // ============================================
+        window.addEventListener('load', function() {
+            // Reset semua input di form
+            document.getElementById('registerForm').reset();
+            
+            // Hapus semua nilai input secara paksa
+            document.querySelectorAll('#registerForm input').forEach(input => {
+                input.value = '';
+                input.classList.remove('success', 'error');
+            });
+            
+            // Reset indikator password
+            document.getElementById('strengthBar').className = 'bar';
+            document.getElementById('strengthText').textContent = '';
+        });
+
+        // ============================================
+        // 3. ELEMEN
+        // ============================================
         const form = document.getElementById('registerForm');
         const username = document.getElementById('username');
         const fullname = document.getElementById('fullname');
@@ -316,20 +181,17 @@
         const confirmPassword = document.getElementById('confirmPassword');
         const termsCheckbox = document.getElementById('termsCheckbox');
         const alertDiv = document.getElementById('alert');
-        const registerBtn = document.getElementById('registerBtn');
 
-        // === FUNGSI VALIDASI ===
-
-        // Validasi Username
+        // ============================================
+        // 4. VALIDASI REAL-TIME
+        // ============================================
         username.addEventListener('input', function() {
             const error = document.getElementById('usernameError');
             if (this.value.length < 3 && this.value.length > 0) {
-                this.classList.add('error');
-                this.classList.remove('success');
+                this.classList.add('error'); this.classList.remove('success');
                 error.classList.add('show');
             } else if (this.value.length >= 3) {
-                this.classList.remove('error');
-                this.classList.add('success');
+                this.classList.remove('error'); this.classList.add('success');
                 error.classList.remove('show');
             } else {
                 this.classList.remove('error', 'success');
@@ -337,17 +199,14 @@
             }
         });
 
-        // Validasi Email
         email.addEventListener('input', function() {
             const error = document.getElementById('emailError');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (this.value.length > 0 && !emailRegex.test(this.value)) {
-                this.classList.add('error');
-                this.classList.remove('success');
+                this.classList.add('error'); this.classList.remove('success');
                 error.classList.add('show');
             } else if (this.value.length > 0 && emailRegex.test(this.value)) {
-                this.classList.remove('error');
-                this.classList.add('success');
+                this.classList.remove('error'); this.classList.add('success');
                 error.classList.remove('show');
             } else {
                 this.classList.remove('error', 'success');
@@ -355,26 +214,22 @@
             }
         });
 
-        // Validasi Password & Kekuatan Password
         password.addEventListener('input', function() {
             const error = document.getElementById('passwordError');
             const bar = document.getElementById('strengthBar');
             const text = document.getElementById('strengthText');
 
             if (this.value.length > 0 && this.value.length < 6) {
-                this.classList.add('error');
-                this.classList.remove('success');
+                this.classList.add('error'); this.classList.remove('success');
                 error.classList.add('show');
             } else if (this.value.length >= 6) {
-                this.classList.remove('error');
-                this.classList.add('success');
+                this.classList.remove('error'); this.classList.add('success');
                 error.classList.remove('show');
             } else {
                 this.classList.remove('error', 'success');
                 error.classList.remove('show');
             }
 
-            // Hitung kekuatan password
             let strength = 0;
             if (this.value.length >= 6) strength++;
             if (this.value.length >= 10) strength++;
@@ -404,16 +259,13 @@
             }
         });
 
-        // Validasi Konfirmasi Password
         confirmPassword.addEventListener('input', function() {
             const error = document.getElementById('confirmError');
             if (this.value.length > 0 && this.value !== password.value) {
-                this.classList.add('error');
-                this.classList.remove('success');
+                this.classList.add('error'); this.classList.remove('success');
                 error.classList.add('show');
             } else if (this.value.length > 0 && this.value === password.value) {
-                this.classList.remove('error');
-                this.classList.add('success');
+                this.classList.remove('error'); this.classList.add('success');
                 error.classList.remove('show');
             } else {
                 this.classList.remove('error', 'success');
@@ -421,27 +273,27 @@
             }
         });
 
-        // === CEK USERNAME DUPLIKAT ===
+        // ============================================
+        // 5. CEK DUPLIKAT
+        // ============================================
         function isUsernameTaken(usernameValue) {
             const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
             return users.some(u => u.username.toLowerCase() === usernameValue.toLowerCase());
         }
 
-        // === CEK EMAIL DUPLIKAT ===
         function isEmailTaken(emailValue) {
             const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
             return users.some(u => u.email && u.email.toLowerCase() === emailValue.toLowerCase());
         }
 
-        // === SUBMIT FORM ===
+        // ============================================
+        // 6. SUBMIT FORM
+        // ============================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // Reset alert
             alertDiv.className = 'alert';
             alertDiv.style.display = 'none';
 
-            // Ambil nilai
             const usernameVal = username.value.trim();
             const fullnameVal = fullname.value.trim();
             const emailVal = email.value.trim();
@@ -449,78 +301,56 @@
             const passwordVal = password.value;
             const confirmVal = confirmPassword.value;
 
-            // === VALIDASI LENGKAP ===
-
-            // 1. Cek username kosong / pendek
             if (usernameVal.length < 3) {
                 showAlert('error', 'Username minimal 3 karakter!');
                 username.focus();
                 return;
             }
-
-            // 2. Cek username sudah terdaftar
             if (isUsernameTaken(usernameVal)) {
                 showAlert('error', 'Username <strong>' + usernameVal + '</strong> sudah terdaftar! Gunakan username lain.');
                 username.focus();
                 username.select();
                 return;
             }
-
-            // 3. Cek nama lengkap
             if (fullnameVal.length < 2) {
                 showAlert('error', 'Masukkan nama lengkap dengan benar!');
                 fullname.focus();
                 return;
             }
-
-            // 4. Cek email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(emailVal)) {
                 showAlert('error', 'Masukkan email yang valid! Contoh: admin@email.com');
                 email.focus();
                 return;
             }
-
-            // 5. Cek email sudah terdaftar
             if (isEmailTaken(emailVal)) {
                 showAlert('error', 'Email <strong>' + emailVal + '</strong> sudah terdaftar! Gunakan email lain.');
                 email.focus();
                 email.select();
                 return;
             }
-
-            // 6. Cek nomor HP
             if (phoneVal.length < 10 || !/^[0-9]+$/.test(phoneVal)) {
                 showAlert('error', 'Masukkan nomor HP yang valid (minimal 10 digit angka)!');
                 phone.focus();
                 return;
             }
-
-            // 7. Cek password
             if (passwordVal.length < 6) {
                 showAlert('error', 'Password minimal 6 karakter!');
                 password.focus();
                 return;
             }
-
-            // 8. Cek konfirmasi password
             if (passwordVal !== confirmVal) {
                 showAlert('error', 'Konfirmasi password tidak cocok!');
                 confirmPassword.focus();
                 confirmPassword.select();
                 return;
             }
-
-            // 9. Cek syarat & ketentuan
             if (!termsCheckbox.checked) {
                 showAlert('error', 'Anda harus menyetujui Syarat & Ketentuan terlebih dahulu!');
                 termsCheckbox.focus();
                 return;
             }
 
-            // === SEMUA VALIDASI BERHASIL ===
-
-            // Simpan data ke localStorage
             const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
             users.push({
                 username: usernameVal,
@@ -533,10 +363,8 @@
             });
             localStorage.setItem('umkm_users', JSON.stringify(users));
 
-            // Tampilkan sukses
             showAlert('success', '✅ Pendaftaran berhasil! Silakan <a href="login.html" style="color:#2c5f2d; font-weight:600;">login</a> untuk masuk ke dashboard.');
 
-            // Reset form
             form.reset();
             document.querySelectorAll('.form-group input').forEach(el => {
                 el.classList.remove('success', 'error');
@@ -544,23 +372,24 @@
             document.getElementById('strengthBar').className = 'bar';
             document.getElementById('strengthText').textContent = '';
 
-            // Redirect otomatis ke login setelah 3 detik
             setTimeout(function() {
                 window.location.href = 'login.html?registered=true';
             }, 3000);
         });
 
-        // === FUNGSI SHOW ALERT ===
+        // ============================================
+        // 7. FUNGSI ALERT
+        // ============================================
         function showAlert(type, message) {
             alertDiv.className = 'alert ' + type;
             alertDiv.innerHTML = message;
             alertDiv.style.display = 'block';
-
-            // Scroll ke atas agar alert terlihat
             alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // === CEK USERNAME & EMAIL SECARA REAL-TIME (UNTUK DUPLIKAT) ===
+        // ============================================
+        // 8. CEK DUPLIKAT SAAT BLUR
+        // ============================================
         username.addEventListener('blur', function() {
             if (this.value.length >= 3 && isUsernameTaken(this.value.trim())) {
                 showAlert('error', 'Username <strong>' + this.value + '</strong> sudah terdaftar!');
@@ -578,6 +407,5 @@
             }
         });
     </script>
-
 </body>
 </html>
