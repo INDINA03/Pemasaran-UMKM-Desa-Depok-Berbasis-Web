@@ -21,6 +21,7 @@
         .btn-login { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
         .error { background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
+        .success { background: #e8f5e9; color: #2c5f2d; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
         .back-link { text-align: center; margin-top: 20px; }
         .back-link a { color: #2c5f2d; text-decoration: none; }
         .register-link { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
@@ -36,6 +37,7 @@
             <p>Sistem Informasi UMKM Desa Depok</p>
         </div>
         <div id="errorMsg" class="error"></div>
+        <div id="successMsg" class="success"></div>
         <form id="loginForm">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Username</label>
@@ -56,41 +58,32 @@
     </div>
 
     <script>
-        // Cek apakah sudah login, jika ya redirect ke dashboard
-        if (localStorage.getItem('admin_logged_in') === 'true') {
-            window.location.href = 'dashboard.html';
-        }
-
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
             
-            // Sembunyikan pesan error
             errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
             
-            // Login dengan akun default (admin/admin123) atau akun yang terdaftar
+            // Ambil data user dari localStorage
             const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
             
-            // Cek apakah ada akun yang cocok
+            // Cari user yang cocok
             const user = users.find(u => u.username === username && u.password === password);
             
-            // Jika tidak ada di database, cek default admin
             if (user) {
-                // Login berhasil
+                // ✅ LOGIN BERHASIL
                 localStorage.setItem('admin_logged_in', 'true');
                 localStorage.setItem('admin_username', username);
-                window.location.href = 'dashboard.html';
-            } else if (username === 'admin' && password === 'admin123') {
-                // Login dengan akun default
-                localStorage.setItem('admin_logged_in', 'true');
-                localStorage.setItem('admin_username', 'admin');
+                // Redirect ke dashboard
                 window.location.href = 'dashboard.html';
             } else {
-                // Cek apakah username ada
+                // ❌ LOGIN GAGAL
                 const userExists = users.find(u => u.username === username);
-                if(userExists) {
+                if (userExists) {
                     errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Password salah!';
                 } else {
                     errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Username tidak ditemukan! Silakan daftar terlebih dahulu.';
@@ -98,6 +91,14 @@
                 errorDiv.style.display = 'block';
             }
         });
+
+        // Cek jika ada pesan sukses dari register
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            const successDiv = document.getElementById('successMsg');
+            successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Pendaftaran berhasil! Silakan login.';
+            successDiv.style.display = 'block';
+        }
     </script>
 </body>
 </html>
