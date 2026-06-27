@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .login-container { background: white; border-radius: 20px; padding: 40px; width: 90%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-container { background: white; border-radius: 20px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .login-header { text-align: center; margin-bottom: 30px; }
         .login-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 30px; }
         .login-header h1 { color: #2c5f2d; font-size: 1.5em; }
@@ -18,7 +18,7 @@
         .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
         .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-family: inherit; transition: 0.3s; }
         .form-group input:focus { outline: none; border-color: #2c5f2d; }
-        .btn-login { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-login { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 16px; }
         .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
         .error { background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
         .success { background: #e8f5e9; color: #2c5f2d; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
@@ -27,7 +27,6 @@
         .register-link { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
         .register-link a { color: #2c5f2d; text-decoration: none; font-weight: 600; }
         .register-link a:hover { text-decoration: underline; }
-        .debug-info { background: #f5f5f5; padding: 10px; border-radius: 8px; font-size: 0.8rem; color: #555; margin-top: 15px; display: none; word-break: break-all; }
     </style>
 </head>
 <body>
@@ -56,31 +55,31 @@
         <div class="register-link">
             <a href="register.html"><i class="fas fa-user-plus"></i> Belum punya akun? Daftar di sini</a>
         </div>
-        <div class="debug-info" id="debugInfo">
-            <strong>Debug Info:</strong><br>
-            <span id="debugContent">Loading...</span>
-        </div>
     </div>
 
     <script>
-        // === FUNGSI UNTUK MENAMPILKAN DEBUG ===
-        function showDebug(message) {
-            const debugDiv = document.getElementById('debugInfo');
-            const debugContent = document.getElementById('debugContent');
-            debugDiv.style.display = 'block';
-            debugContent.innerHTML = message;
-            console.log('[DEBUG]', message);
+        // === BUAT AKUN DEFAULT JIKA BELUM ADA ===
+        function createDefaultAdmin() {
+            const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
+            const adminExists = users.some(u => u.username === 'admin');
+            if (!adminExists) {
+                users.push({
+                    username: 'admin',
+                    fullname: 'Administrator Desa Depok',
+                    email: 'admin@desadepok.id',
+                    phone: '08123456789',
+                    password: 'admin123',
+                    registeredAt: new Date().toISOString(),
+                    role: 'admin'
+                });
+                localStorage.setItem('umkm_users', JSON.stringify(users));
+            }
         }
-
-        // === CEK STATUS LOGIN SAAT INI ===
-        const currentLogin = localStorage.getItem('admin_logged_in');
-        const currentUser = localStorage.getItem('admin_username');
-        showDebug('Status login saat ini: ' + currentLogin + ' | User: ' + currentUser);
+        createDefaultAdmin();
 
         // === FORM LOGIN ===
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('errorMsg');
@@ -89,49 +88,14 @@
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
 
-            showDebug('Mencoba login dengan username: ' + username);
-
-            // Ambil data user dari localStorage
-            let users = JSON.parse(localStorage.getItem('umkm_users')) || [];
-
-            // Jika tidak ada user, buat admin default
-            if (users.length === 0) {
-                users = [{
-                    username: 'admin',
-                    fullname: 'Administrator',
-                    email: 'admin@desa.id',
-                    phone: '08123456789',
-                    password: 'admin123',
-                    registeredAt: new Date().toISOString(),
-                    role: 'admin'
-                }];
-                localStorage.setItem('umkm_users', JSON.stringify(users));
-                showDebug('Akun default dibuat: admin/admin123');
-            }
-
-            // Cari user
+            const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
             const user = users.find(u => u.username === username && u.password === password);
 
             if (user) {
-                // ===== LOGIN BERHASIL =====
-                showDebug('✅ Login sukses untuk: ' + username);
-
-                // Simpan ke localStorage
                 localStorage.setItem('admin_logged_in', 'true');
                 localStorage.setItem('admin_username', username);
-
-                // Simpan juga ke sessionStorage sebagai cadangan
-                sessionStorage.setItem('admin_logged_in', 'true');
-                sessionStorage.setItem('admin_username', username);
-
-                // Debug: cek apakah tersimpan
-                showDebug('localStorage admin_logged_in = ' + localStorage.getItem('admin_logged_in'));
-                showDebug('sessionStorage admin_logged_in = ' + sessionStorage.getItem('admin_logged_in'));
-
-                // Redirect ke dashboard
                 window.location.href = 'dashboard.html';
             } else {
-                // ===== LOGIN GAGAL =====
                 const userExists = users.find(u => u.username === username);
                 if (userExists) {
                     errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Password salah!';
@@ -139,11 +103,9 @@
                     errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Username tidak ditemukan! Silakan daftar terlebih dahulu.';
                 }
                 errorDiv.style.display = 'block';
-                showDebug('❌ Login gagal untuk: ' + username);
             }
         });
 
-        // Cek pesan sukses dari register
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('registered') === 'true') {
             document.getElementById('successMsg').innerHTML = '<i class="fas fa-check-circle"></i> Pendaftaran berhasil! Silakan login.';
