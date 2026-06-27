@@ -3,201 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMKM Desa Depok</title>
+    <title>Beranda | UMKM Desa Depok</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Poppins',sans-serif; background:#f0f7f0; }
-        .container { max-width:1200px; margin:0 auto; padding:30px 5%; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+        .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
+        .logo-text p { font-size: 0.7em; color: #666; }
         
-        /* HERO */
-        .hero { text-align:center; padding:40px 0 30px; }
-        .hero h1 { color:#1a3b1a; font-size:2.5rem; }
-        .hero p { color:#666; margin:10px 0 20px; font-size:1.1rem; }
-        .hero .btn-group { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
-        .btn-primary { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:12px 30px; border:none; border-radius:12px; font-weight:600; cursor:pointer; transition:0.3s; text-decoration:none; display:inline-block; }
-        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 5px 20px rgba(44,95,45,0.3); }
-        .btn-outline { background:transparent; color:#2c5f2d; padding:12px 30px; border:2px solid #2c5f2d; border-radius:12px; font-weight:600; cursor:pointer; transition:0.3s; text-decoration:none; display:inline-block; }
-        .btn-outline:hover { background:#2c5f2d; color:white; }
-
-        /* SECTION TITLE */
-        .section-title { 
-            text-align:center; 
-            margin:40px 0 30px; 
-            color:#1a3b1a; 
-            font-size:1.8rem;
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
         }
-        .section-title i { color:#2c5f2d; margin-right:10px; }
-
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            margin-top: 10px;
-        }
-        .product-card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
             transition: 0.3s;
-            border: 1px solid #e8f5e9;
-            text-align: center;
+            line-height: 1;
+            padding-bottom: 5px;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(44,95,45,0.15);
-        }
-        .product-card .icon {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-        }
-        .product-card h3 {
-            color: #1a3b1a;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        .product-card .price {
+        .nav-links a:hover { color: #2c5f2d; }
+        .nav-links a.active {
             color: #2c5f2d;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .product-card .category {
-            color: #888;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            background: #e8f5e9;
-            padding: 3px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-        .product-card .btn-order {
-            background: linear-gradient(135deg, #2c5f2d, #1a3b1a);
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 25px;
-            cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
-            font-family: inherit;
-            margin-top: 10px;
-            width: 100%;
+            border-bottom: 3px solid #2c5f2d;
         }
-        .product-card .btn-order:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(44,95,45,0.3);
+        .btn-outline {
+            border: 2px solid #2c5f2d;
+            padding: 8px 22px;
+            border-radius: 40px;
+            background: transparent;
+            margin-left: 10px;
+            /* Pastikan tidak ada border-bottom tambahan dari class active */
+            border-bottom: 2px solid #2c5f2d;
         }
-
-        .empty-products {
-            text-align: center;
-            padding: 50px 20px;
-            color: #999;
-            grid-column: 1 / -1;
+        .btn-outline:hover { background: #2c5f2d; color: white !important; }
+        /* Hilangkan padding-bottom yang mengganggu pada tombol */
+        .nav-links a.btn-outline {
+            padding-bottom: 8px;
         }
-        .empty-products i {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 15px;
-            color: #ccc;
-        }
-
-        .footer { text-align:center; margin-top:50px; padding:20px; color:#888; border-top:1px solid #e0e0e0; }
         
-        @media (max-width:768px) {
-            .hero h1 { font-size:1.8rem; }
-            .btn-outline { margin-top:10px; }
-            .product-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width:480px) {
+        /* Hero dan konten lainnya (sama seperti sebelumnya) */
+        .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
+        .hero h1 { font-size: 2em; margin-bottom: 15px; }
+        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
+        .stat-number { font-size: 2.5em; font-weight: 700; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
+        .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-wrapper { flex: 3; position: relative; }
+        .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .search-wrapper input { width: 100%; padding: 14px 15px 14px 45px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; }
+        .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .section-title { text-align: center; margin: 50px 0 30px; }
+        .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
+        .section-title h2 { font-size: 1.8em; color: #1a3b1a; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; font-size: 85px; }
+        .product-info { padding: 20px; }
+        .price { font-size: 1.5em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
+        .whatsapp-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white; padding: 8px 18px; border-radius: 10px; text-decoration: none; margin-top: 15px; }
+        .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.3em; }
+            .search-form { flex-direction: column; }
             .product-grid { grid-template-columns: 1fr; }
+            .nav-links { gap: 20px; justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- HERO -->
-        <div class="hero">
-            <div style="font-size:4rem; margin-bottom:15px;">🏪</div>
-            <h1>UMKM Desa Depok</h1>
-            <p>Nikmati produk kuliner terbaik dari UMKM Desa Depok</p>
-            <div class="btn-group">
-                <a href="login.html" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Login Admin</a>
-                <a href="register.html" class="btn-outline"><i class="fas fa-user-plus"></i> Daftar Akun</a>
+    <nav class="navbar">
+        <div class="logo" onclick="location.href='index.html'">
+            <div class="logo-icon">🏪</div>
+            <div class="logo-text">
+                <h2>UMKM Desa Depok</h2>
+                <p>Kec. Kandeman - Kab. Batang</p>
             </div>
         </div>
-
-        <!-- DAFTAR PRODUK -->
-        <h2 class="section-title"><i class="fas fa-utensils"></i> Produk Unggulan</h2>
-        <div class="product-grid" id="productGrid">
-            <!-- Produk akan muncul dari localStorage -->
+        <div class="nav-links">
+            <a href="index.html" class="active">Beranda</a>
+            <a href="tentang.html">Tentang</a>
+            <a href="kontak.html">Kontak</a>
+            <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
         </div>
+    </nav>
 
-        <div class="footer">
-            <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok</p>
+    <section class="hero">
+        <h1>Selamat Datang di Sistem Informasi Pemasaran UMKM Berbasis Website</h1>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-number" id="totalProducts">5</div><div>Produk</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalUMKM">3</div><div>UMKM</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalCategories">1</div><div>Kategori</div></div>
         </div>
+    </section>
+
+    <div class="container">
+        <div class="search-section">
+            <form class="search-form" id="searchForm">
+                <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Cari produk..."></div>
+                <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari</button>
+            </form>
+        </div>
+        <div class="section-title"><div class="badge"><i class="fas fa-utensils"></i> Menu Pilihan</div><h2>Produk Kuliner UMKM Desa Depok</h2></div>
+        <div class="product-grid" id="productGrid"></div>
     </div>
 
+    <footer class="footer">
+        <p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p>
+        <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
+    </footer>
+
     <script>
-        // === AMBIL DATA PRODUK DARI LOCALSTORAGE ===
-        function renderProducts() {
-            const products = JSON.parse(localStorage.getItem('umkm_products')) || [];
+        let products = [
+            { id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan kenyal.", price:15000, icon:"🍜", bgGradient:"linear-gradient(135deg, #ff9a9e, #fecfef)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:2, name:"Bakso Urat", description:"Bakso urat spesial.", price:20000, icon:"🥩", bgGradient:"linear-gradient(135deg, #fa709a, #fee140)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:3, name:"Bakso Jumbo", description:"Bakso jumbo 3x lipat.", price:35000, icon:"🍲", bgGradient:"linear-gradient(135deg, #f6d365, #fda085)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:4, name:"Mie Ayam Ceker", description:"Mie ayam ceker empuk.", price:18000, icon:"🍗", bgGradient:"linear-gradient(135deg, #ffecd2, #fcb69f)", umkm_name:"Mie Ayam Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:5, name:"Es Teh Manis", description:"Es teh segar.", price:3000, icon:"🧋", bgGradient:"linear-gradient(135deg, #a8edea, #fed6e3)", umkm_name:"UMKM Minuman", contact:"0857-4871-0963", category_name:"Minuman" }
+        ];
+        function updateStats() {
+            document.getElementById('totalProducts').innerText = products.length;
+            document.getElementById('totalUMKM').innerText = [...new Set(products.map(p=>p.umkm_name))].length;
+            document.getElementById('totalCategories').innerText = [...new Set(products.map(p=>p.category_name))].length;
+        }
+        function displayProducts(data) {
             const grid = document.getElementById('productGrid');
-
-            if (products.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-products">
-                        <i class="fas fa-utensils"></i>
-                        <h3>Belum ada produk</h3>
-                        <p>Silakan cek kembali nanti.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            // Icon berdasarkan kategori
-            const iconMap = {
-                'Makanan': '🍛',
-                'Minuman': '🥤',
-                'Camilan': '🍿',
-                'Kue': '🍰',
-                'Lainnya': '🍽️'
-            };
-
-            grid.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <div class="icon">${iconMap[product.kategori] || '🍽️'}</div>
-                    <h3>${product.nama || 'Produk'}</h3>
-                    <div class="price">Rp ${(product.harga || 0).toLocaleString('id-ID')}</div>
-                    <div class="category">${product.kategori || '-'}</div>
-                    <button class="btn-order" onclick="orderProduct('${product.nama}')">
-                        <i class="fas fa-shopping-cart"></i> Pesan
-                    </button>
-                </div>
-            `).join('');
+            if(!data.length) { grid.innerHTML = '<div style="text-align:center;padding:50px">Produk tidak ditemukan</div>'; return; }
+            grid.innerHTML = data.map(p => <div class="product-card"><div class="product-image" style="background:${p.bgGradient}">${p.icon}</div><div class="product-info"><h3>${p.name}</h3><div class="price">Rp ${p.price.toLocaleString('id-ID')}</div><div class="description">${p.description}</div><a href="https://wa.me/${p.contact.replace(/\D/g,'')}" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan</a></div></div>).join('');
         }
-
-        // === FUNGSI PESAN ===
-        function orderProduct(nama) {
-            alert('🛒 Anda memesan: ' + nama + '\n\nSilakan hubungi admin untuk pemesanan.');
-        }
-
-        // === RENDER SAAT HALAMAN DIMUAT ===
-        renderProducts();
-
-        // === UPDATE OTOMATIS JIKA ADA PERUBAHAN DATA ===
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'umkm_products') {
-                renderProducts();
-            }
-        });
-
-        // === CEK SETIAP 2 DETIK (UNTUK UPDATE REAL-TIME) ===
-        setInterval(function() {
-            renderProducts();
-        }, 2000);
+        function filterProducts() { let s = document.getElementById('searchInput').value.toLowerCase(); displayProducts(products.filter(p => p.name.toLowerCase().includes(s) || p.description.toLowerCase().includes(s))); }
+        document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); filterProducts(); });
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        updateStats(); displayProducts(products);
     </script>
 </body>
 </html>
