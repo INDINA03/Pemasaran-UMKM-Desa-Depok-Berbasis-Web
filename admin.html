@@ -99,13 +99,7 @@
                 </div>
                 <div class="form-group">
                     <label>Kategori</label>
-                    <select id="kategoriProduk" style="width:100%; padding:10px 15px; border:2px solid #e0e0e0; border-radius:8px; font-family:inherit;">
-                        <option value="Makanan">🍛 Makanan</option>
-                        <option value="Minuman">🥤 Minuman</option>
-                        <option value="Camilan">🍿 Camilan</option>
-                        <option value="Kue">🍰 Kue</option>
-                        <option value="Lainnya">🍽️ Lainnya</option>
-                    </select>
+                    <input type="text" id="kategoriProduk" placeholder="Contoh: Makanan" required>
                 </div>
                 <div class="form-group">
                     <label>Harga</label>
@@ -124,16 +118,24 @@
     </div>
 
     <script>
-        // === CEK LOGIN ===
+        // ============================================================
+        // 1. CEK LOGIN - SAMA SEPERTI DI DASHBOARD
+        // ============================================================
         (function checkLogin() {
             const isLoggedIn = localStorage.getItem('admin_logged_in');
+            console.log('🔍 [admin.html] admin_logged_in =', isLoggedIn);
+            
             if (isLoggedIn !== 'true') {
+                console.warn('❌ Belum login, redirect ke login.html');
                 window.location.href = 'login.html';
                 return;
             }
+            console.log('✅ Login valid, tampilkan halaman kelola produk.');
         })();
 
-        // === LOGOUT ===
+        // ============================================================
+        // 2. FUNGSI LOGOUT
+        // ============================================================
         function logout() {
             if (confirm('Apakah Anda yakin ingin logout?')) {
                 localStorage.removeItem('admin_logged_in');
@@ -142,7 +144,9 @@
             }
         }
 
-        // === CRUD PRODUK ===
+        // ============================================================
+        // 3. CRUD PRODUK
+        // ============================================================
         const STORAGE_KEY = 'umkm_products';
 
         function getData() {
@@ -156,12 +160,12 @@
         function renderTable() {
             const data = getData();
             const tbody = document.getElementById('productTableBody');
-
+            
             if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><i class="fas fa-box"></i>Belum ada data produk.</td></tr>`;
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="fas fa-box"></i>Belum ada data produk.</td></tr>';
                 return;
             }
-
+            
             tbody.innerHTML = data.map((item, index) => `
                 <tr>
                     <td>${index + 1}</td>
@@ -180,13 +184,13 @@
         function openModal(index = -1) {
             const modal = document.getElementById('productModal');
             const title = document.getElementById('modalTitle');
-
+            
             if (index >= 0) {
                 const data = getData();
                 const item = data[index];
                 document.getElementById('editIndex').value = index;
                 document.getElementById('namaProduk').value = item.nama || '';
-                document.getElementById('kategoriProduk').value = item.kategori || 'Makanan';
+                document.getElementById('kategoriProduk').value = item.kategori || '';
                 document.getElementById('harga').value = item.harga || '';
                 document.getElementById('stok').value = item.stok || '';
                 title.innerHTML = '<i class="fas fa-edit"></i> Edit Produk';
@@ -204,22 +208,22 @@
 
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
+            
             const index = parseInt(document.getElementById('editIndex').value);
             const data = getData();
-
+            
             const newData = {
                 nama: document.getElementById('namaProduk').value.trim(),
-                kategori: document.getElementById('kategoriProduk').value,
+                kategori: document.getElementById('kategoriProduk').value.trim(),
                 harga: parseInt(document.getElementById('harga').value) || 0,
                 stok: parseInt(document.getElementById('stok').value) || 0
             };
-
-            if (!newData.nama || newData.harga <= 0) {
-                showAlert('error', 'Nama dan Harga wajib diisi!');
+            
+            if (!newData.nama || !newData.kategori || newData.harga <= 0) {
+                showAlert('error', 'Semua field wajib diisi dengan benar!');
                 return;
             }
-
+            
             if (index >= 0) {
                 data[index] = newData;
                 showAlert('success', '✅ Data produk berhasil diperbarui!');
@@ -227,13 +231,15 @@
                 data.push(newData);
                 showAlert('success', '✅ Data produk berhasil ditambahkan!');
             }
-
+            
             saveData(data);
             renderTable();
             closeModal();
         });
 
-        function editData(index) { openModal(index); }
+        function editData(index) {
+            openModal(index);
+        }
 
         function deleteData(index) {
             if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
@@ -250,35 +256,37 @@
             alertDiv.className = 'alert ' + type;
             alertDiv.innerHTML = message;
             alertDiv.style.display = 'block';
-            setTimeout(() => { alertDiv.style.display = 'none'; }, 4000);
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 4000);
         }
 
+        // ============================================================
+        // 4. TUTUP MODAL SAAT KLIK DI LUAR
+        // ============================================================
         document.getElementById('productModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-            if (e.altKey && e.key === 'l') logout();
-        });
-
-        renderTable();
-
-        // === TAMBAHKAN DATA CONTOH (BAKSO) ===
-        function addExampleData() {
-            const products = getData();
-            if (products.length === 0) {
-                const exampleProducts = [
-                    { nama: 'Bakso Biasa Istimewa', kategori: 'Makanan', harga: 15000, stok: 50 },
-                    { nama: 'Bakso Urat', kategori: 'Makanan', harga: 20000, stok: 30 },
-                    { nama: 'Bakso Jumbo', kategori: 'Makanan', harga: 35000, stok: 20 }
-                ];
-                saveData(exampleProducts);
-                renderTable();
-                showAlert('success', '✅ Data contoh Bakso berhasil ditambahkan!');
+            if (e.target === this) {
+                closeModal();
             }
-        }
-        addExampleData();
+        });
+
+        // ============================================================
+        // 5. KEYBOARD SHORTCUT
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.altKey && e.key === 'l') {
+                logout();
+            }
+        });
+
+        // ============================================================
+        // 6. RENDER TABLE SAAT HALAMAN DIMUAT
+        // ============================================================
+        renderTable();
+        console.log('✅ Halaman kelola produk siap digunakan.');
     </script>
 </body>
 </html>
