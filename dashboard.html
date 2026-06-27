@@ -8,230 +8,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            font-family:'Poppins',sans-serif; 
-            background:#f0f7f0; 
-        }
-        
-        /* NAVBAR */
-        .navbar { 
-            background:white; 
-            padding:15px 5%; 
-            display:flex; 
-            justify-content:space-between; 
-            align-items:center; 
-            flex-wrap:wrap; 
-            gap:15px; 
-            box-shadow:0 2px 10px rgba(0,0,0,0.05);
-            position:sticky;
-            top:0;
-            z-index:100;
-        }
+        body { font-family:'Poppins',sans-serif; background:#f0f7f0; }
+        .navbar { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); position:sticky; top:0; z-index:100; }
         .nav-left { display:flex; align-items:center; gap:10px; }
-        .nav-left h2 { 
-            font-size:1.2rem; 
-            color:#1a3b1a; 
-            font-weight:600;
-        }
-        .logo-icon { 
-            background:linear-gradient(135deg,#2c5f2d,#1a3b1a); 
-            width:45px; 
-            height:45px; 
-            border-radius:12px; 
-            display:flex; 
-            align-items:center; 
-            justify-content:center; 
-            color:white; 
-            font-size:24px; 
-        }
+        .nav-left h2 { font-size:1.2rem; color:#1a3b1a; font-weight:600; }
+        .logo-icon { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; }
         .nav-right { display:flex; align-items:center; gap:15px; }
-        .nav-right a { 
-            text-decoration:none; 
-            color:#555; 
-            font-weight:500; 
-            transition:0.3s; 
-            padding:8px 15px;
-            border-radius:8px;
-        }
-        .nav-right a:hover { 
-            background:#f0f7f0; 
-            color:#1a3b1a; 
-        }
-        .btn-logout { 
-            background:#c62828; 
-            color:white !important; 
-            padding:10px 25px !important; 
-            border:none;
-            border-radius:25px !important; 
-            cursor:pointer;
-            font-weight:600;
-            font-family:inherit;
-            font-size:14px;
-            transition:0.3s;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-        }
-        .btn-logout:hover { 
-            background:#b71c1c !important; 
-            transform:translateY(-2px);
-            box-shadow:0 5px 15px rgba(198,40,40,0.3);
-        }
-        
-        /* CONTAINER */
-        .container { 
-            max-width:1200px; 
-            margin:0 auto; 
-            padding:30px 5%; 
-        }
-        
-        /* WELCOME CARD */
-        .welcome-card { 
-            background:white; 
-            border-radius:24px; 
-            padding:30px; 
-            margin-bottom:40px; 
-            box-shadow:0 5px 15px rgba(0,0,0,0.05);
-            border-left:5px solid #2c5f2d;
-        }
-        .welcome-card h2 { 
-            color:#1a3b1a; 
-            margin-bottom:5px; 
-            font-size:1.5rem;
-            font-weight:600;
-        }
-        .welcome-card h2 i { 
-            color:#2c5f2d; 
-            margin-right:10px; 
-        }
-        .welcome-card p { 
-            color:#666; 
-            font-size:0.95rem; 
-        }
-        .admin-badge { 
-            background:#2c5f2d; 
-            color:white; 
-            padding:2px 12px; 
-            border-radius:20px; 
-            font-size:0.7rem; 
-            font-weight:600; 
-            margin-left:8px; 
-        }
-        
-        /* STATISTIK */
-        .stats-grid { 
-            display:grid; 
-            grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); 
-            gap:25px; 
-            margin-bottom:40px; 
-        }
-        .stat-card { 
-            background:white; 
-            border-radius:24px; 
-            padding:25px 20px; 
-            text-align:center; 
-            box-shadow:0 5px 15px rgba(0,0,0,0.05); 
-            transition:0.3s; 
-        }
-        .stat-card:hover { 
-            transform:translateY(-5px); 
-        }
-        .stat-number { 
-            font-size:2.8rem; 
-            font-weight:800; 
-            color:#1a3b1a; 
-        }
-        .stat-label { 
-            color:#888; 
-            font-size:0.9rem; 
-            margin-top:5px; 
-        }
-        .stat-icon { 
-            font-size:2rem; 
-            margin-bottom:10px; 
-        }
-        /* Stat card khusus untuk Total Nilai (Rp) */
-        .stat-card .stat-number.currency {
-            font-size:2rem;
-        }
-        
-        /* MENU */
-        .section-title { 
-            color:#1a3b1a; 
-            margin-bottom:20px; 
-            font-size:1.3rem; 
-            font-weight:600;
-        }
-        .section-title i { 
-            color:#2c5f2d; 
-            margin-right:10px; 
-        }
-        .menu-grid { 
-            display:grid; 
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); 
-            gap:25px; 
-            margin-top:10px; 
-        }
-        .menu-card { 
-            background:white; 
-            border-radius:24px; 
-            padding:35px 25px; 
-            text-align:center; 
-            text-decoration:none; 
-            color:#333; 
-            transition:0.3s; 
-            box-shadow:0 5px 15px rgba(0,0,0,0.05); 
-            display:block; 
-            border:2px solid transparent; 
-        }
-        .menu-card:hover { 
-            transform:translateY(-8px); 
-            background:linear-gradient(135deg,#2c5f2d,#1a3b1a); 
-            color:white; 
-            box-shadow:0 10px 30px rgba(44,95,45,0.2);
-        }
-        .menu-card i { 
-            font-size:3.5rem; 
-            margin-bottom:15px; 
-            display:block; 
-            color:#2c5f2d; 
-        }
-        .menu-card:hover i { 
-            color:white; 
-        }
-        .menu-card h3 { 
-            margin-bottom:8px; 
-            font-size:1.2rem; 
-            font-weight:600;
-        }
-        .menu-card p { 
-            font-size:0.9rem; 
-            opacity:0.7; 
-        }
-        .menu-card:hover p { 
-            color:rgba(255,255,255,0.8); 
-        }
-        
-        .footer { 
-            text-align:center; 
-            margin-top:50px; 
-            padding:20px; 
-            color:#888; 
-            border-top:1px solid #e0e0e0; 
-            font-size:0.9rem; 
-        }
-        
-        @media (max-width:768px){ 
-            .navbar { padding:15px; } 
-            .nav-left h2 { font-size:1rem; } 
-            .btn-logout { padding:8px 15px !important; font-size:12px; } 
-            .stats-grid { grid-template-columns:repeat(2,1fr); gap:15px; }
-            .stat-number { font-size:2rem; }
-            .stat-card .stat-number.currency { font-size:1.5rem; }
-        }
+        .nav-right a { text-decoration:none; color:#555; font-weight:500; transition:0.3s; padding:8px 15px; border-radius:8px; }
+        .nav-right a:hover { background:#f0f7f0; color:#1a3b1a; }
+        .btn-logout { background:#c62828; color:white !important; padding:10px 25px !important; border:none; border-radius:25px; cursor:pointer; font-weight:600; font-family:inherit; font-size:14px; transition:0.3s; display:inline-flex; align-items:center; gap:8px; }
+        .btn-logout:hover { background:#b71c1c !important; transform:translateY(-2px); box-shadow:0 5px 15px rgba(198,40,40,0.3); }
+        .container { max-width:1200px; margin:0 auto; padding:30px 5%; }
+        .welcome-card { background:white; border-radius:24px; padding:30px; margin-bottom:40px; box-shadow:0 5px 15px rgba(0,0,0,0.05); border-left:5px solid #2c5f2d; }
+        .welcome-card h2 { color:#1a3b1a; margin-bottom:5px; font-size:1.5rem; font-weight:600; }
+        .welcome-card h2 i { color:#2c5f2d; margin-right:10px; }
+        .welcome-card p { color:#666; font-size:0.95rem; }
+        .admin-badge { background:#2c5f2d; color:white; padding:2px 12px; border-radius:20px; font-size:0.7rem; font-weight:600; margin-left:8px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:25px; margin-bottom:40px; }
+        .stat-card { background:white; border-radius:24px; padding:25px 20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition:0.3s; }
+        .stat-card:hover { transform:translateY(-5px); }
+        .stat-number { font-size:2.8rem; font-weight:800; color:#1a3b1a; }
+        .stat-label { color:#888; font-size:0.9rem; margin-top:5px; }
+        .stat-icon { font-size:2rem; margin-bottom:10px; }
+        .stat-card .stat-number.currency { font-size:2rem; }
+        .section-title { color:#1a3b1a; margin-bottom:20px; font-size:1.3rem; font-weight:600; }
+        .section-title i { color:#2c5f2d; margin-right:10px; }
+        .menu-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:10px; }
+        .menu-card { background:white; border-radius:24px; padding:35px 25px; text-align:center; text-decoration:none; color:#333; transition:0.3s; box-shadow:0 5px 15px rgba(0,0,0,0.05); display:block; border:2px solid transparent; }
+        .menu-card:hover { transform:translateY(-8px); background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; box-shadow:0 10px 30px rgba(44,95,45,0.2); }
+        .menu-card i { font-size:3.5rem; margin-bottom:15px; display:block; color:#2c5f2d; }
+        .menu-card:hover i { color:white; }
+        .menu-card h3 { margin-bottom:8px; font-size:1.2rem; font-weight:600; }
+        .menu-card p { font-size:0.9rem; opacity:0.7; }
+        .menu-card:hover p { color:rgba(255,255,255,0.8); }
+        .footer { text-align:center; margin-top:50px; padding:20px; color:#888; border-top:1px solid #e0e0e0; font-size:0.9rem; }
+        .debug-bar { background:#333; color:#0f0; padding:8px 15px; font-size:0.75rem; font-family:monospace; display:none; position:fixed; bottom:0; left:0; right:0; z-index:999; }
+        @media (max-width:768px){ .navbar { padding:15px; } .nav-left h2 { font-size:1rem; } .btn-logout { padding:8px 15px !important; font-size:12px; } .stats-grid { grid-template-columns:repeat(2,1fr); gap:15px; } .stat-number { font-size:2rem; } .stat-card .stat-number.currency { font-size:1.5rem; } }
     </style>
 </head>
 <body>
+    <!-- DEBUG BAR -->
+    <div class="debug-bar" id="debugBar">Loading...</div>
+
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-left">
@@ -248,37 +66,34 @@
 
     <!-- CONTENT -->
     <div class="container">
-        <!-- WELCOME -->
         <div class="welcome-card">
             <h2><i class="fas fa-user-shield"></i> Halo, <span id="adminName">Admin</span>! <span class="admin-badge">ADMIN</span></h2>
             <p>Selamat datang di Dashboard UMKM Desa Depok.</p>
         </div>
 
-        <!-- STATISTIK -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">📦</div>
-                <div class="stat-number" id="totalProduk">5</div>
+                <div class="stat-number" id="totalProduk">0</div>
                 <div class="stat-label">Total Produk</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏪</div>
-                <div class="stat-number" id="totalUMKM">3</div>
+                <div class="stat-number" id="totalUMKM">0</div>
                 <div class="stat-label">Total UMKM</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📂</div>
-                <div class="stat-number" id="totalKategori">1</div>
+                <div class="stat-number" id="totalKategori">0</div>
                 <div class="stat-label">Kategori</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💰</div>
-                <div class="stat-number currency" id="totalNilai">Rp 91.000</div>
+                <div class="stat-number currency" id="totalNilai">Rp 0</div>
                 <div class="stat-label">Total Nilai</div>
             </div>
         </div>
 
-        <!-- MENU -->
         <h3 class="section-title"><i class="fas fa-th-large"></i> Menu Manajemen</h3>
         <div class="menu-grid">
             <a href="admin.html" class="menu-card">
@@ -309,81 +124,111 @@
     </div>
 
     <script>
-        // ============================================
-        // 1. CEK LOGIN
-        // ============================================
+        // ============================================================
+        // DEBUG FUNCTION
+        // ============================================================
+        function debugLog(msg) {
+            const bar = document.getElementById('debugBar');
+            bar.style.display = 'block';
+            bar.innerHTML = '🔍 ' + msg;
+            console.log('[DEBUG]', msg);
+        }
+
+        // ============================================================
+        // 1. CEK LOGIN - DENGAN LOCALSTORAGE & SESSIONSTORAGE
+        // ============================================================
         (function checkLogin() {
-            const isLoggedIn = localStorage.getItem('admin_logged_in');
+            // Cek dari localStorage dulu
+            let isLoggedIn = localStorage.getItem('admin_logged_in');
+            debugLog('localStorage admin_logged_in = ' + isLoggedIn);
+
+            // Jika tidak ada di localStorage, cek sessionStorage
+            if (isLoggedIn === null || isLoggedIn === undefined) {
+                isLoggedIn = sessionStorage.getItem('admin_logged_in');
+                debugLog('sessionStorage admin_logged_in = ' + isLoggedIn);
+                
+                // Jika ada di sessionStorage, pindahkan ke localStorage
+                if (isLoggedIn === 'true') {
+                    const username = sessionStorage.getItem('admin_username');
+                    localStorage.setItem('admin_logged_in', 'true');
+                    localStorage.setItem('admin_username', username);
+                    debugLog('✅ Memindahkan sessionStorage ke localStorage');
+                }
+            }
+
+            // Jika tetap tidak login, redirect
             if (isLoggedIn !== 'true') {
+                debugLog('❌ Belum login, redirect ke login.html');
+                // Hapus semua data yang tidak valid
+                localStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_logged_in');
                 window.location.href = 'login.html';
                 return;
             }
+
+            debugLog('✅ Login valid! Menampilkan dashboard.');
+            document.getElementById('debugBar').style.display = 'none';
         })();
 
-        // ============================================
+        // ============================================================
         // 2. FUNGSI LOGOUT
-        // ============================================
+        // ============================================================
         function logout() {
             if (confirm('Apakah Anda yakin ingin logout?')) {
                 localStorage.removeItem('admin_logged_in');
                 localStorage.removeItem('admin_username');
+                sessionStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_username');
+                debugLog('👋 Logout, redirect ke login.html');
                 window.location.href = 'login.html';
             }
         }
 
-        // ============================================
+        // ============================================================
         // 3. TAMPILKAN NAMA ADMIN
-        // ============================================
+        // ============================================================
         function getAdminName() {
-            const name = localStorage.getItem('admin_username') || 'Admin';
+            let name = localStorage.getItem('admin_username');
+            if (!name) name = sessionStorage.getItem('admin_username');
+            if (!name) name = 'Admin';
             document.getElementById('adminName').textContent = name;
         }
         getAdminName();
 
-        // ============================================
-        // 4. UPDATE STATISTIK DARI LOCALSTORAGE
-        // ============================================
+        // ============================================================
+        // 4. UPDATE STATISTIK
+        // ============================================================
         function updateStats() {
-            // Ambil data dari localStorage
             const products = JSON.parse(localStorage.getItem('umkm_products')) || [];
             const umkm = JSON.parse(localStorage.getItem('umkm_data')) || [];
 
-            // Total Produk
             document.getElementById('totalProduk').textContent = products.length || 0;
-
-            // Total UMKM
             document.getElementById('totalUMKM').textContent = umkm.length || 0;
 
-            // Total Kategori (unik)
-            const allKategori = [
-                ...products.map(p => p.kategori), 
-                ...umkm.map(u => u.kategori)
-            ];
+            const allKategori = [...products.map(p => p.kategori), ...umkm.map(u => u.kategori)];
             const uniqueKategori = new Set(allKategori.filter(k => k && k.trim() !== ''));
             document.getElementById('totalKategori').textContent = uniqueKategori.size || 0;
 
-            // Total Nilai
             const totalNilai = products.reduce((sum, p) => sum + (Number(p.harga) || 0), 0);
             document.getElementById('totalNilai').textContent = 'Rp ' + totalNilai.toLocaleString('id-ID');
         }
-
-        // Jalankan update statistik
         updateStats();
 
-        // ============================================
-        // 5. SHORTCUT ALT+L UNTUK LOGOUT
-        // ============================================
+        // ============================================================
+        // 5. SHORTCUT ALT+L
+        // ============================================================
         document.addEventListener('keydown', function(e) {
             if (e.altKey && e.key === 'l') {
                 logout();
             }
         });
 
-        // ============================================
-        // 6. CEK PERUBAHAN LOCALSTORAGE DARI TAB LAIN
-        // ============================================
+        // ============================================================
+        // 6. CEK PERUBAHAN STORAGE DARI TAB LAIN
+        // ============================================================
         window.addEventListener('storage', function(e) {
             if (e.key === 'admin_logged_in' && e.newValue !== 'true') {
+                debugLog('⚠️ Login status berubah di tab lain');
                 window.location.href = 'login.html';
             }
             if (e.key === 'umkm_products' || e.key === 'umkm_data') {
@@ -391,7 +236,7 @@
             }
         });
 
-        console.log('✅ Dashboard berhasil dimuat!');
+        debugLog('✅ Dashboard siap digunakan!');
     </script>
 </body>
 </html>
