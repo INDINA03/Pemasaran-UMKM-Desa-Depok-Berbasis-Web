@@ -24,9 +24,31 @@
         .success { background: #e8f5e9; color: #2c5f2d; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
         .back-link { text-align: center; margin-top: 20px; }
         .back-link a { color: #2c5f2d; text-decoration: none; }
-        .register-link { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
-        .register-link a { color: #2c5f2d; text-decoration: none; font-weight: 600; }
-        .register-link a:hover { text-decoration: underline; }
+        .back-link a:hover { text-decoration: underline; }
+
+        /* ===== PERBAIKAN REGISTER LINK ===== */
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.95em;
+        }
+        .register-link span {
+            color: #555;
+        }
+        .register-link a {
+            color: #2c5f2d;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .register-link a:hover {
+            color: #1a3b1a;
+        }
+        .register-link i {
+            margin-right: 5px;
+            color: #2c5f2d;
+        }
     </style>
 </head>
 <body>
@@ -52,8 +74,10 @@
         <div class="back-link">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
         </div>
+        <!-- ===== REGISTER LINK YANG DIPERBAIKI ===== -->
         <div class="register-link">
-            <a href="register.html"><i class="fas fa-user-plus"></i> Belum punya akun? Daftar di sini</a>
+            <span><i class="fas fa-user-plus"></i> Belum punya akun? </span>
+            <a href="register.html">Daftar di sini</a>
         </div>
     </div>
 
