@@ -67,14 +67,19 @@
         </div>
     </div>
     <script>
-        // ===== PENGECEKAN SESSION YANG LEBIH STABIL =====
-        // Cek session di awal, tapi beri jeda 0.5 detik agar localStorage terbaca
-        setTimeout(function() {
+        // ================================================================
+        // SOLUSI PALING AMPUH: Cek session menggunakan window.onload
+        // Agar halaman benar-benar siap sebelum pengecekan
+        // ================================================================
+        window.onload = function() {
             const isLoggedIn = localStorage.getItem('adminLoggedIn');
             if (isLoggedIn !== 'true') {
                 window.location.href = "login.html";
+                return;
             }
-        }, 500);
+            // Jika sudah login, jalankan script
+            loadProducts();
+        };
 
         let products = [];
 
@@ -167,8 +172,6 @@
             localStorage.removeItem('adminUsername');
             window.location.href = 'login.html';
         });
-
-        loadProducts();
     </script>
 </body>
 </html>
