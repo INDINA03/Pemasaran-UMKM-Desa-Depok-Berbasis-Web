@@ -3,281 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola UMKM | Admin</title>
+    <title>Kelola UMKM - Desa Depok</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
-        
-        /* Navbar Admin */
-        .admin-nav { background: #1a1a2e; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .admin-nav h2 { font-size: 1.2em; display: flex; align-items: center; gap: 10px; }
-        .admin-nav h2 i { background: #2c5f2d; padding: 8px; border-radius: 10px; }
-        .admin-nav a { color: white; text-decoration: none; margin-left: 20px; transition: 0.3s; }
-        .admin-nav a:hover { opacity: 0.8; transform: translateY(-2px); }
-        .back-btn { background: #2c5f2d; padding: 8px 20px; border-radius: 25px; }
-        .logout-btn { background: #c62828; padding: 8px 20px; border-radius: 25px; }
-        
-        /* Container */
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+        .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
+        .btn-logout { background: #f44336; padding: 8px 20px; border-radius: 25px; color: white; text-decoration: none; }
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 5%; }
-        
-        /* Header */
-        .page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 25px; }
-        .page-header h1 { color: #1a3b1a; font-size: 1.8em; }
-        .btn-add { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 12px 25px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
-        
-        /* Tabel */
-        .umkm-table { background: white; border-radius: 20px; overflow-x: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-card, .table-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 15px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; }
+        .btn-submit { background: #2c5f2d; color: white; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #2c5f2d; color: white; font-weight: 600; }
-        tr:hover { background: #f8f9fa; }
-        .umkm-icon { font-size: 28px; }
-        .umkm-name { font-weight: 600; color: #1a3b1a; }
-        .umkm-address { font-size: 0.85rem; color: #666; }
-        .btn-edit { background: #ff9800; color: white; padding: 5px 12px; border-radius: 5px; border: none; cursor: pointer; margin-right: 5px; transition: 0.3s; }
-        .btn-delete { background: #c62828; color: white; padding: 5px 12px; border-radius: 5px; border: none; cursor: pointer; transition: 0.3s; }
-        .btn-edit:hover, .btn-delete:hover { transform: scale(1.02); opacity: 0.9; }
-        .empty-row { text-align: center; padding: 40px; color: #999; }
-        
-        /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { background: white; border-radius: 20px; padding: 30px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
-        .modal-content h3 { color: #2c5f2d; margin-bottom: 20px; border-left: 4px solid #2c5f2d; padding-left: 15px; }
-        .modal-content input, .modal-content textarea, .modal-content select { width: 100%; padding: 10px; margin-bottom: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; }
-        .modal-content input:focus, .modal-content textarea:focus, .modal-content select:focus { outline: none; border-color: #2c5f2d; }
-        .btn-save { background: #2c5f2d; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
-        .btn-cancel { background: #999; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-left: 10px; }
-        
-        /* Footer */
-        .footer { background: #1a1a2e; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 0.85rem; }
-        
-        @media (max-width: 768px) {
-            th, td { font-size: 0.8rem; padding: 8px; }
-            .admin-nav { flex-direction: column; text-align: center; }
-            .admin-nav a { margin: 0 10px; }
-        }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #2c5f2d; color: white; }
+        .btn-edit { background: #ff9800; color: white; padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-delete { background: #f44336; color: white; padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; margin-left: 5px; }
+        .alert { padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-success { background: #d4edda; color: #155724; }
+        @media (max-width: 768px) { th, td { font-size: 12px; } }
     </style>
 </head>
 <body>
-    <nav class="admin-nav">
-        <h2><i class="fas fa-store"></i> Kelola Data UMKM Desa Depok</h2>
+    <nav class="navbar">
+        <div style="display:flex;align-items:center;gap:10px">
+            <div class="logo-icon">🏪</div>
+            <div class="logo-text"><h2>Kelola UMKM</h2><p>Desa Depok</p></div>
+        </div>
         <div>
-            <span><i class="fas fa-user-shield"></i> Halo, Admin</span>
-            <a href="dashboard.html" class="back-btn"><i class="fas fa-chart-line"></i> Dashboard</a>
-            <a href="index.html"><i class="fas fa-home"></i> Lihat Website</a>
-            <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="admin.html" style="margin-right:15px;">Kelola Produk</a>
+            <a href="laporan.html" style="margin-right:15px;">Laporan</a>
+            <a href="login.html" class="btn-logout">Logout</a>
         </div>
     </nav>
-
     <div class="container">
-        <div class="page-header">
-            <h1><i class="fas fa-store"></i> Manajemen Data UMKM</h1>
-            <button class="btn-add" onclick="openAddModal()"><i class="fas fa-plus-circle"></i> Tambah UMKM</button>
+        <div id="alert" class="alert" style="display:none"></div>
+        <div class="form-card">
+            <h2>➕ Tambah / Edit UMKM</h2>
+            <form id="umkmForm">
+                <input type="hidden" id="umkmId">
+                <div class="form-grid">
+                    <div class="form-group"><input type="text" id="namaUmkm" placeholder="Nama UMKM" required></div>
+                    <div class="form-group"><input type="text" id="pemilik" placeholder="Nama Pemilik" required></div>
+                    <div class="form-group"><input type="text" id="kontakUmkm" placeholder="No. HP / WA" required></div>
+                    <div class="form-group"><input type="text" id="alamat" placeholder="Alamat (Desa/Kecamatan)"></div>
+                </div>
+                <button type="submit" class="btn-submit">💾 Simpan UMKM</button>
+            </form>
         </div>
-
-        <div class="umkm-table">
+        <div class="table-card">
+            <h3>📋 Daftar UMKM</h3>
             <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Logo</th>
-                        <th>Nama UMKM</th>
-                        <th>Alamat</th>
-                        <th>Pemilik</th>
-                        <th>Kontak</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>No</th><th>Nama UMKM</th><th>Pemilik</th><th>Kontak</th><th>Alamat</th><th>Aksi</th></tr></thead>
                 <tbody id="umkmTableBody"></tbody>
             </table>
         </div>
     </div>
-
-    <footer class="footer">
-        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
-    </footer>
-
-    <!-- Modal Tambah/Edit UMKM -->
-    <div id="umkmModal" class="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle">Tambah UMKM</h3>
-            <input type="hidden" id="umkmId">
-            <input type="text" id="umkmName" placeholder="Nama UMKM" required>
-            <input type="text" id="umkmOwner" placeholder="Nama Pemilik" required>
-            <textarea id="umkmAddress" rows="3" placeholder="Alamat Lengkap" required></textarea>
-            <input type="text" id="umkmPhone" placeholder="No. Telepon / WhatsApp" required>
-            <input type="text" id="umkmEmail" placeholder="Email">
-            <input type="text" id="umkmInstagram" placeholder="Instagram (opsional)">
-            <textarea id="umkmDescription" rows="3" placeholder="Deskripsi UMKM"></textarea>
-            <select id="umkmCategory">
-                <option value="Kuliner">🍽️ Kuliner</option>
-                <option value="Kerajinan Tangan">🎨 Kerajinan Tangan</option>
-                <option value="Pertanian">🌾 Pertanian</option>
-                <option value="Fashion">👗 Fashion</option>
-                <option value="Lainnya">📦 Lainnya</option>
-            </select>
-            <div style="margin-top: 20px;">
-                <button class="btn-save" onclick="saveUmkm()"><i class="fas fa-save"></i> Simpan</button>
-                <button class="btn-cancel" onclick="closeModal()"><i class="fas fa-times"></i> Batal</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Data UMKM default
-        const defaultUmkm = [
-            { id: 1, name: "Bakso Mak Siti Depok", owner: "Siti Fatimah", address: "Jl. Raya Depok No. 12, Desa Depok, Kecamatan Kandeman, Kabupaten Batang", phone: "0857-4871-0963", email: "baksomaksiti@gmail.com", instagram: "@baksomaksiti", description: "Bakso sapi pilihan dengan tekstur kenyal dan lembut. Berdiri sejak 2015.", category: "Kuliner" },
-            { id: 2, name: "Mie Ayam Ceker Mak Siti", owner: "Siti Fatimah", address: "Jl. Raya Depok No. 12, Desa Depok, Kecamatan Kandeman, Kabupaten Batang", phone: "0857-4871-0963", email: "mieayammaksiti@gmail.com", instagram: "@mieayammaksiti", description: "Mie ayam ceker empuk meresap dengan bumbu rempah pilihan.", category: "Kuliner" },
-            { id: 3, name: "UMKM Minuman Depok Segar", owner: "Ahmad Rifa'i", address: "Jl. Kandeman No. 5, Desa Depok, Kecamatan Kandeman, Kabupaten Batang", phone: "0857-1234-5678", email: "minumandepok@gmail.com", instagram: "@minumandepok", description: "Minuman segar dari bahan-bahan alami pilihan.", category: "Kuliner" },
-            { id: 4, name: "Kerajinan Bambu Depok", owner: "Slamet Riyadi", address: "Dusun Krajan RT 03 RW 02, Desa Depok, Kecamatan Kandeman, Kabupaten Batang", phone: "0857-9876-5432", email: "kerajinanbambu@gmail.com", instagram: "@kerajinanbambu", description: "Kerajinan anyaman bambu berkualitas tinggi.", category: "Kerajinan Tangan" },
-            { id: 5, name: "Pertanian Organik Depok", owner: "Sukirno", address: "Dusun Sidomulyo RT 01 RW 01, Desa Depok, Kecamatan Kandeman, Kabupaten Batang", phone: "0857-5678-1234", email: "pertanianorganik@gmail.com", instagram: "@pertanianorganik", description: "Hasil pertanian organik dari Desa Depok.", category: "Pertanian" }
-        ];
-
+        if (!localStorage.getItem('adminLoggedIn')) window.location.href = "login.html";
         let umkmList = [];
-
         function loadUmkm() {
-            const stored = localStorage.getItem('umkm_data');
-            if (stored) {
-                umkmList = JSON.parse(stored);
-            } else {
-                umkmList = defaultUmkm;
-                localStorage.setItem('umkm_data', JSON.stringify(umkmList));
+            const stored = localStorage.getItem('umkm_list');
+            if (stored) umkmList = JSON.parse(stored);
+            else {
+                umkmList = [
+                    { id:1, nama:"Bakso Mak Siti", pemilik:"Siti Aminah", kontak:"0857-4871-0963", alamat:"Desa Depok" },
+                    { id:2, nama:"Mie Ayam Ceker Mak Siti", pemilik:"Siti Aminah", kontak:"0857-4871-0963", alamat:"Desa Depok" },
+                    { id:3, nama:"UMKM Minuman Depok Segar", pemilik:"Ahmad", kontak:"0857-4871-0963", alamat:"Desa Depok" }
+                ];
+                localStorage.setItem('umkm_list', JSON.stringify(umkmList));
             }
-            renderTable();
+            renderUmkm();
         }
-
-        function saveToLocalStorage() {
-            localStorage.setItem('umkm_data', JSON.stringify(umkmList));
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function renderTable() {
+        function renderUmkm() {
             const tbody = document.getElementById('umkmTableBody');
-            if (umkmList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="empty-row">Belum ada data UMKM. Silakan tambah UMKM baru.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = umkmList.map((u, index) => `
+            if (!umkmList.length) { tbody.innerHTML = '<tr><td colspan="6">Belum ada UMKM</td></tr>'; return; }
+            tbody.innerHTML = umkmList.map((u, idx) => `
                 <tr>
-                    <td>${index + 1}</td>
-                    <td class="umkm-icon">${u.category === 'Kuliner' ? '🍽️' : u.category === 'Kerajinan Tangan' ? '🎨' : u.category === 'Pertanian' ? '🌾' : u.category === 'Fashion' ? '👗' : '📦'}</td>
+                    <td>${idx+1}</td>
+                    <td>${u.nama}</td>
+                    <td>${u.pemilik}</td>
+                    <td>${u.kontak}</td>
+                    <td>${u.alamat}</td>
                     <td>
-                        <div class="umkm-name">${escapeHtml(u.name)}</div>
-                        <div class="umkm-address"><i class="fas fa-tag"></i> ${escapeHtml(u.category)}</div>
-                    </td>
-                    <td style="font-size:0.85rem; color:#555;">${escapeHtml(u.address)}</td>
-                    <td>${escapeHtml(u.owner)}</td>
-                    <td>
-                        <div><i class="fab fa-whatsapp" style="color:#25D366;"></i> ${escapeHtml(u.phone)}</div>
-                        ${u.email ? `<div style="font-size:0.8rem; color:#666;"><i class="fas fa-envelope"></i> ${escapeHtml(u.email)}</div>` : ''}
-                    </td>
-                    <td>
-                        <button class="btn-edit" onclick="editUmkm(${u.id})"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-delete" onclick="deleteUmkm(${u.id})"><i class="fas fa-trash"></i> Hapus</button>
+                        <button class="btn-edit" onclick="editUmkm(${u.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteUmkm(${u.id})">Hapus</button>
                     </td>
                 </tr>
             `).join('');
         }
-
-        function openAddModal() {
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah UMKM';
-            document.getElementById('umkmId').value = '';
-            document.getElementById('umkmName').value = '';
-            document.getElementById('umkmOwner').value = '';
-            document.getElementById('umkmAddress').value = '';
-            document.getElementById('umkmPhone').value = '';
-            document.getElementById('umkmEmail').value = '';
-            document.getElementById('umkmInstagram').value = '';
-            document.getElementById('umkmDescription').value = '';
-            document.getElementById('umkmCategory').value = 'Kuliner';
-            document.getElementById('umkmModal').style.display = 'flex';
-        }
-
-        function editUmkm(id) {
-            const u = umkmList.find(x => x.id === id);
-            if (!u) return;
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit UMKM';
-            document.getElementById('umkmId').value = u.id;
-            document.getElementById('umkmName').value = u.name;
-            document.getElementById('umkmOwner').value = u.owner || '';
-            document.getElementById('umkmAddress').value = u.address || '';
-            document.getElementById('umkmPhone').value = u.phone || '';
-            document.getElementById('umkmEmail').value = u.email || '';
-            document.getElementById('umkmInstagram').value = u.instagram || '';
-            document.getElementById('umkmDescription').value = u.description || '';
-            document.getElementById('umkmCategory').value = u.category || 'Kuliner';
-            document.getElementById('umkmModal').style.display = 'flex';
-        }
-
         function saveUmkm() {
+            localStorage.setItem('umkm_list', JSON.stringify(umkmList));
+            renderUmkm();
+        }
+        document.getElementById('umkmForm').addEventListener('submit', (e) => {
+            e.preventDefault();
             const id = document.getElementById('umkmId').value;
-            const newUmkm = {
+            const data = {
                 id: id ? parseInt(id) : Date.now(),
-                name: document.getElementById('umkmName').value.trim(),
-                owner: document.getElementById('umkmOwner').value.trim(),
-                address: document.getElementById('umkmAddress').value.trim(),
-                phone: document.getElementById('umkmPhone').value.trim(),
-                email: document.getElementById('umkmEmail').value.trim(),
-                instagram: document.getElementById('umkmInstagram').value.trim(),
-                description: document.getElementById('umkmDescription').value.trim(),
-                category: document.getElementById('umkmCategory').value
+                nama: document.getElementById('namaUmkm').value,
+                pemilik: document.getElementById('pemilik').value,
+                kontak: document.getElementById('kontakUmkm').value,
+                alamat: document.getElementById('alamat').value
             };
-
-            if (!newUmkm.name || !newUmkm.address || !newUmkm.phone) {
-                alert('Nama UMKM, alamat, dan kontak harus diisi!');
-                return;
-            }
-
             if (id) {
-                const index = umkmList.findIndex(u => u.id === parseInt(id));
-                umkmList[index] = newUmkm;
+                const index = umkmList.findIndex(u => u.id == id);
+                if (index !== -1) umkmList[index] = data;
+                showAlert('UMKM berhasil diupdate');
             } else {
-                umkmList.push(newUmkm);
+                umkmList.push(data);
+                showAlert('UMKM berhasil ditambahkan');
             }
-
-            saveToLocalStorage();
-            renderTable();
-            closeModal();
-            alert('Data UMKM berhasil disimpan!');
+            saveUmkm();
+            document.getElementById('umkmForm').reset();
+            document.getElementById('umkmId').value = '';
+        });
+        function editUmkm(id) {
+            const u = umkmList.find(u => u.id === id);
+            if (u) {
+                document.getElementById('umkmId').value = u.id;
+                document.getElementById('namaUmkm').value = u.nama;
+                document.getElementById('pemilik').value = u.pemilik;
+                document.getElementById('kontakUmkm').value = u.kontak;
+                document.getElementById('alamat').value = u.alamat;
+            }
         }
-
         function deleteUmkm(id) {
-            if (confirm('Yakin ingin menghapus data UMKM ini?')) {
+            if (confirm('Hapus UMKM ini? Data produk yang terkait juga akan dihapus (jika ada).')) {
                 umkmList = umkmList.filter(u => u.id !== id);
-                saveToLocalStorage();
-                renderTable();
-                alert('Data UMKM berhasil dihapus!');
+                // Hapus juga produk yang terkait dengan UMKM ini
+                const products = JSON.parse(localStorage.getItem('umkm_products') || '[]');
+                const namaUmkm = umkmList.find(u => u.id === id)?.nama || '';
+                const newProducts = products.filter(p => p.umkm_name !== namaUmkm);
+                localStorage.setItem('umkm_products', JSON.stringify(newProducts));
+                saveUmkm();
+                showAlert('UMKM dan produk terkait dihapus');
             }
         }
-
-        function closeModal() {
-            document.getElementById('umkmModal').style.display = 'none';
+        function showAlert(msg) {
+            const alertDiv = document.getElementById('alert');
+            alertDiv.className = 'alert alert-success';
+            alertDiv.style.display = 'block';
+            alertDiv.innerHTML = msg;
+            setTimeout(() => alertDiv.style.display = 'none', 2000);
         }
-
-        window.onclick = function(event) {
-            if (event.target === document.getElementById('umkmModal')) {
-                closeModal();
-            }
-        };
-
-        // Cek login
-        function checkLogin() {
-            const isLoggedIn = localStorage.getItem('admin_logged_in');
-            if (isLoggedIn !== 'true') {
-                window.location.href = 'login.html';
-            }
-        }
-
-        checkLogin();
         loadUmkm();
     </script>
 </body>
