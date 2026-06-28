@@ -3,290 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Produk - Admin Desa Depok</title>
+    <title>Admin Panel - UMKM Desa Depok</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Poppins',sans-serif; background:#f0f7f0; }
-        .navbar { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-        .logo-icon { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; }
-        .nav-links a { text-decoration:none; color:#333; margin-left:20px; font-weight:500; }
-        .btn-logout { background:#c62828; color:white !important; padding:10px 25px !important; border:none; border-radius:25px; cursor:pointer; font-weight:600; font-family:inherit; font-size:14px; transition:0.3s; display:inline-flex; align-items:center; gap:8px; }
-        .btn-logout:hover { background:#b71c1c !important; transform:translateY(-2px); box-shadow:0 5px 15px rgba(198,40,40,0.3); }
-        .container { max-width:1200px; margin:0 auto; padding:30px 5%; }
-        .page-title { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:30px; }
-        .page-title h2 { color:#1a3b1a; }
-        .btn-primary { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:12px 25px; border:none; border-radius:10px; cursor:pointer; font-weight:600; transition:0.3s; font-family:inherit; }
-        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(44,95,45,0.3); }
-        .btn-danger { background:#c62828; color:white; padding:8px 15px; border:none; border-radius:8px; cursor:pointer; font-weight:500; transition:0.3s; }
-        .btn-danger:hover { background:#b71c1c; }
-        .btn-edit { background:#f9a825; color:white; padding:8px 15px; border:none; border-radius:8px; cursor:pointer; font-weight:500; transition:0.3s; }
-        .btn-edit:hover { background:#f57f17; }
-        .table-wrapper { background:white; border-radius:20px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.05); overflow-x:auto; }
-        table { width:100%; border-collapse:collapse; }
-        th { background:#2c5f2d; color:white; padding:12px 15px; text-align:left; }
-        td { padding:12px 15px; border-bottom:1px solid #eee; }
-        tr:hover td { background:#f8faf8; }
-        .empty-state { text-align:center; padding:40px; color:#888; }
-        .empty-state i { font-size:3rem; display:block; margin-bottom:15px; color:#ccc; }
-        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; }
-        .modal.show { display:flex; }
-        .modal-content { background:white; padding:35px; border-radius:20px; width:90%; max-width:500px; max-height:90vh; overflow-y:auto; }
-        .modal-content h3 { margin-bottom:20px; color:#1a3b1a; }
-        .modal-content .form-group { margin-bottom:15px; }
-        .modal-content label { display:block; margin-bottom:5px; font-weight:500; color:#333; }
-        .modal-content input { width:100%; padding:10px 15px; border:2px solid #e0e0e0; border-radius:8px; font-family:inherit; }
-        .modal-content input:focus { outline:none; border-color:#2c5f2d; }
-        .modal-actions { display:flex; gap:10px; margin-top:20px; }
-        .modal-actions button { flex:1; padding:12px; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-family:inherit; }
-        .btn-cancel { background:#e0e0e0; color:#333; }
-        .btn-cancel:hover { background:#bdbdbd; }
-        .btn-save { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; }
-        .btn-save:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(44,95,45,0.3); }
-        .alert { padding:12px 15px; border-radius:10px; margin-bottom:20px; display:none; }
-        .alert.success { background:#e8f5e9; color:#2c5f2d; display:block; border-left:4px solid #2c5f2d; }
-        .alert.error { background:#ffebee; color:#c62828; display:block; border-left:4px solid #c62828; }
-        .back-link { margin-top:20px; display:inline-block; color:#2c5f2d; text-decoration:none; }
-        .back-link:hover { text-decoration:underline; }
-        @media (max-width:768px){ .page-title { flex-direction:column; align-items:stretch; } .btn-primary { width:100%; text-align:center; } .navbar { padding:15px; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+        .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
+        .logo-text p { font-size: 0.7em; color: #666; }
+        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 500; }
+        .btn-logout { background: #f44336; padding: 8px 20px; border-radius: 25px; color: white !important; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 5%; }
+        .admin-header { background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .form-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-card h2 { color: #1a3b1a; margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.85em; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; }
+        .btn-submit { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 12px 25px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-delete { background: #f44336; color: white; padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; margin-left: 5px; }
+        .btn-edit { background: #ff9800; color: white; padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #2c5f2d; color: white; }
+        tr:hover { background: #f5f5f5; }
+        .alert { padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none; }
+        .alert-success { background: #d4edda; color: #155724; display: block; }
+        @media (max-width: 768px) { th, td { font-size: 12px; } .form-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <div class="logo-icon">📦</div>
-            <h2>Kelola Produk</h2>
+        <div class="logo">
+            <div class="logo-icon">🏪</div>
+            <div class="logo-text">
+                <h2>Admin UMKM Desa Depok</h2>
+                <p>Panel Manajemen Produk</p>
+            </div>
         </div>
         <div class="nav-links">
-            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <button onclick="logout()" class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
+            <a href="index.html"><i class="fas fa-home"></i> Lihat Website</a>
+            <a href="login.html" class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
 
     <div class="container">
-        <div class="page-title">
-            <h2><i class="fas fa-boxes"></i> Data Produk</h2>
-            <button class="btn-primary" onclick="openModal()"><i class="fas fa-plus"></i> Tambah Produk</button>
+        <div class="admin-header">
+            <h2><i class="fas fa-store"></i> Manajemen Produk UMKM</h2>
+            <p>Total Produk: <strong id="totalCount">0</strong></p>
         </div>
 
         <div id="alert" class="alert"></div>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>No</th><th>Nama Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Aksi</th></tr>
-                </thead>
-                <tbody id="productTableBody">
-                    <tr><td colspan="6" class="empty-state"><i class="fas fa-box"></i>Belum ada data produk.</td></tr>
-                </tbody>
-            </table>
+        <!-- Form Tambah/Edit Produk -->
+        <div class="form-card">
+            <h2 id="formTitle">➕ Tambah Produk Baru</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId" value="">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nama Produk</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Harga (Rp)</label>
+                        <input type="number" id="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama UMKM</label>
+                        <input type="text" id="umkm_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kontak (No. HP)</label>
+                        <input type="text" id="contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ikon/Emoji</label>
+                        <input type="text" id="icon" placeholder="🍜" maxlength="2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">💾 Simpan Produk</button>
+            </form>
         </div>
 
-        <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
-    </div>
-
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <h3 id="modalTitle"><i class="fas fa-plus"></i> Tambah Produk</h3>
-            <form id="productForm">
-                <input type="hidden" id="editIndex" value="-1">
-                <div class="form-group">
-                    <label>Nama Produk</label>
-                    <input type="text" id="namaProduk" placeholder="Masukkan nama produk" required>
-                </div>
-                <div class="form-group">
-                    <label>Kategori</label>
-                    <input type="text" id="kategoriProduk" placeholder="Contoh: Makanan" required>
-                </div>
-                <div class="form-group">
-                    <label>Harga</label>
-                    <input type="number" id="harga" placeholder="Masukkan harga" required>
-                </div>
-                <div class="form-group">
-                    <label>Stok</label>
-                    <input type="number" id="stok" placeholder="Masukkan stok" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="closeModal()">Batal</button>
-                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Simpan</button>
-                </div>
-            </form>
+        <!-- Tabel Produk -->
+        <div style="background: white; border-radius: 15px; overflow-x: auto; padding: 20px;">
+            <h3>📋 Daftar Produk</h3>
+            <table>
+                <thead>
+                    <tr><th>No</th><th>Ikon</th><th>Nama Produk</th><th>UMKM</th><th>Harga</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="productTable"></tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        // 1. CEK LOGIN - SAMA SEPERTI DI DASHBOARD
-        // ============================================================
-        (function checkLogin() {
-            const isLoggedIn = localStorage.getItem('admin_logged_in');
-            console.log('🔍 [admin.html] admin_logged_in =', isLoggedIn);
-            
-            if (isLoggedIn !== 'true') {
-                console.warn('❌ Belum login, redirect ke login.html');
-                window.location.href = 'login.html';
+        // Cek login
+        if (!localStorage.getItem('adminLoggedIn')) {
+            window.location.href = "login.html";
+        }
+
+        // Data default
+        const defaultProducts = [
+            { id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan tekstur kenyal.", price:15000, icon:"🍜", bgGradient:"linear-gradient(135deg,#ff9a9e,#fecfef)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:2, name:"Bakso Urat", description:"Bakso urat dengan urat sapi asli.", price:20000, icon:"🥩", bgGradient:"linear-gradient(135deg,#fa709a,#fee140)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:3, name:"Bakso Jumbo", description:"Bakso jumbo 3x lipat.", price:35000, icon:"🍲", bgGradient:"linear-gradient(135deg,#f6d365,#fda085)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:4, name:"Mie Ayam Ceker", description:"Mie ayam ceker empuk meresap.", price:18000, icon:"🍗", bgGradient:"linear-gradient(135deg,#ffecd2,#fcb69f)", umkm_name:"Mie Ayam Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:5, name:"Es Teh Manis", description:"Teh hitam + gula aren.", price:3000, icon:"🧋", bgGradient:"linear-gradient(135deg,#a8edea,#fed6e3)", umkm_name:"UMKM Minuman", contact:"0857-4871-0963", category_name:"Minuman" }
+        ];
+
+        let products = [];
+
+        function loadProducts() {
+            const stored = localStorage.getItem('umkm_products');
+            if (stored && JSON.parse(stored).length > 0) {
+                products = JSON.parse(stored);
+            } else {
+                products = defaultProducts;
+                localStorage.setItem('umkm_products', JSON.stringify(products));
+            }
+            document.getElementById('totalCount').innerText = products.length;
+            displayTable();
+        }
+
+        function displayTable() {
+            const tbody = document.getElementById('productTable');
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Belum ada produk</td></tr>';
                 return;
             }
-            console.log('✅ Login valid, tampilkan halaman kelola produk.');
-        })();
-
-        // ============================================================
-        // 2. FUNGSI LOGOUT
-        // ============================================================
-        function logout() {
-            if (confirm('Apakah Anda yakin ingin logout?')) {
-                localStorage.removeItem('admin_logged_in');
-                localStorage.removeItem('admin_username');
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ============================================================
-        // 3. CRUD PRODUK
-        // ============================================================
-        const STORAGE_KEY = 'umkm_products';
-
-        function getData() {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        }
-
-        function saveData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
-
-        function renderTable() {
-            const data = getData();
-            const tbody = document.getElementById('productTableBody');
-            
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="fas fa-box"></i>Belum ada data produk.</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = data.map((item, index) => `
+            tbody.innerHTML = products.map((p, idx) => `
                 <tr>
-                    <td>${index + 1}</td>
-                    <td><strong>${item.nama || '-'}</strong></td>
-                    <td><span style="background:#e8f5e9; padding:4px 12px; border-radius:20px; font-size:0.85rem;">${item.kategori || '-'}</span></td>
-                    <td>Rp ${(item.harga || 0).toLocaleString('id-ID')}</td>
-                    <td>${item.stok || 0}</td>
+                    <td>${idx+1}</td>
+                    <td style="font-size:24px">${p.icon || '📦'}</td>
+                    <td>${p.name}</td>
+                    <td>${p.umkm_name}</td>
+                    <td>Rp ${p.price.toLocaleString('id-ID')}</td>
                     <td>
-                        <button class="btn-edit" onclick="editData(${index})"><i class="fas fa-edit"></i></button>
-                        <button class="btn-danger" onclick="deleteData(${index})"><i class="fas fa-trash"></i></button>
+                        <button class="btn-edit" onclick="editProduct(${p.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteProduct(${p.id})">Hapus</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function openModal(index = -1) {
-            const modal = document.getElementById('productModal');
-            const title = document.getElementById('modalTitle');
-            
-            if (index >= 0) {
-                const data = getData();
-                const item = data[index];
-                document.getElementById('editIndex').value = index;
-                document.getElementById('namaProduk').value = item.nama || '';
-                document.getElementById('kategoriProduk').value = item.kategori || '';
-                document.getElementById('harga').value = item.harga || '';
-                document.getElementById('stok').value = item.stok || '';
-                title.innerHTML = '<i class="fas fa-edit"></i> Edit Produk';
-            } else {
-                document.getElementById('editIndex').value = -1;
-                document.getElementById('productForm').reset();
-                title.innerHTML = '<i class="fas fa-plus"></i> Tambah Produk';
-            }
-            modal.classList.add('show');
-        }
-
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('show');
+        function saveToLocal() {
+            localStorage.setItem('umkm_products', JSON.stringify(products));
+            loadProducts();
         }
 
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const index = parseInt(document.getElementById('editIndex').value);
-            const data = getData();
-            
-            const newData = {
-                nama: document.getElementById('namaProduk').value.trim(),
-                kategori: document.getElementById('kategoriProduk').value.trim(),
-                harga: parseInt(document.getElementById('harga').value) || 0,
-                stok: parseInt(document.getElementById('stok').value) || 0
+            const id = document.getElementById('productId').value;
+            const product = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('name').value,
+                description: document.getElementById('description').value,
+                price: parseInt(document.getElementById('price').value),
+                icon: document.getElementById('icon').value || '📦',
+                bgGradient: "linear-gradient(135deg,#a8edea,#fed6e3)",
+                umkm_name: document.getElementById('umkm_name').value,
+                contact: document.getElementById('contact').value,
+                category_name: "Makanan & Minuman"
             };
-            
-            if (!newData.nama || !newData.kategori || newData.harga <= 0) {
-                showAlert('error', 'Semua field wajib diisi dengan benar!');
-                return;
-            }
-            
-            if (index >= 0) {
-                data[index] = newData;
-                showAlert('success', '✅ Data produk berhasil diperbarui!');
+            if (id) {
+                const index = products.findIndex(p => p.id == id);
+                if (index !== -1) products[index] = product;
+                showAlert('✅ Produk berhasil diupdate!');
             } else {
-                data.push(newData);
-                showAlert('success', '✅ Data produk berhasil ditambahkan!');
+                products.push(product);
+                showAlert('✅ Produk berhasil ditambahkan!');
             }
-            
-            saveData(data);
-            renderTable();
-            closeModal();
+            saveToLocal();
+            resetForm();
         });
 
-        function editData(index) {
-            openModal(index);
-        }
-
-        function deleteData(index) {
-            if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-                const data = getData();
-                data.splice(index, 1);
-                saveData(data);
-                renderTable();
-                showAlert('success', '✅ Data produk berhasil dihapus!');
+        function editProduct(id) {
+            const p = products.find(p => p.id === id);
+            if (p) {
+                document.getElementById('productId').value = p.id;
+                document.getElementById('name').value = p.name;
+                document.getElementById('description').value = p.description;
+                document.getElementById('price').value = p.price;
+                document.getElementById('icon').value = p.icon;
+                document.getElementById('umkm_name').value = p.umkm_name;
+                document.getElementById('contact').value = p.contact;
+                document.getElementById('formTitle').innerHTML = '✏️ Edit Produk';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
-        function showAlert(type, message) {
+        function deleteProduct(id) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                products = products.filter(p => p.id !== id);
+                saveToLocal();
+                showAlert('🗑️ Produk berhasil dihapus!');
+                resetForm();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('productId').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('icon').value = '';
+            document.getElementById('umkm_name').value = '';
+            document.getElementById('contact').value = '';
+            document.getElementById('formTitle').innerHTML = '➕ Tambah Produk Baru';
+        }
+
+        function showAlert(msg) {
             const alertDiv = document.getElementById('alert');
-            alertDiv.className = 'alert ' + type;
-            alertDiv.innerHTML = message;
-            alertDiv.style.display = 'block';
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-            }, 4000);
+            alertDiv.className = 'alert alert-success';
+            alertDiv.innerHTML = msg;
+            setTimeout(() => alertDiv.className = 'alert', 2000);
         }
 
-        // ============================================================
-        // 4. TUTUP MODAL SAAT KLIK DI LUAR
-        // ============================================================
-        document.getElementById('productModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUsername');
+            window.location.href = 'login.html';
         });
 
-        // ============================================================
-        // 5. KEYBOARD SHORTCUT
-        // ============================================================
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-            if (e.altKey && e.key === 'l') {
-                logout();
-            }
-        });
-
-        // ============================================================
-        // 6. RENDER TABLE SAAT HALAMAN DIMUAT
-        // ============================================================
-        renderTable();
-        console.log('✅ Halaman kelola produk siap digunakan.');
+        loadProducts();
     </script>
 </body>
 </html>
