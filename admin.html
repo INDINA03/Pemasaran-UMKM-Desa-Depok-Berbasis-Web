@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,6 @@
         th { background:#2c5f2d; color:white; }
         .btn-edit { background:#ff9800; color:white; padding:6px 14px; border:none; border-radius:20px; cursor:pointer; margin-right:8px; }
         .btn-delete { background:#f44336; color:white; padding:6px 14px; border:none; border-radius:20px; cursor:pointer; }
-        .login-warning { background:#fff3cd; border:2px solid #ffc107; border-radius:16px; padding:20px; margin-bottom:30px; text-align:center; }
         @media (max-width:768px){ th,td { font-size:12px; padding:8px; } }
     </style>
 </head>
@@ -36,16 +35,10 @@
         <div>
             <a href="dashboard.html">Dashboard</a>
             <a href="laporan.html">Laporan</a>
-            <a href="#" id="logoutBtn" class="btn-logout">Logout</a>
+            <a href="login.html" class="btn-logout">Logout</a>
         </div>
     </nav>
     <div class="container">
-        <!-- Peringatan jika belum login -->
-        <div id="loginWarning" class="login-warning" style="display:none;">
-            <p style="font-size:18px;font-weight:bold;">🔒 Anda belum login!</p>
-            <p>Silakan <a href="login.html" style="color:#2c5f2d;font-weight:bold;">Login di sini</a> untuk mengelola produk.</p>
-        </div>
-
         <div class="card">
             <h2 id="formTitle">Tambah Produk Baru</h2>
             <form id="productForm">
@@ -65,31 +58,16 @@
             <h3>Daftar Produk</h3>
             <div style="overflow-x:auto">
                 <table>
-                    <thead>
-                        <tr><th>No</th><th>Ikon</th><th>Nama</th><th>UMKM</th><th>Harga</th><th>Aksi</th></tr>
-                    </thead>
+                    <thead><tr><th>No</th><th>Ikon</th><th>Nama</th><th>UMKM</th><th>Harga</th><th>Aksi</th></tr></thead>
                     <tbody id="productTable"></tbody>
                 </table>
             </div>
         </div>
     </div>
     <script>
-        // ================================================================
-        // CEK SESSION TANPA REDIRECT - HANYA TAMPILKAN PERINGATAN
-        // ================================================================
-        const isLoggedIn = localStorage.getItem('adminLoggedIn');
-        
-        if (isLoggedIn !== 'true') {
-            // Tampilkan peringatan
-            document.getElementById('loginWarning').style.display = 'block';
-            // Nonaktifkan form dan tombol
-            document.getElementById('productForm').style.opacity = '0.5';
-            document.getElementById('productForm').style.pointerEvents = 'none';
-        }
-
-        // ================================================================
-        // SCRIPT NORMAL (tetap berjalan meskipun belum login)
-        // ================================================================
+        // =====================================================
+        // TIDAK ADA PENGECEKAN SESSION - LANGSUNG JALAN
+        // =====================================================
         let products = [];
 
         function loadProducts() {
@@ -128,17 +106,8 @@
             renderTable();
         }
 
-        // Event listener form (hanya jalan jika sudah login)
         document.getElementById('productForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Cek lagi apakah sudah login
-            if (localStorage.getItem('adminLoggedIn') !== 'true') {
-                alert('Silakan login terlebih dahulu!');
-                window.location.href = 'login.html';
-                return;
-            }
-
             const id = document.getElementById('productId').value;
             const product = {
                 id: id ? parseInt(id) : Date.now(),
@@ -163,12 +132,6 @@
         });
 
         function editProduct(id) {
-            // Cek login sebelum edit
-            if (localStorage.getItem('adminLoggedIn') !== 'true') {
-                alert('Silakan login terlebih dahulu!');
-                window.location.href = 'login.html';
-                return;
-            }
             const p = products.find(p => p.id === id);
             if (p) {
                 document.getElementById('productId').value = p.id;
@@ -184,24 +147,11 @@
         }
 
         function deleteProduct(id) {
-            // Cek login sebelum hapus
-            if (localStorage.getItem('adminLoggedIn') !== 'true') {
-                alert('Silakan login terlebih dahulu!');
-                window.location.href = 'login.html';
-                return;
-            }
             if (confirm('Hapus produk ini?')) {
                 products = products.filter(p => p.id !== id);
                 saveToLocal();
             }
         }
-
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('adminLoggedIn');
-            localStorage.removeItem('adminUsername');
-            window.location.href = 'login.html';
-        });
 
         loadProducts();
     </script>
