@@ -67,14 +67,14 @@
         </div>
     </div>
     <script>
-        // PENGECEKAN SESSION YANG LEBIH STABIL (TANPA REDIRECT PREMATUR)
-        (function() {
+        // ===== PENGECEKAN SESSION YANG LEBIH STABIL =====
+        // Cek session di awal, tapi beri jeda 0.5 detik agar localStorage terbaca
+        setTimeout(function() {
             const isLoggedIn = localStorage.getItem('adminLoggedIn');
             if (isLoggedIn !== 'true') {
                 window.location.href = "login.html";
-                return;
             }
-        })();
+        }, 500);
 
         let products = [];
 
