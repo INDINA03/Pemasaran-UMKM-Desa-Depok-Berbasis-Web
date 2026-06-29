@@ -124,7 +124,9 @@
     </footer>
 
     <script>
-        // Data produk dari localStorage atau default
+        // ================================================================
+        // DATA PRODUK DARI LOCALSTORAGE ATAU DEFAULT
+        // ================================================================
         const defaultProducts = [
             { id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan tekstur kenyal dan lembut. Kuah kaldu sapi gurih, dilengkapi mie, tahu, dan pangsit goreng.", price:15000, icon:"🍜", bgGradient:"linear-gradient(135deg, #ff9a9e, #fecfef)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
             { id:2, name:"Bakso Urat", description:"Bakso urat spesial dengan urat sapi asli, tekstur kenyal dan kres-kres. Kaya kolagen alami.", price:20000, icon:"🥩", bgGradient:"linear-gradient(135deg, #fa709a, #fee140)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
@@ -135,6 +137,9 @@
 
         let products = [];
 
+        // ================================================================
+        // LOAD PRODUK
+        // ================================================================
         function loadProducts() {
             try {
                 const stored = localStorage.getItem('umkm_products');
@@ -142,15 +147,19 @@
                     const parsed = JSON.parse(stored);
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         products = parsed;
+                        console.log('✅ Data dari localStorage:', products.length, 'produk');
                     } else {
                         products = defaultProducts;
                         localStorage.setItem('umkm_products', JSON.stringify(products));
+                        console.log('✅ Data kosong, pakai default');
                     }
                 } else {
                     products = defaultProducts;
                     localStorage.setItem('umkm_products', JSON.stringify(products));
+                    console.log('✅ Tidak ada data, pakai default');
                 }
             } catch(e) {
+                console.log('❌ Error:', e);
                 products = defaultProducts;
                 localStorage.setItem('umkm_products', JSON.stringify(products));
             }
@@ -158,21 +167,37 @@
             displayProducts(products);
         }
 
+        // ================================================================
+        // UPDATE STATISTIK
+        // ================================================================
         function updateStats() {
             document.getElementById('totalProducts').innerText = products.length || 0;
-            document.getElementById('totalUMKM').innerText = new Set(products.map(p => p.umkm_name)).size || 0;
-            document.getElementById('totalCategories').innerText = new Set(products.map(p => p.category_name)).size || 0;
+            const uniqueUmkm = new Set(products.map(p => p.umkm_name)).size;
+            document.getElementById('totalUMKM').innerText = uniqueUmkm || 0;
+            const uniqueCat = new Set(products.map(p => p.category_name)).size;
+            document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
+        // ================================================================
+        // TAMPILKAN PRODUK
+        // ================================================================
         function displayProducts(data) {
             const grid = document.getElementById('productGrid');
             if (!data || data.length === 0) {
-                grid.innerHTML = `<div style="text-align:center;padding:50px;background:white;border-radius:20px;grid-column:1/-1;"><i class="fas fa-box-open" style="font-size:60px;color:#ccc;margin-bottom:20px;"></i><h3>Belum ada produk</h3><p style="color:#999;">Silakan tambahkan produk melalui halaman admin.</p></div>`;
+                grid.innerHTML = `
+                    <div style="text-align:center;padding:50px;background:white;border-radius:20px;grid-column:1/-1;">
+                        <i class="fas fa-box-open" style="font-size:60px;color:#ccc;margin-bottom:20px;"></i>
+                        <h3>Belum ada produk</h3>
+                        <p style="color:#999;">Silakan tambahkan produk melalui halaman admin.</p>
+                    </div>
+                `;
                 return;
             }
             grid.innerHTML = data.map(p => `
                 <div class="product-card">
-                    <div class="product-image" style="background: ${p.bgGradient || 'linear-gradient(135deg, #667eea, #764ba2)'}">${p.icon || '📦'}</div>
+                    <div class="product-image" style="background: ${p.bgGradient || 'linear-gradient(135deg, #667eea, #764ba2)'}">
+                        ${p.icon || '📦'}
+                    </div>
                     <div class="product-info">
                         <h3>${p.name || 'Produk'}</h3>
                         <div class="price">Rp ${(p.price || 0).toLocaleString('id-ID')}</div>
@@ -183,15 +208,46 @@
             `).join('');
         }
 
+        // ================================================================
+        // FILTER / PENCARIAN
+        // ================================================================
         function filterProducts() {
             const s = document.getElementById('searchInput').value.toLowerCase().trim();
-            if (!s) { displayProducts(products); return; }
-            displayProducts(products.filter(p => (p.name || '').toLowerCase().includes(s) || (p.description || '').toLowerCase().includes(s) || (p.umkm_name || '').toLowerCase().includes(s)));
+            if (!s) {
+                displayProducts(products);
+                return;
+            }
+            const filtered = products.filter(p => 
+                (p.name || '').toLowerCase().includes(s) || 
+                (p.description || '').toLowerCase().includes(s) ||
+                (p.umkm_name || '').toLowerCase().includes(s)
+            );
+            displayProducts(filtered);
         }
 
-        document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); filterProducts(); });
+        // ================================================================
+        // EVENT LISTENERS
+        // ================================================================
+        document.getElementById('searchForm').addEventListener('submit', e => {
+            e.preventDefault();
+            filterProducts();
+        });
         document.getElementById('searchInput').addEventListener('input', filterProducts);
+
+        // ================================================================
+        // JALANKAN
+        // ================================================================
         loadProducts();
+
+        // Sinkron jika ada perubahan dari tab lain
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'umkm_products') {
+                console.log('🔄 Data produk berubah dari tab lain, reload...');
+                loadProducts();
+            }
+        });
+
+        console.log('✅ Halaman beranda siap!');
     </script>
 </body>
 </html>
