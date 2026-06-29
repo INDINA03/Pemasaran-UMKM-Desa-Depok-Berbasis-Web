@@ -127,24 +127,30 @@
         </div>
     </div>
     <script>
-        // =====================================================
-        // TIDAK ADA PENGECEKAN SESSION - LANGSUNG JALAN
-        // =====================================================
+        // ================================================================
+        // SOLUSI AKHIR: HAPUS SEMUA PENGECEKAN SESSION
+        // HANYA TAMPILKAN DATA DARI LOCALSTORAGE
+        // ================================================================
+        
         let umkmList = [];
 
         function loadUmkm() {
-            const stored = localStorage.getItem('umkm_list');
-            if (stored) {
-                umkmList = JSON.parse(stored);
-            } else {
+            try {
+                const stored = localStorage.getItem('umkm_list');
+                if (stored) {
+                    umkmList = JSON.parse(stored);
+                } else {
+                    umkmList = [];
+                }
+            } catch (e) {
                 umkmList = [];
-                localStorage.setItem('umkm_list', JSON.stringify(umkmList));
             }
             renderUmkm();
         }
 
         function renderUmkm() {
             const tbody = document.getElementById('umkmTable');
+            if (!tbody) return;
             if (umkmList.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">Belum ada UMKM</td></tr>';
                 return;
@@ -152,9 +158,9 @@
             tbody.innerHTML = umkmList.map((u, i) => `
                 <tr>
                     <td>${i + 1}</td>
-                    <td><strong>${u.nama}</strong></td>
-                    <td>${u.pemilik}</td>
-                    <td>${u.kontak}</td>
+                    <td><strong>${u.nama || '-'}</strong></td>
+                    <td>${u.pemilik || '-'}</td>
+                    <td>${u.kontak || '-'}</td>
                     <td>${u.alamat || '-'}</td>
                     <td>
                         <button class="btn-edit" onclick="editUmkm(${u.id})">Edit</button>
@@ -165,11 +171,15 @@
         }
 
         function saveUmkm() {
-            localStorage.setItem('umkm_list', JSON.stringify(umkmList));
+            try {
+                localStorage.setItem('umkm_list', JSON.stringify(umkmList));
+            } catch (e) {
+                console.log('Gagal menyimpan data');
+            }
             renderUmkm();
         }
 
-        document.getElementById('umkmForm').addEventListener('submit', (e) => {
+        document.getElementById('umkmForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('umkmId').value;
             const data = {
@@ -195,9 +205,9 @@
             const u = umkmList.find(u => u.id === id);
             if (u) {
                 document.getElementById('umkmId').value = u.id;
-                document.getElementById('namaUmkm').value = u.nama;
-                document.getElementById('pemilik').value = u.pemilik;
-                document.getElementById('kontakUmkm').value = u.kontak;
+                document.getElementById('namaUmkm').value = u.nama || '';
+                document.getElementById('pemilik').value = u.pemilik || '';
+                document.getElementById('kontakUmkm').value = u.kontak || '';
                 document.getElementById('alamat').value = u.alamat || '';
                 document.getElementById('formTitle').innerHTML = 'Edit UMKM';
                 window.scrollTo(0, 0);
@@ -206,13 +216,15 @@
 
         function deleteUmkm(id) {
             if (confirm('Hapus UMKM ini?')) {
-                // Hapus UMKM
                 umkmList = umkmList.filter(u => u.id !== id);
                 saveUmkm();
             }
         }
 
-        loadUmkm();
+        // Jalankan saat halaman selesai dimuat
+        window.addEventListener('load', function() {
+            loadUmkm();
+        });
     </script>
 </body>
 </html>
