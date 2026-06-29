@@ -3,43 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - UMKM Desa Depok</title>
+    <title>Beranda | UMKM Desa Depok</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
         .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
-        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: 0.3s;
+            line-height: 1;
+            padding-bottom: 5px;
+        }
         .nav-links a:hover { color: #2c5f2d; }
-        .nav-links .active { color: #2c5f2d; border-bottom: 2px solid #2c5f2d; padding-bottom: 5px; }
-        .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
+        .nav-links a.active {
+            color: #2c5f2d;
+            font-weight: 600;
+            border-bottom: 3px solid #2c5f2d;
+        }
+        .btn-outline {
+            border: 2px solid #2c5f2d;
+            padding: 8px 22px;
+            border-radius: 40px;
+            background: transparent;
+            margin-left: 10px;
+            border-bottom: 2px solid #2c5f2d;
+        }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
-        .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
+        .nav-links a.btn-outline {
+            padding-bottom: 8px;
+        }
+        
+        .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
+        .hero h1 { font-size: 2em; margin-bottom: 15px; }
+        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
+        .stat-number { font-size: 2.5em; font-weight: 700; }
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
-        .hero-small { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 60px 5%; text-align: center; }
-        .hero-small h1 { font-size: 2.5em; margin-bottom: 15px; }
-        .welcome-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
-        .welcome-card h2 { color: #1a3b1a; margin-bottom: 20px; }
-        .welcome-card p { color: #666; line-height: 1.8; margin-bottom: 15px; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
-        .feature-card { background: white; border-radius: 15px; padding: 30px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
-        .feature-card:hover { transform: translateY(-5px); }
-        .feature-icon { font-size: 50px; margin-bottom: 15px; }
-        .feature-card h3 { color: #1a3b1a; margin-bottom: 10px; }
-        .feature-card p { color: #666; font-size: 0.9em; }
+        .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); margin-top: -40px; position: relative; z-index: 10; }
+        .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-wrapper { flex: 3; position: relative; }
+        .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .search-wrapper input { width: 100%; padding: 14px 15px 14px 45px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; }
+        .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .section-title { text-align: center; margin: 50px 0 30px; }
+        .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
+        .section-title h2 { font-size: 1.8em; color: #1a3b1a; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; font-size: 85px; }
+        .product-info { padding: 20px; }
+        .price { font-size: 1.5em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
+        .description { color: #666; font-size: 0.9em; margin: 10px 0; line-height: 1.5; }
+        .whatsapp-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white; padding: 8px 18px; border-radius: 10px; text-decoration: none; margin-top: 15px; }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
-        @media (max-width: 768px) { .hero-small h1 { font-size: 1.5em; } }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.3em; }
+            .search-form { flex-direction: column; }
+            .product-grid { grid-template-columns: 1fr; }
+            .nav-links { gap: 20px; justify-content: center; }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">
+        <div class="logo" onclick="location.href='index.html'">
             <div class="logo-icon">🏪</div>
             <div class="logo-text">
                 <h2>UMKM Desa Depok</h2>
@@ -47,53 +91,163 @@
             </div>
         </div>
         <div class="nav-links">
-            <a href="beranda.html">Beranda</a>
+            <a href="beranda.html" class="active">Beranda</a>
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-            <a href="admin.html" class="btn-fill"><i class="fas fa-store"></i> Kelola UMKM</a>
         </div>
     </nav>
 
-    <section class="hero-small">
-        <h1>Selamat Datang di Website Resmi<br>UMKM Desa Depok</h1>
-        <p>Platform Pemasaran Produk Unggulan Warga Desa Depok</p>
+    <section class="hero">
+        <h1>Selamat Datang di Sistem Informasi Pemasaran UMKM Berbasis Website</h1>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-number" id="totalProducts">0</div><div>Produk</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalUMKM">0</div><div>UMKM</div></div>
+            <div class="stat-item"><div class="stat-number" id="totalCategories">0</div><div>Kategori</div></div>
+        </div>
     </section>
 
     <div class="container">
-        <div class="welcome-card">
-            <h2>📢 Apa itu UMKM Desa Depok?</h2>
-            <p>UMKM Desa Depok adalah platform digital yang menghubungkan produk unggulan warga Desa Depok, Kecamatan Kandeman, Kabupaten Batang dengan pembeli. Kami membantu pelaku UMKM lokal memasarkan produknya secara online agar lebih dikenal masyarakat luas.</p>
-            <p>Dengan website ini, Anda dapat melihat berbagai produk kuliner, kerajinan tangan, dan produk unggulan lainnya yang dibuat dengan penuh dedikasi oleh warga Desa Depok.</p>
+        <div class="search-section">
+            <form class="search-form" id="searchForm">
+                <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Cari produk..."></div>
+                <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari</button>
+            </form>
         </div>
-
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🍜</div>
-                <h3>Kuliner Lezat</h3>
-                <p>Bakso kenyal, mie ayam ceker empuk, es teh segar, dan aneka makanan khas Depok.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤝</div>
-                <h3>Langsung dari UMKM</h3>
-                <p>Produk langsung dari tangan-tangan terampil warga Desa Depok tanpa perantara.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚚</div>
-                <h3>Pesan Mudah</h3>
-                <p>Pesan langsung via WhatsApp, tersedia layanan antar untuk area Kandeman dan sekitarnya.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⭐</div>
-                <h3>Harga Terjangkau</h3>
-                <p>Harga bersahabat dengan kualitas terbaik, cocok untuk keluarga.</p>
-            </div>
-        </div>
+        <div class="section-title"><div class="badge"><i class="fas fa-utensils"></i> Menu Pilihan</div><h2>Produk Kuliner UMKM Desa Depok</h2></div>
+        <div class="product-grid" id="productGrid"></div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
-        <p style="margin-top: 10px; font-size: 0.8em;"><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
+        <p>&copy; 2026 UMKM Desa Depok - Kandeman, Batang</p>
+        <p><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
     </footer>
+
+    <script>
+        // ================================================================
+        // DATA PRODUK DARI LOCALSTORAGE ATAU DEFAULT
+        // ================================================================
+        const defaultProducts = [
+            { id:1, name:"Bakso Biasa Istimewa", description:"Bakso sapi pilihan tekstur kenyal dan lembut. Kuah kaldu sapi gurih, dilengkapi mie, tahu, dan pangsit goreng.", price:15000, icon:"🍜", bgGradient:"linear-gradient(135deg, #ff9a9e, #fecfef)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:2, name:"Bakso Urat", description:"Bakso urat spesial dengan urat sapi asli, tekstur kenyal dan kres-kres. Kaya kolagen alami.", price:20000, icon:"🥩", bgGradient:"linear-gradient(135deg, #fa709a, #fee140)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:3, name:"Bakso Jumbo", description:"Bakso jumbo ukuran 3x lipat! Diameter 5-7cm, dibuat dari daging sapi segar 95%. Satu porsi cukup untuk 2 orang.", price:35000, icon:"🍲", bgGradient:"linear-gradient(135deg, #f6d365, #fda085)", umkm_name:"Bakso Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:4, name:"Mie Ayam Ceker", description:"Mie ayam dengan topping ceker ayam super empuk meresap hingga ke tulang! Dimasak 3 jam dengan 12 bumbu rahasia.", price:18000, icon:"🍗", bgGradient:"linear-gradient(135deg, #ffecd2, #fcb69f)", umkm_name:"Mie Ayam Mak Siti", contact:"0857-4871-0963", category_name:"Makanan" },
+            { id:5, name:"Es Teh Manis", description:"Es teh manis dengan teh hitam premium, gula aren asli, dan es batu kristal. Tidak pahit, segar maksimal.", price:3000, icon:"🧋", bgGradient:"linear-gradient(135deg, #a8edea, #fed6e3)", umkm_name:"UMKM Minuman", contact:"0857-4871-0963", category_name:"Minuman" }
+        ];
+
+        let products = [];
+
+        // ================================================================
+        // LOAD PRODUK
+        // ================================================================
+        function loadProducts() {
+            try {
+                const stored = localStorage.getItem('umkm_products');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        products = parsed;
+                        console.log('✅ Data dari localStorage:', products.length, 'produk');
+                    } else {
+                        products = defaultProducts;
+                        localStorage.setItem('umkm_products', JSON.stringify(products));
+                        console.log('✅ Data kosong, pakai default');
+                    }
+                } else {
+                    products = defaultProducts;
+                    localStorage.setItem('umkm_products', JSON.stringify(products));
+                    console.log('✅ Tidak ada data, pakai default');
+                }
+            } catch(e) {
+                console.log('❌ Error:', e);
+                products = defaultProducts;
+                localStorage.setItem('umkm_products', JSON.stringify(products));
+            }
+            updateStats();
+            displayProducts(products);
+        }
+
+        // ================================================================
+        // UPDATE STATISTIK
+        // ================================================================
+        function updateStats() {
+            document.getElementById('totalProducts').innerText = products.length || 0;
+            const uniqueUmkm = new Set(products.map(p => p.umkm_name)).size;
+            document.getElementById('totalUMKM').innerText = uniqueUmkm || 0;
+            const uniqueCat = new Set(products.map(p => p.category_name)).size;
+            document.getElementById('totalCategories').innerText = uniqueCat || 0;
+        }
+
+        // ================================================================
+        // TAMPILKAN PRODUK (DIPERBAIKI DENGAN BACKTICK)
+        // ================================================================
+        function displayProducts(data) {
+            const grid = document.getElementById('productGrid');
+            if (!data || data.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align:center;padding:50px;background:white;border-radius:20px;grid-column:1/-1;">
+                        <i class="fas fa-box-open" style="font-size:60px;color:#ccc;margin-bottom:20px;"></i>
+                        <h3>Belum ada produk</h3>
+                        <p style="color:#999;">Silakan tambahkan produk melalui halaman admin.</p>
+                    </div>
+                `;
+                return;
+            }
+            grid.innerHTML = data.map(p => `
+                <div class="product-card">
+                    <div class="product-image" style="background: ${p.bgGradient || 'linear-gradient(135deg, #667eea, #764ba2)'}">
+                        ${p.icon || '📦'}
+                    </div>
+                    <div class="product-info">
+                        <h3>${p.name || 'Produk'}</h3>
+                        <div class="price">Rp ${(p.price || 0).toLocaleString('id-ID')}</div>
+                        <div class="description">${p.description || 'Deskripsi tidak tersedia'}</div>
+                        ${p.contact ? `<a href="https://wa.me/${p.contact.replace(/\D/g,'')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ================================================================
+        // FILTER / PENCARIAN
+        // ================================================================
+        function filterProducts() {
+            const s = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!s) {
+                displayProducts(products);
+                return;
+            }
+            const filtered = products.filter(p => 
+                (p.name || '').toLowerCase().includes(s) || 
+                (p.description || '').toLowerCase().includes(s) ||
+                (p.umkm_name || '').toLowerCase().includes(s)
+            );
+            displayProducts(filtered);
+        }
+
+        // ================================================================
+        // EVENT LISTENERS
+        // ================================================================
+        document.getElementById('searchForm').addEventListener('submit', e => {
+            e.preventDefault();
+            filterProducts();
+        });
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+
+        // ================================================================
+        // JALANKAN
+        // ================================================================
+        loadProducts();
+
+        // Sinkron jika ada perubahan dari tab lain
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'umkm_products') {
+                console.log('🔄 Data produk berubah dari tab lain, reload...');
+                loadProducts();
+            }
+        });
+
+        console.log('✅ Halaman beranda siap!');
+    </script>
 </body>
 </html>
