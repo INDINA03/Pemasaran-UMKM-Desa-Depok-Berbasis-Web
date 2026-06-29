@@ -42,15 +42,10 @@
         .menu-card p { font-size:0.9rem; opacity:0.7; }
         .menu-card:hover p { color:rgba(255,255,255,0.8); }
         .footer { text-align:center; margin-top:50px; padding:20px; color:#888; border-top:1px solid #e0e0e0; font-size:0.9rem; }
-        .debug-bar { background:#333; color:#0f0; padding:8px 15px; font-size:0.75rem; font-family:monospace; display:none; position:fixed; bottom:0; left:0; right:0; z-index:999; }
         @media (max-width:768px){ .navbar { padding:15px; } .nav-left h2 { font-size:1rem; } .btn-logout { padding:8px 15px !important; font-size:12px; } .stats-grid { grid-template-columns:repeat(2,1fr); gap:15px; } .stat-number { font-size:2rem; } .stat-card .stat-number.currency { font-size:1.5rem; } }
     </style>
 </head>
 <body>
-    <!-- DEBUG BAR -->
-    <div class="debug-bar" id="debugBar">Loading...</div>
-
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-left">
             <div class="logo-icon">🏪</div>
@@ -64,7 +59,6 @@
         </div>
     </nav>
 
-    <!-- CONTENT -->
     <div class="container">
         <div class="welcome-card">
             <h2><i class="fas fa-user-shield"></i> Halo, <span id="adminName">Admin</span>! <span class="admin-badge">ADMIN</span></h2>
@@ -90,7 +84,7 @@
             <div class="stat-card">
                 <div class="stat-icon">💰</div>
                 <div class="stat-number currency" id="totalNilai">Rp 0</div>
-                <div class="stat-label">Total Nilai</div>
+                <div class="stat-label">Total Nilai Produk</div>
             </div>
         </div>
 
@@ -120,54 +114,19 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok</p>
+        <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
     </div>
 
     <script>
         // ============================================================
-        // DEBUG FUNCTION
-        // ============================================================
-        function debugLog(msg) {
-            const bar = document.getElementById('debugBar');
-            bar.style.display = 'block';
-            bar.innerHTML = '🔍 ' + msg;
-            console.log('[DEBUG]', msg);
-        }
-
-        // ============================================================
-        // 1. CEK LOGIN - DENGAN LOCALSTORAGE & SESSIONSTORAGE
+        // 1. CEK LOGIN
         // ============================================================
         (function checkLogin() {
-            // Cek dari localStorage dulu
             let isLoggedIn = localStorage.getItem('admin_logged_in');
-            debugLog('localStorage admin_logged_in = ' + isLoggedIn);
-
-            // Jika tidak ada di localStorage, cek sessionStorage
-            if (isLoggedIn === null || isLoggedIn === undefined) {
-                isLoggedIn = sessionStorage.getItem('admin_logged_in');
-                debugLog('sessionStorage admin_logged_in = ' + isLoggedIn);
-                
-                // Jika ada di sessionStorage, pindahkan ke localStorage
-                if (isLoggedIn === 'true') {
-                    const username = sessionStorage.getItem('admin_username');
-                    localStorage.setItem('admin_logged_in', 'true');
-                    localStorage.setItem('admin_username', username);
-                    debugLog('✅ Memindahkan sessionStorage ke localStorage');
-                }
-            }
-
-            // Jika tetap tidak login, redirect
             if (isLoggedIn !== 'true') {
-                debugLog('❌ Belum login, redirect ke login.html');
-                // Hapus semua data yang tidak valid
-                localStorage.removeItem('admin_logged_in');
-                sessionStorage.removeItem('admin_logged_in');
                 window.location.href = 'login.html';
                 return;
             }
-
-            debugLog('✅ Login valid! Menampilkan dashboard.');
-            document.getElementById('debugBar').style.display = 'none';
         })();
 
         // ============================================================
@@ -177,9 +136,6 @@
             if (confirm('Apakah Anda yakin ingin logout?')) {
                 localStorage.removeItem('admin_logged_in');
                 localStorage.removeItem('admin_username');
-                sessionStorage.removeItem('admin_logged_in');
-                sessionStorage.removeItem('admin_username');
-                debugLog('👋 Logout, redirect ke login.html');
                 window.location.href = 'login.html';
             }
         }
@@ -189,54 +145,70 @@
         // ============================================================
         function getAdminName() {
             let name = localStorage.getItem('admin_username');
-            if (!name) name = sessionStorage.getItem('admin_username');
             if (!name) name = 'Admin';
             document.getElementById('adminName').textContent = name;
         }
         getAdminName();
 
         // ============================================================
-        // 4. UPDATE STATISTIK
+        // 4. UPDATE STATISTIK - DIPERBAIKI MENGGUNAKAN 'price'
         // ============================================================
         function updateStats() {
-            const products = JSON.parse(localStorage.getItem('umkm_products')) || [];
-            const umkm = JSON.parse(localStorage.getItem('umkm_data')) || [];
+            // Ambil data produk dari localStorage
+            let products = [];
+            try {
+                const stored = localStorage.getItem('umkm_products');
+                if (stored) {
+                    products = JSON.parse(stored);
+                }
+            } catch (e) {
+                products = [];
+            }
 
+            // Ambil data UMKM dari localStorage
+            let umkm = [];
+            try {
+                const storedUmkm = localStorage.getItem('umkm_list');
+                if (storedUmkm) {
+                    umkm = JSON.parse(storedUmkm);
+                }
+            } catch (e) {
+                umkm = [];
+            }
+
+            // Total Produk
             document.getElementById('totalProduk').textContent = products.length || 0;
+
+            // Total UMKM
             document.getElementById('totalUMKM').textContent = umkm.length || 0;
 
-            const allKategori = [...products.map(p => p.kategori), ...umkm.map(u => u.kategori)];
-            const uniqueKategori = new Set(allKategori.filter(k => k && k.trim() !== ''));
+            // Total Kategori (dari produk)
+            const allKategori = products.map(p => p.category_name).filter(k => k && k.trim() !== '');
+            const uniqueKategori = new Set(allKategori);
             document.getElementById('totalKategori').textContent = uniqueKategori.size || 0;
 
-            const totalNilai = products.reduce((sum, p) => sum + (Number(p.harga) || 0), 0);
+            // Total Nilai (gunakan 'price' bukan 'harga')
+            const totalNilai = products.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
             document.getElementById('totalNilai').textContent = 'Rp ' + totalNilai.toLocaleString('id-ID');
         }
         updateStats();
 
         // ============================================================
-        // 5. SHORTCUT ALT+L
-        // ============================================================
-        document.addEventListener('keydown', function(e) {
-            if (e.altKey && e.key === 'l') {
-                logout();
-            }
-        });
-
-        // ============================================================
-        // 6. CEK PERUBAHAN STORAGE DARI TAB LAIN
+        // 5. CEK PERUBAHAN STORAGE DARI TAB LAIN
         // ============================================================
         window.addEventListener('storage', function(e) {
             if (e.key === 'admin_logged_in' && e.newValue !== 'true') {
-                debugLog('⚠️ Login status berubah di tab lain');
                 window.location.href = 'login.html';
             }
-            if (e.key === 'umkm_products' || e.key === 'umkm_data') {
+            if (e.key === 'umkm_products' || e.key === 'umkm_list') {
                 updateStats();
             }
         });
 
-        debugLog('✅ Dashboard siap digunakan!');
+        // ============================================================
+        // 6. UPDATE STATISTIK SETIAP 10 DETIK
+        // ============================================================
+        setInterval(updateStats, 10000);
     </script>
 </body>
 </html>
