@@ -15,9 +15,24 @@
         .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
         .logo-text p { font-size: 0.7em; color: #666; }
         .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; padding-bottom: 5px; }
         .nav-links a:hover { color: #2c5f2d; }
-        .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
+        
+        /* ============================================= */
+        /* GARIS BAWAH UNTUK MENU YANG SEDANG AKTIF */
+        /* ============================================= */
+        .nav-links a.active {
+            color: #2c5f2d;
+            font-weight: 600;
+            border-bottom: 3px solid #2c5f2d;
+        }
+        
+        .btn-outline { 
+            border: 2px solid #2c5f2d; 
+            padding: 8px 20px; 
+            border-radius: 25px; 
+            background: transparent; 
+        }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
         .btn-fill { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); padding: 8px 20px; border-radius: 25px; color: white !important; }
         .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 50px 5%; text-align: center; }
@@ -59,9 +74,12 @@
             </div>
         </div>
         <div class="nav-links">
-            <a href="beranda.html" class="nav-link">Beranda</a>
-            <a href="tentang.html" class="nav-link">Tentang</a>
-            <a href="kontak.html" class="nav-link">Kontak</a>
+            <!-- ============================================= -->
+            <!-- BERANDA PAKAI class="active" = ADA GARIS BAWAH -->
+            <!-- ============================================= -->
+            <a href="beranda.html" class="active">Beranda</a>
+            <a href="tentang.html">Tentang</a>
+            <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
         </div>
     </nav>
@@ -175,13 +193,11 @@
                         products = parsed;
                         console.log('✅ Data produk dimuat dari localStorage:', products.length, 'produk');
                     } else {
-                        // Jika data kosong atau bukan array, gunakan default
                         products = defaultProducts;
                         localStorage.setItem('umkm_products', JSON.stringify(products));
                         console.log('✅ Data kosong, menggunakan default products');
                     }
                 } else {
-                    // Jika tidak ada data di localStorage, gunakan default
                     products = defaultProducts;
                     localStorage.setItem('umkm_products', JSON.stringify(products));
                     console.log('✅ Tidak ada data, menggunakan default products');
@@ -192,7 +208,6 @@
                 localStorage.setItem('umkm_products', JSON.stringify(products));
             }
 
-            // Update statistik dan tampilkan produk
             updateStats();
             displayProducts(products);
         }
@@ -276,7 +291,6 @@
         // ================================================================
         loadProducts();
 
-        // Jika ada perubahan di localStorage dari tab lain, reload data
         window.addEventListener('storage', function(e) {
             if (e.key === 'umkm_products') {
                 console.log('🔄 Data produk berubah dari tab lain, reload...');
