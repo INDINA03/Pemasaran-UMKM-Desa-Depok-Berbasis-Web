@@ -51,17 +51,11 @@
         .container { max-width:1200px; margin:0 auto; padding:30px 5%; }
         .card { background:white; border-radius:24px; padding:30px; margin-bottom:30px; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
         
-        /* ============================================= */
-        /* FORM DENGAN JARAK YANG LEGA */
-        /* ============================================= */
         .form-grid { 
             display:grid; 
             grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); 
-            gap:25px; /* jarak antar kolom */
-            margin-bottom:25px; /* jarak ke deskripsi */
-        }
-        .form-group { 
-            margin-bottom:0; 
+            gap:25px; 
+            margin-bottom:25px; 
         }
         .form-group label {
             display:block;
@@ -84,7 +78,6 @@
             border-color:#2c5f2d; 
             box-shadow:0 0 0 3px rgba(44,95,45,0.2); 
         }
-        /* Field Deskripsi dengan jarak atas yang cukup */
         .field-description {
             margin-top:15px;
             margin-bottom:10px;
@@ -108,13 +101,13 @@
             box-shadow:0 5px 20px rgba(44,95,45,0.3); 
         }
         table { width:100%; border-collapse:collapse; background:white; border-radius:20px; overflow:hidden; }
-        th, td { padding:14px; text-align:left; border-bottom:1px solid #e2e8f0; }
+        th, td { padding:12px 10px; text-align:left; border-bottom:1px solid #e2e8f0; font-size:0.9em; }
         th { background:#2c5f2d; color:white; }
-        .btn-edit { background:#ff9800; color:white; padding:6px 14px; border:none; border-radius:20px; cursor:pointer; margin-right:8px; transition:0.3s; }
+        .btn-edit { background:#ff9800; color:white; padding:5px 12px; border:none; border-radius:20px; cursor:pointer; margin-right:5px; transition:0.3s; font-size:0.8em; }
         .btn-edit:hover { background:#e68900; transform:scale(1.05); }
-        .btn-delete { background:#f44336; color:white; padding:6px 14px; border:none; border-radius:20px; cursor:pointer; transition:0.3s; }
+        .btn-delete { background:#f44336; color:white; padding:5px 12px; border:none; border-radius:20px; cursor:pointer; transition:0.3s; font-size:0.8em; }
         .btn-delete:hover { background:#d32f2f; transform:scale(1.05); }
-        @media (max-width:768px){ th,td { font-size:12px; padding:8px; } .nav-links a { padding:8px 14px; font-size:0.85em; } }
+        @media (max-width:768px){ th,td { font-size:11px; padding:6px; } .nav-links a { padding:8px 14px; font-size:0.85em; } }
     </style>
 </head>
 <body>
@@ -138,7 +131,6 @@
             <form id="productForm">
                 <input type="hidden" id="productId">
                 
-                <!-- Grid 2 kolom untuk field atas -->
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nama Produk</label>
@@ -162,7 +154,6 @@
                     </div>
                 </div>
 
-                <!-- Deskripsi di bawah dengan jarak yang cukup -->
                 <div class="field-description">
                     <label style="font-weight:600;font-size:0.9em;display:block;margin-bottom:6px;">Deskripsi</label>
                     <textarea id="description" rows="4" placeholder="Tulis deskripsi produk di sini..."></textarea>
@@ -175,7 +166,18 @@
             <h3>📋 Daftar Produk</h3>
             <div style="overflow-x:auto">
                 <table>
-                    <thead><tr><th>No</th><th>Ikon</th><th>Nama</th><th>UMKM</th><th>Harga</th><th>Aksi</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Ikon</th>
+                            <th>Nama</th>
+                            <th>UMKM</th>
+                            <th>Kontak</th>
+                            <th>Harga</th>
+                            <th>Deskripsi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
                     <tbody id="productTable"></tbody>
                 </table>
             </div>
@@ -200,16 +202,18 @@
         function renderTable() {
             const tbody = document.getElementById('productTable');
             if (products.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">Belum ada produk</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">Belum ada produk</td></tr>';
                 return;
             }
             tbody.innerHTML = products.map((p, i) => `
                 <tr>
                     <td>${i + 1}</td>
-                    <td style="font-size:24px">${p.icon || '📦'}</td>
-                    <td>${p.name}</td>
+                    <td style="font-size:24px;text-align:center;">${p.icon || '📦'}</td>
+                    <td><strong>${p.name}</strong></td>
                     <td>${p.umkm_name}</td>
+                    <td>${p.contact || '-'}</td>
                     <td>Rp ${p.price.toLocaleString('id-ID')}</td>
+                    <td style="max-width:200px;font-size:0.85em;color:#555;">${p.description || '-'}</td>
                     <td>
                         <button class="btn-edit" onclick="editProduct(${p.id})">Edit</button>
                         <button class="btn-delete" onclick="deleteProduct(${p.id})">Hapus</button>
