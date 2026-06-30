@@ -37,12 +37,34 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
         .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .product-image { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 75px; background: linear-gradient(135deg, #f6d365, #fda085); }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ================================================================ */
+        /* PERBAIKAN GAMBAR - FULL TAMPIL */
+        /* ================================================================ */
+        .product-image { 
+            width: 100%; 
+            height: 220px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+        .product-image .no-image {
+            font-size: 60px;
+            color: #ccc;
+        }
+
         .product-info { padding: 20px; }
         .product-info h3 { font-size: 1.2em; color: #1a3b1a; }
         .price { font-size: 1.4em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
-        .description { color: #666; font-size: 0.85em; margin: 10px 0; line-height: 1.5; }
+        .description { color: #666; font-size: 0.85em; margin: 10px 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .umkm-name, .contact { font-size: 0.85em; margin: 5px 0; display: flex; align-items: center; gap: 5px; }
         .category-tag { display: inline-block; background: #e8f5e9; color: #2c5f2d; padding: 4px 10px; border-radius: 20px; font-size: 0.7em; margin-top: 10px; }
         .whatsapp-btn { display: inline-flex; align-items: center; gap: 5px; background: #25D366; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; margin-top: 12px; font-size: 0.8em; }
@@ -145,19 +167,14 @@
         // UPDATE STATISTIK
         // ================================================================
         function updateStats() {
-            // Total Produk
             document.getElementById('totalProducts').innerText = products.length || 0;
-
-            // Total UMKM (dari data umkm_list, BUKAN dari produk)
             document.getElementById('totalUMKM').innerText = umkmList.length || 0;
-
-            // Total Kategori (dari produk)
             const uniqueCat = new Set(products.map(p => p.category_name)).size;
             document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
         // ================================================================
-        // TAMPILKAN PRODUK
+        // TAMPILKAN PRODUK - GAMBAR FULL
         // ================================================================
         function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
@@ -174,10 +191,14 @@
                 return;
             }
 
-            grid.innerHTML = productsToShow.map(p => `
+            grid.innerHTML = productsToShow.map(p => {
+                // Cek apakah ada gambar
+                const hasImage = p.image && p.image !== '📦' && p.image.startsWith('data:image');
+                
+                return `
                 <div class="product-card">
                     <div class="product-image">
-                        ${p.image && p.image !== '📦' ? `<img src="${p.image}" alt="${p.name}">` : (p.icon || '📦')}
+                        ${hasImage ? `<img src="${p.image}" alt="${p.name}">` : `<span class="no-image">${p.icon || '📦'}</span>`}
                     </div>
                     <div class="product-info">
                         <h3>${p.name || 'Produk'}</h3>
@@ -189,7 +210,7 @@
                         ${p.contact ? `<a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a>` : ''}
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // ================================================================
