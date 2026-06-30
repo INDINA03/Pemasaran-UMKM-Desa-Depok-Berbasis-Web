@@ -102,30 +102,40 @@
 
     <script>
         // ================================================================
-        // TIDAK ADA DATA DEFAULT - HANYA BACA DARI LOCALSTORAGE
+        // DATA PRODUK & UMKM - BACA DARI LOCALSTORAGE
         // ================================================================
         let products = [];
+        let umkmList = [];
 
-        function loadProducts() {
+        function loadData() {
+            // Load produk
             try {
                 const stored = localStorage.getItem('umkm_products');
                 if (stored) {
                     const parsed = JSON.parse(stored);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        products = parsed;
-                        console.log('✅ Data dari localStorage:', products.length, 'produk');
-                    } else {
-                        products = [];
-                        console.log('✅ localStorage kosong, tidak ada produk');
-                    }
+                    products = Array.isArray(parsed) ? parsed : [];
                 } else {
                     products = [];
-                    console.log('✅ Tidak ada data di localStorage');
                 }
             } catch (e) {
-                console.log('❌ Error:', e);
                 products = [];
             }
+
+            // Load UMKM
+            try {
+                const storedUmkm = localStorage.getItem('umkm_list');
+                if (storedUmkm) {
+                    const parsed = JSON.parse(storedUmkm);
+                    umkmList = Array.isArray(parsed) ? parsed : [];
+                } else {
+                    umkmList = [];
+                }
+            } catch (e) {
+                umkmList = [];
+            }
+
+            console.log('📦 Produk:', products.length);
+            console.log('🏪 UMKM:', umkmList.length);
 
             updateStats();
             displayProducts(products);
@@ -135,9 +145,13 @@
         // UPDATE STATISTIK
         // ================================================================
         function updateStats() {
+            // Total Produk
             document.getElementById('totalProducts').innerText = products.length || 0;
-            const uniqueUmkm = new Set(products.map(p => p.umkm_name)).size;
-            document.getElementById('totalUMKM').innerText = uniqueUmkm || 0;
+
+            // Total UMKM (dari data umkm_list, BUKAN dari produk)
+            document.getElementById('totalUMKM').innerText = umkmList.length || 0;
+
+            // Total Kategori (dari produk)
             const uniqueCat = new Set(products.map(p => p.category_name)).size;
             document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
@@ -208,13 +222,13 @@
         // ================================================================
         // JALANKAN
         // ================================================================
-        loadProducts();
+        loadData();
 
         // Sinkron jika ada perubahan dari tab lain
         window.addEventListener('storage', function(e) {
-            if (e.key === 'umkm_products') {
-                console.log('🔄 Data produk berubah dari tab lain, reload...');
-                loadProducts();
+            if (e.key === 'umkm_products' || e.key === 'umkm_list') {
+                console.log('🔄 Data berubah dari tab lain, reload...');
+                loadData();
             }
         });
 
