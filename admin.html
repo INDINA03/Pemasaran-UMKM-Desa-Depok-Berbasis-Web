@@ -65,7 +65,6 @@
             margin-bottom:6px;
         }
 
-        /* Hilangkan panah spinner pada input number */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -92,7 +91,7 @@
         }
 
         /* ============================================= */
-        /* UPLOAD GAMBAR - DIPERBAIKI */
+        /* UPLOAD GAMBAR - VERSI SEDERHANA */
         /* ============================================= */
         .upload-area {
             border: 2px dashed #2c5f2d;
@@ -103,7 +102,7 @@
             cursor: pointer;
             transition: 0.3s;
             position: relative;
-            min-height: 120px;
+            min-height: 140px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -114,9 +113,8 @@
             border-color: #1a3b1a;
         }
         .upload-area .icon-upload {
-            font-size: 36px;
+            font-size: 40px;
             color: #2c5f2d;
-            display: block;
             margin-bottom: 5px;
         }
         .upload-area p {
@@ -130,6 +128,7 @@
             margin-top: 5px;
             font-size: 0.85em;
         }
+        /* Input file disembunyikan tapi tetap bisa diklik */
         .upload-area input[type="file"] {
             position: absolute;
             top: 0;
@@ -138,25 +137,21 @@
             height: 100%;
             opacity: 0;
             cursor: pointer;
-            z-index: 10;
         }
-        /* Preview gambar di dalam area upload */
-        .upload-area .preview-img {
-            max-width: 100px;
-            max-height: 100px;
+        /* Preview gambar */
+        .preview-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .preview-container img {
+            max-width: 120px;
+            max-height: 120px;
             border-radius: 10px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #2c5f2d;
             object-fit: cover;
-            margin-top: 5px;
-            display: none;
         }
-        .upload-area .preview-img.show {
-            display: block;
-        }
-        /* Sembunyikan teks jika ada gambar */
-        .upload-area.has-image .icon-upload,
-        .upload-area.has-image p,
-        .upload-area.has-image .file-name {
+        /* Sembunyikan preview jika tidak ada gambar */
+        .preview-container.hidden {
             display: none;
         }
 
@@ -240,12 +235,14 @@
                     <div class="form-group">
                         <label>Gambar Produk</label>
                         <div class="upload-area" id="uploadArea">
-                            <span class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></span>
+                            <div class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></div>
                             <p>Klik di sini untuk upload gambar</p>
-                            <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
+                            <p style="font-size:0.7em;color:#999;">Format: JPG, PNG (Max 2MB)</p>
                             <div class="file-name" id="fileName">Belum ada file</div>
-                            <img id="previewImage" class="preview-img">
-                            <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
+                            <input type="file" id="image" accept="image/*" onchange="handleImageUpload(event)">
+                        </div>
+                        <div class="preview-container hidden" id="previewContainer">
+                            <img id="previewImage" src="#" alt="Preview">
                         </div>
                     </div>
                 </div>
@@ -281,33 +278,37 @@
     </div>
     <script>
         // =====================================================
-        // PREVIEW GAMBAR - DIPERBAIKI
+        // UPLOAD GAMBAR - SEDERHANA
         // =====================================================
         let uploadedImageData = null;
 
-        function previewImage(event) {
+        function handleImageUpload(event) {
             const file = event.target.files[0];
-            const previewImg = document.getElementById('previewImage');
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
             const fileName = document.getElementById('fileName');
             const uploadArea = document.getElementById('uploadArea');
             
-            console.log('File selected:', file); // Debug
-            
             if (file) {
+                // Validasi ukuran file (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Ukuran gambar terlalu besar! Maksimal 2MB.');
+                    event.target.value = '';
+                    return;
+                }
+                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageData = e.target.result;
-                    previewImg.src = e.target.result;
-                    previewImg.classList.add('show');
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
                     fileName.textContent = file.name;
-                    uploadArea.classList.add('has-image');
-                    console.log('Preview loaded!'); // Debug
+                    uploadArea.style.borderColor = '#2c5f2d';
                 }
                 reader.readAsDataURL(file);
             } else {
-                previewImg.classList.remove('show');
+                previewContainer.classList.add('hidden');
                 fileName.textContent = 'Belum ada file';
-                uploadArea.classList.remove('has-image');
                 uploadedImageData = null;
             }
         }
@@ -381,12 +382,13 @@
                 products.push(product);
             }
             saveToLocal();
+            
+            // Reset form
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('formTitle').innerHTML = 'Tambah Produk Baru';
-            document.getElementById('previewImage').classList.remove('show');
+            document.getElementById('previewContainer').classList.add('hidden');
             document.getElementById('fileName').textContent = 'Belum ada file';
-            document.getElementById('uploadArea').classList.remove('has-image');
             uploadedImageData = null;
         });
 
@@ -400,20 +402,18 @@
                 document.getElementById('umkm_name').value = p.umkm_name;
                 document.getElementById('contact').value = p.contact;
                 
-                const previewImg = document.getElementById('previewImage');
+                const previewContainer = document.getElementById('previewContainer');
+                const previewImage = document.getElementById('previewImage');
                 const fileName = document.getElementById('fileName');
-                const uploadArea = document.getElementById('uploadArea');
                 
                 if (p.image && p.image !== '📦') {
-                    previewImg.src = p.image;
-                    previewImg.classList.add('show');
+                    previewImage.src = p.image;
+                    previewContainer.classList.remove('hidden');
                     fileName.textContent = 'Gambar tersimpan';
-                    uploadArea.classList.add('has-image');
                     uploadedImageData = p.image;
                 } else {
-                    previewImg.classList.remove('show');
+                    previewContainer.classList.add('hidden');
                     fileName.textContent = 'Belum ada file';
-                    uploadArea.classList.remove('has-image');
                     uploadedImageData = null;
                 }
                 
