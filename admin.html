@@ -75,13 +75,6 @@
             -moz-appearance: textfield;
             appearance: textfield;
         }
-        input[type="number"]::-moz-inner-spin-button {
-            -moz-appearance: none;
-        }
-        input[type="number"]::-ms-clear,
-        input[type="number"]::-ms-reveal {
-            display: none;
-        }
 
         input, textarea { 
             width:100%; 
@@ -99,58 +92,55 @@
         }
 
         /* ============================================= */
-        /* STYLE UNTUK UPLOAD GAMBAR */
+        /* UPLOAD GAMBAR - DIPERBAIKI */
         /* ============================================= */
-        .file-upload-wrapper {
-            position: relative;
-        }
-        .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .file-upload-box {
+        .upload-area {
             border: 2px dashed #2c5f2d;
             border-radius: 14px;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             background: #f8fdf8;
+            cursor: pointer;
             transition: 0.3s;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: relative;
         }
-        .file-upload-box:hover {
+        .upload-area:hover {
             background: #e8f5e9;
             border-color: #1a3b1a;
         }
-        .file-upload-box .icon-upload {
+        .upload-area .icon-upload {
             font-size: 40px;
             color: #2c5f2d;
+            display: block;
             margin-bottom: 5px;
         }
-        .file-upload-box p {
+        .upload-area p {
             color: #666;
-            font-size: 0.85em;
+            font-size: 0.9em;
             margin: 0;
         }
-        .file-upload-box .file-name {
+        .upload-area .file-name {
             color: #2c5f2d;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 8px;
+            font-size: 0.85em;
+        }
+        .upload-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
         .image-preview {
             margin-top: 10px;
             text-align: center;
         }
         .image-preview img {
-            max-width: 100px;
-            max-height: 100px;
+            max-width: 120px;
+            max-height: 120px;
             border-radius: 10px;
             border: 2px solid #e2e8f0;
             object-fit: cover;
@@ -235,13 +225,11 @@
                     </div>
                     <div class="form-group">
                         <label>Gambar Produk</label>
-                        <div class="file-upload-wrapper">
-                            <div class="file-upload-box" id="uploadBox">
-                                <div class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></div>
-                                <p>Klik atau drag untuk upload gambar</p>
-                                <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
-                                <div class="file-name" id="fileName">Belum ada file</div>
-                            </div>
+                        <div class="upload-area" id="uploadArea">
+                            <span class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></span>
+                            <p>Klik di sini untuk upload gambar</p>
+                            <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
+                            <div class="file-name" id="fileName">Belum ada file</div>
                             <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
                         </div>
                         <div class="image-preview" id="imagePreview"></div>
@@ -328,7 +316,7 @@
                 <tr>
                     <td>${i + 1}</td>
                     <td>
-                        ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-image-table">` : '📦'}
+                        ${p.image && p.image !== '📦' ? `<img src="${p.image}" alt="${p.name}" class="product-image-table">` : '📦'}
                     </td>
                     <td><strong>${p.name}</strong></td>
                     <td>${p.umkm_name}</td>
