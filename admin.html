@@ -64,6 +64,29 @@
             color:#333;
             margin-bottom:6px;
         }
+
+        /* ============================================= */
+        /* HILANGKAN PANAH SPINNER PADA INPUT NUMBER */
+        /* ============================================= */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        /* Firefox versi lama */
+        input[type="number"]::-moz-inner-spin-button {
+            -moz-appearance: none;
+        }
+        /* Edge / IE */
+        input[type="number"]::-ms-clear,
+        input[type="number"]::-ms-reveal {
+            display: none;
+        }
+
         input, textarea { 
             width:100%; 
             padding:12px 15px; 
