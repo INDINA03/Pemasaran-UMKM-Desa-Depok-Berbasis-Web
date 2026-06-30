@@ -91,7 +91,7 @@
         }
 
         /* ============================================= */
-        /* UPLOAD GAMBAR - VERSI SEDERHANA */
+        /* UPLOAD GAMBAR - PREVIEW DI DALAM AREA */
         /* ============================================= */
         .upload-area {
             border: 2px dashed #2c5f2d;
@@ -137,22 +137,30 @@
             height: 100%;
             opacity: 0;
             cursor: pointer;
+            z-index: 10;
         }
-        /* Preview gambar */
-        .preview-container {
-            margin-top: 10px;
-            text-align: center;
-        }
-        .preview-container img {
-            max-width: 120px;
-            max-height: 120px;
+        /* Preview gambar di DALAM area upload */
+        .upload-area .preview-img {
+            max-width: 100px;
+            max-height: 100px;
             border-radius: 10px;
             border: 2px solid #2c5f2d;
             object-fit: cover;
-        }
-        /* Sembunyikan preview jika tidak ada gambar */
-        .preview-container.hidden {
+            margin-top: 5px;
             display: none;
+        }
+        .upload-area .preview-img.show {
+            display: block;
+        }
+        /* Sembunyikan semua elemen jika ada gambar */
+        .upload-area.has-image .icon-upload,
+        .upload-area.has-image p,
+        .upload-area.has-image .file-name {
+            display: none;
+        }
+        /* Tampilkan preview */
+        .upload-area.has-image .preview-img {
+            display: block;
         }
 
         .field-description {
@@ -235,14 +243,13 @@
                     <div class="form-group">
                         <label>Gambar Produk</label>
                         <div class="upload-area" id="uploadArea">
-                            <div class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></div>
+                            <span class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></span>
                             <p>Klik di sini untuk upload gambar</p>
                             <p style="font-size:0.7em;color:#999;">Format: JPG, PNG (Max 2MB)</p>
                             <div class="file-name" id="fileName">Belum ada file</div>
+                            <!-- Preview gambar di DALAM area upload -->
+                            <img id="previewImage" class="preview-img">
                             <input type="file" id="image" accept="image/*" onchange="handleImageUpload(event)">
-                        </div>
-                        <div class="preview-container hidden" id="previewContainer">
-                            <img id="previewImage" src="#" alt="Preview">
                         </div>
                     </div>
                 </div>
@@ -278,19 +285,17 @@
     </div>
     <script>
         // =====================================================
-        // UPLOAD GAMBAR - SEDERHANA
+        // UPLOAD GAMBAR - PREVIEW DI DALAM AREA
         // =====================================================
         let uploadedImageData = null;
 
         function handleImageUpload(event) {
             const file = event.target.files[0];
-            const previewContainer = document.getElementById('previewContainer');
-            const previewImage = document.getElementById('previewImage');
+            const previewImg = document.getElementById('previewImage');
             const fileName = document.getElementById('fileName');
             const uploadArea = document.getElementById('uploadArea');
             
             if (file) {
-                // Validasi ukuran file (max 2MB)
                 if (file.size > 2 * 1024 * 1024) {
                     alert('Ukuran gambar terlalu besar! Maksimal 2MB.');
                     event.target.value = '';
@@ -300,15 +305,16 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageData = e.target.result;
-                    previewImage.src = e.target.result;
-                    previewContainer.classList.remove('hidden');
+                    previewImg.src = e.target.result;
+                    previewImg.classList.add('show');
                     fileName.textContent = file.name;
-                    uploadArea.style.borderColor = '#2c5f2d';
+                    uploadArea.classList.add('has-image');
                 }
                 reader.readAsDataURL(file);
             } else {
-                previewContainer.classList.add('hidden');
+                previewImg.classList.remove('show');
                 fileName.textContent = 'Belum ada file';
+                uploadArea.classList.remove('has-image');
                 uploadedImageData = null;
             }
         }
@@ -387,8 +393,9 @@
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('formTitle').innerHTML = 'Tambah Produk Baru';
-            document.getElementById('previewContainer').classList.add('hidden');
+            document.getElementById('previewImage').classList.remove('show');
             document.getElementById('fileName').textContent = 'Belum ada file';
+            document.getElementById('uploadArea').classList.remove('has-image');
             uploadedImageData = null;
         });
 
@@ -402,18 +409,20 @@
                 document.getElementById('umkm_name').value = p.umkm_name;
                 document.getElementById('contact').value = p.contact;
                 
-                const previewContainer = document.getElementById('previewContainer');
-                const previewImage = document.getElementById('previewImage');
+                const previewImg = document.getElementById('previewImage');
                 const fileName = document.getElementById('fileName');
+                const uploadArea = document.getElementById('uploadArea');
                 
                 if (p.image && p.image !== '📦') {
-                    previewImage.src = p.image;
-                    previewContainer.classList.remove('hidden');
+                    previewImg.src = p.image;
+                    previewImg.classList.add('show');
                     fileName.textContent = 'Gambar tersimpan';
+                    uploadArea.classList.add('has-image');
                     uploadedImageData = p.image;
                 } else {
-                    previewContainer.classList.add('hidden');
+                    previewImg.classList.remove('show');
                     fileName.textContent = 'Belum ada file';
+                    uploadArea.classList.remove('has-image');
                     uploadedImageData = null;
                 }
                 
