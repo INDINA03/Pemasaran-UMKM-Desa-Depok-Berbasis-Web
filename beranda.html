@@ -37,9 +37,29 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
         .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; overflow: hidden; }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; }
-        .product-image .no-image { font-size: 60px; color: #ccc; }
+        
+        /* ================================================================ */
+        /* GAMBAR TAMPIL UTUH (TIDAK TERPOTONG) */
+        /* ================================================================ */
+        .product-image { 
+            width: 100%; 
+            height: 220px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+        .product-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain;  /* ← UTUH, tidak terpotong */
+        }
+        .product-image .no-image { 
+            font-size: 64px; 
+            color: #ccc; 
+        }
+
         .product-info { padding: 20px; }
         .product-info h3 { font-size: 1.2em; color: #1a3b1a; }
         .price { font-size: 1.4em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
@@ -102,6 +122,9 @@
     </footer>
 
     <script>
+        // ================================================================
+        // DATA PRODUK
+        // ================================================================
         let products = [];
         let umkmList = [];
 
@@ -144,6 +167,9 @@
             document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
+        // ================================================================
+        // TAMPILKAN PRODUK - GAMBAR UTUH (object-fit: contain)
+        // ================================================================
         function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -160,13 +186,13 @@
             }
 
             grid.innerHTML = productsToShow.map(p => {
-                // CEK APAKAH ADA GAMBAR (BASE64)
-                const hasImage = p.image && typeof p.image === 'string' && p.image.startsWith('data:image');
+                // Cek apakah ada gambar
+                const hasImage = p.image && typeof p.image === 'string' && p.image.length > 10 && p.image !== '📦';
                 
                 return `
                 <div class="product-card">
                     <div class="product-image">
-                        ${hasImage ? `<img src="${p.image}" alt="${p.name}">` : `<span class="no-image">${p.icon || '📦'}</span>`}
+                        ${hasImage ? `<img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<span class=\\'no-image\\'>${p.icon || '📦'}</span>'">` : `<span class="no-image">${p.icon || '📦'}</span>`}
                     </div>
                     <div class="product-info">
                         <h3>${p.name || 'Produk'}</h3>
@@ -211,7 +237,7 @@
             }
         });
 
-        console.log('✅ Halaman beranda siap - menampilkan data dari localStorage');
+        console.log('✅ Halaman beranda siap!');
     </script>
 </body>
 </html>
