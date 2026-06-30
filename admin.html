@@ -65,9 +65,7 @@
             margin-bottom:6px;
         }
 
-        /* ============================================= */
-        /* HILANGKAN PANAH SPINNER PADA INPUT NUMBER */
-        /* ============================================= */
+        /* Hilangkan panah spinner pada input number */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -77,11 +75,9 @@
             -moz-appearance: textfield;
             appearance: textfield;
         }
-        /* Firefox versi lama */
         input[type="number"]::-moz-inner-spin-button {
             -moz-appearance: none;
         }
-        /* Edge / IE */
         input[type="number"]::-ms-clear,
         input[type="number"]::-ms-reveal {
             display: none;
@@ -101,6 +97,65 @@
             border-color:#2c5f2d; 
             box-shadow:0 0 0 3px rgba(44,95,45,0.2); 
         }
+
+        /* ============================================= */
+        /* STYLE UNTUK UPLOAD GAMBAR */
+        /* ============================================= */
+        .file-upload-wrapper {
+            position: relative;
+        }
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .file-upload-box {
+            border: 2px dashed #2c5f2d;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            background: #f8fdf8;
+            transition: 0.3s;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-upload-box:hover {
+            background: #e8f5e9;
+            border-color: #1a3b1a;
+        }
+        .file-upload-box .icon-upload {
+            font-size: 40px;
+            color: #2c5f2d;
+            margin-bottom: 5px;
+        }
+        .file-upload-box p {
+            color: #666;
+            font-size: 0.85em;
+            margin: 0;
+        }
+        .file-upload-box .file-name {
+            color: #2c5f2d;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        .image-preview {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .image-preview img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            object-fit: cover;
+        }
+
         .field-description {
             margin-top:15px;
             margin-bottom:10px;
@@ -130,6 +185,13 @@
         .btn-edit:hover { background:#e68900; transform:scale(1.05); }
         .btn-delete { background:#f44336; color:white; padding:5px 12px; border:none; border-radius:20px; cursor:pointer; transition:0.3s; font-size:0.8em; }
         .btn-delete:hover { background:#d32f2f; transform:scale(1.05); }
+        .product-image-table {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
         @media (max-width:768px){ th,td { font-size:11px; padding:6px; } .nav-links a { padding:8px 14px; font-size:0.85em; } }
     </style>
 </head>
@@ -151,7 +213,7 @@
     <div class="container">
         <div class="card">
             <h2 id="formTitle">Tambah Produk Baru</h2>
-            <form id="productForm">
+            <form id="productForm" enctype="multipart/form-data">
                 <input type="hidden" id="productId">
                 
                 <div class="form-grid">
@@ -172,8 +234,17 @@
                         <input type="text" id="contact" placeholder="Contoh: 0857-4871-0963" required>
                     </div>
                     <div class="form-group">
-                        <label>Ikon (😊)</label>
-                        <input type="text" id="icon" placeholder="Masukkan emoji (max 2 karakter)" maxlength="2">
+                        <label>Gambar Produk</label>
+                        <div class="file-upload-wrapper">
+                            <div class="file-upload-box" id="uploadBox">
+                                <div class="icon-upload"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <p>Klik atau drag untuk upload gambar</p>
+                                <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
+                                <div class="file-name" id="fileName">Belum ada file</div>
+                            </div>
+                            <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
                     </div>
                 </div>
 
@@ -192,7 +263,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Ikon</th>
+                            <th>Gambar</th>
                             <th>Nama</th>
                             <th>UMKM</th>
                             <th>Kontak</th>
@@ -208,7 +279,32 @@
     </div>
     <script>
         // =====================================================
-        // TIDAK ADA PENGECEKAN SESSION - LANGSUNG JALAN
+        // PREVIEW GAMBAR
+        // =====================================================
+        let uploadedImageData = null;
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            const fileName = document.getElementById('fileName');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImageData = e.target.result;
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    fileName.textContent = file.name;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+                fileName.textContent = 'Belum ada file';
+                uploadedImageData = null;
+            }
+        }
+
+        // =====================================================
+        // CRUD PRODUK
         // =====================================================
         let products = [];
 
@@ -231,12 +327,14 @@
             tbody.innerHTML = products.map((p, i) => `
                 <tr>
                     <td>${i + 1}</td>
-                    <td style="font-size:24px;text-align:center;">${p.icon || '📦'}</td>
+                    <td>
+                        ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-image-table">` : '📦'}
+                    </td>
                     <td><strong>${p.name}</strong></td>
                     <td>${p.umkm_name}</td>
                     <td>${p.contact || '-'}</td>
                     <td>Rp ${p.price.toLocaleString('id-ID')}</td>
-                    <td style="max-width:200px;font-size:0.85em;color:#555;">${p.description || '-'}</td>
+                    <td style="max-width:150px;font-size:0.85em;color:#555;">${p.description || '-'}</td>
                     <td>
                         <button class="btn-edit" onclick="editProduct(${p.id})">Edit</button>
                         <button class="btn-delete" onclick="deleteProduct(${p.id})">Hapus</button>
@@ -253,16 +351,21 @@
         document.getElementById('productForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('productId').value;
+            
+            // Gunakan gambar yang diupload atau icon default
+            const imageData = uploadedImageData || '📦';
+            
             const product = {
                 id: id ? parseInt(id) : Date.now(),
                 name: document.getElementById('name').value,
                 description: document.getElementById('description').value,
                 price: parseInt(document.getElementById('price').value),
-                icon: document.getElementById('icon').value || '📦',
+                image: imageData,
                 umkm_name: document.getElementById('umkm_name').value,
                 contact: document.getElementById('contact').value,
                 category_name: "Makanan & Minuman"
             };
+            
             if (id) {
                 const index = products.findIndex(p => p.id == id);
                 if (index !== -1) products[index] = product;
@@ -273,6 +376,9 @@
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('formTitle').innerHTML = 'Tambah Produk Baru';
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('fileName').textContent = 'Belum ada file';
+            uploadedImageData = null;
         });
 
         function editProduct(id) {
@@ -282,9 +388,20 @@
                 document.getElementById('name').value = p.name;
                 document.getElementById('description').value = p.description;
                 document.getElementById('price').value = p.price;
-                document.getElementById('icon').value = p.icon;
                 document.getElementById('umkm_name').value = p.umkm_name;
                 document.getElementById('contact').value = p.contact;
+                
+                // Tampilkan preview gambar jika ada
+                if (p.image && p.image !== '📦') {
+                    document.getElementById('imagePreview').innerHTML = `<img src="${p.image}" alt="Preview">`;
+                    document.getElementById('fileName').textContent = 'Gambar tersimpan';
+                    uploadedImageData = p.image;
+                } else {
+                    document.getElementById('imagePreview').innerHTML = '';
+                    document.getElementById('fileName').textContent = 'Belum ada file';
+                    uploadedImageData = null;
+                }
+                
                 document.getElementById('formTitle').innerHTML = 'Edit Produk';
                 window.scrollTo(0, 0);
             }
