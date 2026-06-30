@@ -92,37 +92,42 @@
         }
 
         /* ============================================= */
-        /* UPLOAD GAMBAR - DIPERBAIKI */
+        /* UPLOAD GAMBAR - PREVIEW DI DALAM AREA */
         /* ============================================= */
         .upload-area {
             border: 2px dashed #2c5f2d;
             border-radius: 14px;
-            padding: 25px 20px;
+            padding: 20px;
             text-align: center;
             background: #f8fdf8;
             cursor: pointer;
             transition: 0.3s;
             position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .upload-area:hover {
             background: #e8f5e9;
             border-color: #1a3b1a;
         }
         .upload-area .icon-upload {
-            font-size: 40px;
+            font-size: 36px;
             color: #2c5f2d;
             display: block;
             margin-bottom: 5px;
         }
         .upload-area p {
             color: #666;
-            font-size: 0.9em;
-            margin: 0;
+            font-size: 0.85em;
+            margin: 2px 0;
         }
         .upload-area .file-name {
             color: #2c5f2d;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 5px;
             font-size: 0.85em;
         }
         .upload-area input[type="file"] {
@@ -134,16 +139,20 @@
             opacity: 0;
             cursor: pointer;
         }
-        .image-preview {
-            margin-top: 10px;
-            text-align: center;
-        }
-        .image-preview img {
-            max-width: 120px;
-            max-height: 120px;
+        /* Preview gambar di dalam area upload */
+        .upload-area .preview-img {
+            max-width: 100px;
+            max-height: 100px;
             border-radius: 10px;
             border: 2px solid #e2e8f0;
             object-fit: cover;
+            margin-top: 5px;
+        }
+        /* Sembunyikan teks jika ada gambar */
+        .upload-area.has-image .icon-upload,
+        .upload-area.has-image p,
+        .upload-area.has-image .file-name {
+            display: none;
         }
 
         .field-description {
@@ -230,9 +239,10 @@
                             <p>Klik di sini untuk upload gambar</p>
                             <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
                             <div class="file-name" id="fileName">Belum ada file</div>
+                            <!-- Preview gambar akan muncul di sini -->
+                            <img id="previewImage" class="preview-img" style="display:none;">
                             <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
                         </div>
-                        <div class="image-preview" id="imagePreview"></div>
                     </div>
                 </div>
 
@@ -267,26 +277,30 @@
     </div>
     <script>
         // =====================================================
-        // PREVIEW GAMBAR
+        // PREVIEW GAMBAR - DI DALAM AREA UPLOAD
         // =====================================================
         let uploadedImageData = null;
 
         function previewImage(event) {
             const file = event.target.files[0];
-            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImage');
             const fileName = document.getElementById('fileName');
+            const uploadArea = document.getElementById('uploadArea');
             
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageData = e.target.result;
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
                     fileName.textContent = file.name;
+                    uploadArea.classList.add('has-image');
                 }
                 reader.readAsDataURL(file);
             } else {
-                preview.innerHTML = '';
+                previewImg.style.display = 'none';
                 fileName.textContent = 'Belum ada file';
+                uploadArea.classList.remove('has-image');
                 uploadedImageData = null;
             }
         }
@@ -340,7 +354,6 @@
             e.preventDefault();
             const id = document.getElementById('productId').value;
             
-            // Gunakan gambar yang diupload atau icon default
             const imageData = uploadedImageData || '📦';
             
             const product = {
@@ -364,8 +377,9 @@
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('formTitle').innerHTML = 'Tambah Produk Baru';
-            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('previewImage').style.display = 'none';
             document.getElementById('fileName').textContent = 'Belum ada file';
+            document.getElementById('uploadArea').classList.remove('has-image');
             uploadedImageData = null;
         });
 
@@ -379,14 +393,20 @@
                 document.getElementById('umkm_name').value = p.umkm_name;
                 document.getElementById('contact').value = p.contact;
                 
-                // Tampilkan preview gambar jika ada
+                const previewImg = document.getElementById('previewImage');
+                const fileName = document.getElementById('fileName');
+                const uploadArea = document.getElementById('uploadArea');
+                
                 if (p.image && p.image !== '📦') {
-                    document.getElementById('imagePreview').innerHTML = `<img src="${p.image}" alt="Preview">`;
-                    document.getElementById('fileName').textContent = 'Gambar tersimpan';
+                    previewImg.src = p.image;
+                    previewImg.style.display = 'block';
+                    fileName.textContent = 'Gambar tersimpan';
+                    uploadArea.classList.add('has-image');
                     uploadedImageData = p.image;
                 } else {
-                    document.getElementById('imagePreview').innerHTML = '';
-                    document.getElementById('fileName').textContent = 'Belum ada file';
+                    previewImg.style.display = 'none';
+                    fileName.textContent = 'Belum ada file';
+                    uploadArea.classList.remove('has-image');
                     uploadedImageData = null;
                 }
                 
