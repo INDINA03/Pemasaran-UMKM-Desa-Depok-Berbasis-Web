@@ -37,30 +37,9 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
         .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-
-        /* ================================================================ */
-        /* PERBAIKAN GAMBAR - FULL TAMPIL */
-        /* ================================================================ */
-        .product-image { 
-            width: 100%; 
-            height: 220px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #f0f0f0;
-            overflow: hidden;
-            position: relative;
-        }
-        .product-image img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-        .product-image .no-image {
-            font-size: 60px;
-            color: #ccc;
-        }
-
+        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .product-image .no-image { font-size: 60px; color: #ccc; }
         .product-info { padding: 20px; }
         .product-info h3 { font-size: 1.2em; color: #1a3b1a; }
         .price { font-size: 1.4em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
@@ -123,14 +102,10 @@
     </footer>
 
     <script>
-        // ================================================================
-        // DATA PRODUK & UMKM - BACA DARI LOCALSTORAGE
-        // ================================================================
         let products = [];
         let umkmList = [];
 
         function loadData() {
-            // Load produk
             try {
                 const stored = localStorage.getItem('umkm_products');
                 if (stored) {
@@ -143,7 +118,6 @@
                 products = [];
             }
 
-            // Load UMKM
             try {
                 const storedUmkm = localStorage.getItem('umkm_list');
                 if (storedUmkm) {
@@ -163,9 +137,6 @@
             displayProducts(products);
         }
 
-        // ================================================================
-        // UPDATE STATISTIK
-        // ================================================================
         function updateStats() {
             document.getElementById('totalProducts').innerText = products.length || 0;
             document.getElementById('totalUMKM').innerText = umkmList.length || 0;
@@ -173,9 +144,6 @@
             document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
-        // ================================================================
-        // TAMPILKAN PRODUK - GAMBAR FULL
-        // ================================================================
         function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -192,8 +160,8 @@
             }
 
             grid.innerHTML = productsToShow.map(p => {
-                // Cek apakah ada gambar
-                const hasImage = p.image && p.image !== '📦' && p.image.startsWith('data:image');
+                // CEK APAKAH ADA GAMBAR (BASE64)
+                const hasImage = p.image && typeof p.image === 'string' && p.image.startsWith('data:image');
                 
                 return `
                 <div class="product-card">
@@ -213,9 +181,6 @@
             `}).join('');
         }
 
-        // ================================================================
-        // FILTER PRODUK (Pencarian)
-        // ================================================================
         function filterProducts() {
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             if (!search) {
@@ -230,9 +195,6 @@
             displayProducts(filtered);
         }
 
-        // ================================================================
-        // EVENT LISTENERS
-        // ================================================================
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             filterProducts();
@@ -240,12 +202,8 @@
 
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
-        // ================================================================
-        // JALANKAN
-        // ================================================================
         loadData();
 
-        // Sinkron jika ada perubahan dari tab lain
         window.addEventListener('storage', function(e) {
             if (e.key === 'umkm_products' || e.key === 'umkm_list') {
                 console.log('🔄 Data berubah dari tab lain, reload...');
