@@ -32,6 +32,13 @@
         tr:hover { background: #f5f5f5; }
         .print-btn { background: #2196f3; }
         .export-btn { background: #4caf50; }
+        .product-image-table {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
         @media print {
             .navbar, .filter-bar, button, .print-btn, .export-btn, .btn-logout { display: none; }
             body { background: white; }
@@ -82,7 +89,15 @@
             <h3>📋 Daftar Produk UMKM</h3>
             <table id="reportTable">
                 <thead>
-                    <tr><th>No</th><th>Ikon</th><th>Nama Produk</th><th>UMKM</th><th>Kontak</th><th>Harga</th><th>Kategori</th></tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Gambar</th>
+                        <th>Nama Produk</th>
+                        <th>UMKM</th>
+                        <th>Kontak</th>
+                        <th>Harga</th>
+                        <th>Kategori</th>
+                    </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -133,17 +148,10 @@
         // UPDATE STATISTIK
         // ================================================================
         function updateStats() {
-            // Total Produk
             const totalProduk = products.length || 0;
-
-            // Total UMKM (dari data umkm_list, BUKAN dari produk)
             const totalUmkm = umkmList.length || 0;
-
-            // Total Kategori (dari produk)
             const uniqueCat = [...new Set(products.map(p => p.category_name))];
             const totalKategori = uniqueCat.length || 0;
-
-            // Total Nilai Produk
             const totalHarga = products.reduce((sum, p) => sum + (p.price || 0), 0);
 
             document.getElementById('statsGrid').innerHTML = `
@@ -171,7 +179,7 @@
         }
 
         // ================================================================
-        // RENDER TABLE
+        // RENDER TABLE - TAMPILKAN GAMBAR
         // ================================================================
         function renderTable() {
             const umkmFilter = document.getElementById('filterUmkm').value;
@@ -191,17 +199,23 @@
                 return;
             }
 
-            tbody.innerHTML = filtered.map((p, idx) => `
+            tbody.innerHTML = filtered.map((p, idx) => {
+                // Cek apakah ada gambar
+                const hasImage = p.image && typeof p.image === 'string' && p.image.length > 10 && p.image !== '📦';
+                
+                return `
                 <tr>
                     <td>${idx + 1}</td>
-                    <td style="font-size:24px">${p.icon || '📦'}</td>
+                    <td>
+                        ${hasImage ? `<img src="${p.image}" alt="${p.name}" class="product-image-table">` : `<span style="font-size:24px;">${p.icon || '📦'}</span>`}
+                    </td>
                     <td>${p.name}</td>
                     <td>${p.umkm_name || '-'}</td>
                     <td>${p.contact || '-'}</td>
                     <td>Rp ${(p.price || 0).toLocaleString('id-ID')}</td>
                     <td>${p.category_name || '-'}</td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
         // ================================================================
@@ -252,7 +266,6 @@
         // ================================================================
         loadData();
 
-        // Sinkron jika ada perubahan dari tab lain
         window.addEventListener('storage', function(e) {
             if (e.key === 'umkm_products' || e.key === 'umkm_list') {
                 console.log('🔄 Data berubah dari tab lain, reload...');
