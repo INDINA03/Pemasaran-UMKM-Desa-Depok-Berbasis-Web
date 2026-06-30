@@ -91,105 +91,176 @@
 
     <script>
         // ================================================================
-        // HAPUS PENGECEKAN LOGIN - AGAR TIDAK REDIRECT
+        // DATA PRODUK & UMKM - BACA DARI LOCALSTORAGE
         // ================================================================
-
         let products = [];
+        let umkmList = [];
 
         function loadData() {
-            const stored = localStorage.getItem('umkm_products');
-            if (stored) products = JSON.parse(stored);
-            else products = [];
-            
+            // Load produk
+            try {
+                const stored = localStorage.getItem('umkm_products');
+                if (stored) {
+                    products = JSON.parse(stored);
+                } else {
+                    products = [];
+                }
+            } catch (e) {
+                products = [];
+            }
+
+            // Load UMKM
+            try {
+                const storedUmkm = localStorage.getItem('umkm_list');
+                if (storedUmkm) {
+                    umkmList = JSON.parse(storedUmkm);
+                } else {
+                    umkmList = [];
+                }
+            } catch (e) {
+                umkmList = [];
+            }
+
+            console.log('📦 Produk:', products.length);
+            console.log('🏪 UMKM:', umkmList.length);
+
             updateStats();
             updateFilters();
             renderTable();
         }
 
+        // ================================================================
+        // UPDATE STATISTIK
+        // ================================================================
         function updateStats() {
-            const uniqueUmkm = [...new Set(products.map(p => p.umkm_name))];
+            // Total Produk
+            const totalProduk = products.length || 0;
+
+            // Total UMKM (dari data umkm_list, BUKAN dari produk)
+            const totalUmkm = umkmList.length || 0;
+
+            // Total Kategori (dari produk)
             const uniqueCat = [...new Set(products.map(p => p.category_name))];
+            const totalKategori = uniqueCat.length || 0;
+
+            // Total Nilai Produk
             const totalHarga = products.reduce((sum, p) => sum + (p.price || 0), 0);
+
             document.getElementById('statsGrid').innerHTML = `
-                <div class="stat-card"><div class="stat-number">${products.length}</div><div>Total Produk</div></div>
-                <div class="stat-card"><div class="stat-number">${uniqueUmkm.length}</div><div>Total UMKM</div></div>
-                <div class="stat-card"><div class="stat-number">${uniqueCat.length}</div><div>Kategori</div></div>
+                <div class="stat-card"><div class="stat-number">${totalProduk}</div><div>Total Produk</div></div>
+                <div class="stat-card"><div class="stat-number">${totalUmkm}</div><div>Total UMKM</div></div>
+                <div class="stat-card"><div class="stat-number">${totalKategori}</div><div>Kategori</div></div>
                 <div class="stat-card"><div class="stat-number">Rp ${totalHarga.toLocaleString('id-ID')}</div><div>Total Nilai Produk</div></div>
             `;
         }
 
+        // ================================================================
+        // UPDATE FILTER
+        // ================================================================
         function updateFilters() {
             const umkmSet = [...new Set(products.map(p => p.umkm_name))];
             const catSet = [...new Set(products.map(p => p.category_name))];
             const umkmSelect = document.getElementById('filterUmkm');
             const catSelect = document.getElementById('filterKategori');
-            umkmSelect.innerHTML = '<option value="">Semua UMKM</option>' + umkmSet.map(u => `<option value="${u}">${u}</option>`).join('');
-            catSelect.innerHTML = '<option value="">Semua Kategori</option>' + catSet.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            umkmSelect.innerHTML = '<option value="">Semua UMKM</option>' + 
+                umkmSet.filter(u => u).map(u => `<option value="${u}">${u}</option>`).join('');
+
+            catSelect.innerHTML = '<option value="">Semua Kategori</option>' + 
+                catSet.filter(c => c).map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
+        // ================================================================
+        // RENDER TABLE
+        // ================================================================
         function renderTable() {
             const umkmFilter = document.getElementById('filterUmkm').value;
             const kategoriFilter = document.getElementById('filterKategori').value;
             const search = document.getElementById('searchProduk').value.toLowerCase();
+
             let filtered = products.filter(p => {
                 if (umkmFilter && p.umkm_name !== umkmFilter) return false;
                 if (kategoriFilter && p.category_name !== kategoriFilter) return false;
                 if (search && !p.name.toLowerCase().includes(search) && !p.umkm_name.toLowerCase().includes(search)) return false;
                 return true;
             });
+
             const tbody = document.getElementById('tableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">Tidak ada data</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">Tidak ada data</td></tr>';
                 return;
             }
+
             tbody.innerHTML = filtered.map((p, idx) => `
                 <tr>
-                    <td>${idx+1}</td>
+                    <td>${idx + 1}</td>
                     <td style="font-size:24px">${p.icon || '📦'}</td>
                     <td>${p.name}</td>
-                    <td>${p.umkm_name}</td>
+                    <td>${p.umkm_name || '-'}</td>
                     <td>${p.contact || '-'}</td>
-                    <td>Rp ${p.price.toLocaleString('id-ID')}</td>
+                    <td>Rp ${(p.price || 0).toLocaleString('id-ID')}</td>
                     <td>${p.category_name || '-'}</td>
                 </tr>
             `).join('');
         }
 
-        // Export CSV
+        // ================================================================
+        // EXPORT CSV
+        // ================================================================
         document.getElementById('exportCsv').addEventListener('click', () => {
             const umkmFilter = document.getElementById('filterUmkm').value;
             const kategoriFilter = document.getElementById('filterKategori').value;
             const search = document.getElementById('searchProduk').value.toLowerCase();
+
             let filtered = products.filter(p => {
                 if (umkmFilter && p.umkm_name !== umkmFilter) return false;
                 if (kategoriFilter && p.category_name !== kategoriFilter) return false;
                 if (search && !p.name.toLowerCase().includes(search)) return false;
                 return true;
             });
-            let csvRows = [["No","Nama Produk","UMKM","Kontak","Harga","Kategori"]];
+
+            let csvRows = [["No", "Nama Produk", "UMKM", "Kontak", "Harga", "Kategori"]];
             filtered.forEach((p, i) => {
-                csvRows.push([i+1, p.name, p.umkm_name, p.contact || '-', p.price, p.category_name || '-']);
+                csvRows.push([i + 1, p.name, p.umkm_name || '-', p.contact || '-', p.price || 0, p.category_name || '-']);
             });
+
             const csvContent = csvRows.map(row => row.join(",")).join("\n");
             const blob = new Blob([csvContent], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `laporan_umkm_${new Date().toISOString().slice(0,19)}.csv`;
+            a.download = `laporan_umkm_${new Date().toISOString().slice(0, 19)}.csv`;
             a.click();
             URL.revokeObjectURL(url);
         });
 
+        // ================================================================
+        // EVENT LISTENERS
+        // ================================================================
         document.getElementById('filterUmkm').addEventListener('change', renderTable);
         document.getElementById('filterKategori').addEventListener('change', renderTable);
         document.getElementById('searchProduk').addEventListener('input', renderTable);
+
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
             localStorage.removeItem('adminLoggedIn');
             window.location.href = 'login.html';
         });
 
+        // ================================================================
+        // JALANKAN
+        // ================================================================
         loadData();
+
+        // Sinkron jika ada perubahan dari tab lain
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'umkm_products' || e.key === 'umkm_list') {
+                console.log('🔄 Data berubah dari tab lain, reload...');
+                loadData();
+            }
+        });
+
+        console.log('✅ Halaman laporan siap!');
     </script>
 </body>
 </html>
