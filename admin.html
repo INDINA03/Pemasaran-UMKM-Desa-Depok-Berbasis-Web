@@ -92,7 +92,7 @@
         }
 
         /* ============================================= */
-        /* UPLOAD GAMBAR - PREVIEW DI DALAM AREA */
+        /* UPLOAD GAMBAR - DIPERBAIKI */
         /* ============================================= */
         .upload-area {
             border: 2px dashed #2c5f2d;
@@ -138,6 +138,7 @@
             height: 100%;
             opacity: 0;
             cursor: pointer;
+            z-index: 10;
         }
         /* Preview gambar di dalam area upload */
         .upload-area .preview-img {
@@ -147,6 +148,10 @@
             border: 2px solid #e2e8f0;
             object-fit: cover;
             margin-top: 5px;
+            display: none;
+        }
+        .upload-area .preview-img.show {
+            display: block;
         }
         /* Sembunyikan teks jika ada gambar */
         .upload-area.has-image .icon-upload,
@@ -239,8 +244,7 @@
                             <p>Klik di sini untuk upload gambar</p>
                             <p style="font-size:0.7em;color:#999;">Format: JPG, PNG, GIF (Max 2MB)</p>
                             <div class="file-name" id="fileName">Belum ada file</div>
-                            <!-- Preview gambar akan muncul di sini -->
-                            <img id="previewImage" class="preview-img" style="display:none;">
+                            <img id="previewImage" class="preview-img">
                             <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
                         </div>
                     </div>
@@ -277,7 +281,7 @@
     </div>
     <script>
         // =====================================================
-        // PREVIEW GAMBAR - DI DALAM AREA UPLOAD
+        // PREVIEW GAMBAR - DIPERBAIKI
         // =====================================================
         let uploadedImageData = null;
 
@@ -287,18 +291,21 @@
             const fileName = document.getElementById('fileName');
             const uploadArea = document.getElementById('uploadArea');
             
+            console.log('File selected:', file); // Debug
+            
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageData = e.target.result;
                     previewImg.src = e.target.result;
-                    previewImg.style.display = 'block';
+                    previewImg.classList.add('show');
                     fileName.textContent = file.name;
                     uploadArea.classList.add('has-image');
+                    console.log('Preview loaded!'); // Debug
                 }
                 reader.readAsDataURL(file);
             } else {
-                previewImg.style.display = 'none';
+                previewImg.classList.remove('show');
                 fileName.textContent = 'Belum ada file';
                 uploadArea.classList.remove('has-image');
                 uploadedImageData = null;
@@ -377,7 +384,7 @@
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('formTitle').innerHTML = 'Tambah Produk Baru';
-            document.getElementById('previewImage').style.display = 'none';
+            document.getElementById('previewImage').classList.remove('show');
             document.getElementById('fileName').textContent = 'Belum ada file';
             document.getElementById('uploadArea').classList.remove('has-image');
             uploadedImageData = null;
@@ -399,12 +406,12 @@
                 
                 if (p.image && p.image !== '📦') {
                     previewImg.src = p.image;
-                    previewImg.style.display = 'block';
+                    previewImg.classList.add('show');
                     fileName.textContent = 'Gambar tersimpan';
                     uploadArea.classList.add('has-image');
                     uploadedImageData = p.image;
                 } else {
-                    previewImg.style.display = 'none';
+                    previewImg.classList.remove('show');
                     fileName.textContent = 'Belum ada file';
                     uploadArea.classList.remove('has-image');
                     uploadedImageData = null;
