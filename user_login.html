@@ -49,20 +49,18 @@
             const password = document.getElementById('password').value;
             const alertDiv = document.getElementById('alert');
 
-            // Ambil data user dari localStorage
             const users = JSON.parse(localStorage.getItem('users')) || [];
             const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
 
             if (user) {
-                // Simpan session
+                // Simpan session dengan fullname
                 localStorage.setItem('userLoggedIn', JSON.stringify({
                     id: user.id,
-                    fullname: user.fullname,
+                    fullname: user.fullname || user.username,
                     username: user.username,
                     email: user.email,
                     role: user.role || 'user'
                 }));
-                // Redirect ke beranda
                 window.location.href = 'index.html';
             } else {
                 alertDiv.style.display = 'block';
