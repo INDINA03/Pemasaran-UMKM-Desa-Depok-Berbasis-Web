@@ -67,7 +67,6 @@
             const confirm = document.getElementById('confirm_password').value;
             const alertDiv = document.getElementById('alert');
 
-            // Validasi
             if (password !== confirm) {
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Password dan konfirmasi tidak cocok!';
@@ -79,9 +78,7 @@
                 return;
             }
 
-            // Ambil data user dari localStorage
             let users = JSON.parse(localStorage.getItem('users')) || [];
-            // Cek apakah username atau email sudah terdaftar
             if (users.find(u => u.username === username)) {
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Username sudah terdaftar!';
@@ -93,8 +90,7 @@
                 return;
             }
 
-            // Simpan user baru
-            const newUser = {
+            users.push({
                 id: Date.now(),
                 fullname,
                 username,
@@ -102,8 +98,7 @@
                 password,
                 role: 'user',
                 created_at: new Date().toISOString()
-            };
-            users.push(newUser);
+            });
             localStorage.setItem('users', JSON.stringify(users));
 
             alertDiv.style.display = 'block';
