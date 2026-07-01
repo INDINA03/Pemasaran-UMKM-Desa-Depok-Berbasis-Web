@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - UMKM Desa Depok</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#2c5f2d,#1a3b1a); min-height:100vh; display:flex; justify-content:center; align-items:center; padding:20px; }
+        .login-container { background:white; border-radius:32px; width:400px; max-width:100%; padding:40px 30px; box-shadow:0 25px 50px rgba(0,0,0,0.3); }
+        .login-container h1 { text-align:center; color:#1a3b1a; margin-bottom:8px; }
+        .login-container p { text-align:center; color:#666; margin-bottom:30px; }
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; font-weight:600; margin-bottom:6px; color:#333; }
+        .form-group input { width:100%; padding:12px 15px; border:2px solid #e2e8f0; border-radius:14px; font-size:15px; transition:0.3s; }
+        .form-group input:focus { outline:none; border-color:#2c5f2d; box-shadow:0 0 0 3px rgba(44,95,45,0.2); }
+        .btn-login { width:100%; background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:14px; border:none; border-radius:16px; font-weight:bold; font-size:16px; cursor:pointer; transition:0.3s; }
+        .btn-login:hover { transform:translateY(-2px); box-shadow:0 10px 20px rgba(44,95,45,0.3); }
+        .alert { padding:12px; border-radius:14px; margin-bottom:20px; display:none; background:#fee; color:#c33; }
+        .register-link { text-align:center; margin-top:20px; }
+        .register-link a { color:#2c5f2d; text-decoration:none; font-weight:600; }
+        .back-link { text-align:center; margin-top:15px; }
+        .back-link a { color:#888; text-decoration:none; }
+        @media (max-width:480px){ .login-container { padding:25px 20px; } }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>🔐 Login</h1>
+        <p>Masuk untuk memesan produk UMKM</p>
+        <div id="alert" class="alert"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Username atau Email</label>
+                <input type="text" id="username" placeholder="Masukkan username atau email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+        <div class="register-link">Belum punya akun? <a href="user_register.html">Daftar di sini</a></div>
+        <div class="back-link"><a href="index.html">← Kembali ke Beranda</a></div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const alertDiv = document.getElementById('alert');
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            // Cari user berdasarkan username atau email
+            const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+
+            if (user) {
+                // Simpan session user
+                localStorage.setItem('userLoggedIn', JSON.stringify({
+                    id: user.id,
+                    fullname: user.fullname,
+                    username: user.username,
+                    email: user.email,
+                    role: user.role || 'user'
+                }));
+                window.location.href = 'index.html';
+            } else {
+                alertDiv.style.display = 'block';
+                alertDiv.innerHTML = '❌ Username/email atau password salah!';
+                document.getElementById('password').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
