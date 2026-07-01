@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* (style sama seperti sebelumnya) */
+        /* (CSS sama seperti sebelumnya, tidak diubah) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
         .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -21,8 +21,6 @@
         .nav-links a.active { color: #2c5f2d; font-weight: 600; border-bottom: 3px solid #2c5f2d; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
-        .btn-logout-user { background: #f44336; color: white !important; padding: 8px 20px; border-radius: 25px; border: none; cursor: pointer; font-weight: 500; }
-        .btn-logout-user:hover { background: #d32f2f; }
         .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 50px 5%; text-align: center; }
         .hero h1 { font-size: 2em; margin-bottom: 15px; }
         .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 30px; flex-wrap: wrap; }
@@ -53,8 +51,6 @@
         .whatsapp-btn:hover { background: #128C7E; transform: scale(1.03); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
         .whatsapp-btn i { font-size: 1.2em; }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
-        .user-info { display: flex; align-items: center; gap: 15px; }
-        .user-name { color: #2c5f2d; font-weight: 600; }
         @media (max-width: 768px) { .hero h1 { font-size: 1.3em; } .search-form { flex-direction: column; } }
     </style>
 </head>
@@ -72,8 +68,6 @@
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-            <!-- User Info akan muncul di sini jika sudah login -->
-            <div id="userNav" style="display:inline-flex;align-items:center;gap:10px;"></div>
         </div>
     </nav>
 
@@ -112,42 +106,16 @@
 
     <script>
         // ================================================================
-        // 1. CEK LOGIN USER - HARUS LOGIN UNTUK AKSES HALAMAN INI
+        // WAJIB LOGIN UNTUK MENGAKSES HALAMAN INI
         // ================================================================
         const userData = localStorage.getItem('userLoggedIn');
         if (!userData) {
-            // Jika belum login, langsung ke halaman login
+            // Jika belum login, arahkan ke halaman login
             window.location.href = 'user_login.html';
         }
 
         // ================================================================
-        // 2. TAMPILKAN NAMA USER & TOMBOL LOGOUT
-        // ================================================================
-        function showUserNav() {
-            const userNav = document.getElementById('userNav');
-            try {
-                const user = JSON.parse(userData);
-                // Tampilkan nama lengkap atau fallback
-                const displayName = user.fullname || user.username || 'User';
-                userNav.innerHTML = `
-                    <span class="user-name"><i class="fas fa-user-circle"></i> ${displayName}</span>
-                    <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                `;
-            } catch (e) {
-                // Jika data rusak, redirect ke login
-                window.location.href = 'user_login.html';
-            }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('userLoggedIn');
-            window.location.href = 'user_login.html';
-        }
-
-        showUserNav();
-
-        // ================================================================
-        // 3. DATA PRODUK & UMKM
+        // DATA PRODUK & UMKM
         // ================================================================
         let products = [];
         let umkmList = [];
@@ -248,7 +216,15 @@
         }
 
         // ================================================================
-        // 4. EVENT LISTENERS
+        // LOGOUT
+        // ================================================================
+        function logoutUser() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'user_login.html';
+        }
+
+        // ================================================================
+        // EVENT LISTENERS
         // ================================================================
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -258,7 +234,7 @@
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
         // ================================================================
-        // 5. JALANKAN
+        // JALANKAN
         // ================================================================
         loadData();
 
@@ -267,15 +243,9 @@
                 console.log('🔄 Data berubah dari tab lain, reload...');
                 loadData();
             }
-            if (e.key === 'userLoggedIn') {
-                // Jika user logout dari tab lain, redirect ke login
-                if (!e.newValue) {
-                    window.location.href = 'user_login.html';
-                }
-            }
         });
 
-        console.log('✅ Halaman beranda siap (dilindungi login)');
+        console.log('✅ Halaman beranda siap!');
     </script>
 </body>
 </html>
