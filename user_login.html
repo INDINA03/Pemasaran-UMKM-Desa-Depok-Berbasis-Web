@@ -21,6 +21,8 @@
         .alert { padding:12px; border-radius:14px; margin-bottom:20px; display:none; background:#fee; color:#c33; }
         .register-link { text-align:center; margin-top:20px; }
         .register-link a { color:#2c5f2d; text-decoration:none; font-weight:600; }
+        .back-link { text-align:center; margin-top:15px; }
+        .back-link a { color:#888; text-decoration:none; }
         @media (max-width:480px){ .login-container { padding:25px 20px; } }
     </style>
 </head>
@@ -41,6 +43,7 @@
             <button type="submit" class="btn-login">Login</button>
         </form>
         <div class="register-link">Belum punya akun? <a href="user_register.html">Daftar di sini</a></div>
+        <div class="back-link"><a href="index.html">← Kembali ke Beranda</a></div>
     </div>
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -53,10 +56,9 @@
             const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
 
             if (user) {
-                // Simpan session dengan fullname
                 localStorage.setItem('userLoggedIn', JSON.stringify({
                     id: user.id,
-                    fullname: user.fullname || user.username,
+                    fullname: user.fullname,
                     username: user.username,
                     email: user.email,
                     role: user.role || 'user'
