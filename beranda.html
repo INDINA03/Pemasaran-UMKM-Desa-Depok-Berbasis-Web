@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* (style sama seperti sebelumnya) */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Poppins',sans-serif; background:#f0f4f8; }
         .navbar { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
@@ -69,7 +68,6 @@
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-            <!-- User Login/Daftar akan muncul di sini -->
             <div id="userNav" style="display:inline-flex;align-items:center;gap:10px;"></div>
         </div>
     </nav>
@@ -100,36 +98,60 @@
     </footer>
 
     <script>
-        // ============================================================
-        // 1. CEK APAKAH USER SUDAH LOGIN
-        // ============================================================
-        const userData = localStorage.getItem('userLoggedIn');
+        // ================================================================
+        // 1. CEK LOGIN DENGAN MEKANISME DOUBLE CHECK
+        // ================================================================
+        (function checkLogin() {
+            // Cek dari localStorage
+            let isLoggedIn = localStorage.getItem('userLoggedIn');
+            
+            // Jika tidak ada di localStorage, cek sessionStorage (cadangan)
+            if (!isLoggedIn) {
+                isLoggedIn = sessionStorage.getItem('userLoggedIn');
+                if (isLoggedIn) {
+                    // Pindahkan ke localStorage agar konsisten
+                    localStorage.setItem('userLoggedIn', isLoggedIn);
+                }
+            }
 
-        // Jika BELUM login, langsung redirect ke halaman login
-        if (!userData) {
-            window.location.href = 'user_login.html';
-        }
+            // Jika tetap tidak ada, redirect ke login
+            if (!isLoggedIn) {
+                window.location.href = 'user_login.html';
+                return;
+            }
 
-        // ============================================================
-        // 2. TAMPILKAN NAVBAR (Login/Daftar atau Logout)
-        // ============================================================
+            // Validasi data JSON
+            try {
+                const user = JSON.parse(isLoggedIn);
+                if (!user.username) {
+                    throw new Error('Data user tidak valid');
+                }
+            } catch (e) {
+                // Data rusak, hapus dan redirect
+                localStorage.removeItem('userLoggedIn');
+                sessionStorage.removeItem('userLoggedIn');
+                window.location.href = 'user_login.html';
+            }
+        })();
+
+        // ================================================================
+        // 2. TAMPILKAN NAVBAR
+        // ================================================================
         function showUserNav() {
             const userNav = document.getElementById('userNav');
-            const isLoggedIn = localStorage.getItem('userLoggedIn');
-
-            if (isLoggedIn) {
+            const userData = localStorage.getItem('userLoggedIn') || sessionStorage.getItem('userLoggedIn');
+            
+            if (userData) {
                 try {
-                    const user = JSON.parse(isLoggedIn);
+                    const user = JSON.parse(userData);
                     userNav.innerHTML = `
                         <span class="user-name"><i class="fas fa-user-circle"></i> ${user.fullname || user.username || 'User'}</span>
                         <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     `;
                 } catch(e) {
-                    // Jika data rusak, redirect ke login
-                    window.location.href = 'user_login.html';
+                    userNav.innerHTML = `<a href="user_login.html" style="border:2px solid #2196f3;padding:8px 20px;border-radius:25px;background:transparent;color:#2196f3;text-decoration:none;font-weight:500;">Login</a>`;
                 }
             } else {
-                // Belum login -> tampilkan tombol Login dan Daftar
                 userNav.innerHTML = `
                     <a href="user_login.html" style="border:2px solid #2196f3;padding:8px 20px;border-radius:25px;background:transparent;color:#2196f3;text-decoration:none;font-weight:500;">Login</a>
                     <a href="user_register.html" style="background:#2196f3;padding:8px 20px;border-radius:25px;color:white;text-decoration:none;font-weight:500;">Daftar</a>
@@ -139,14 +161,15 @@
 
         function logoutUser() {
             localStorage.removeItem('userLoggedIn');
+            sessionStorage.removeItem('userLoggedIn');
             window.location.href = 'user_login.html';
         }
 
         showUserNav();
 
-        // ============================================================
-        // 3. DATA PRODUK (SAMA SEPERTI SEBELUMNYA)
-        // ============================================================
+        // ================================================================
+        // 3. DATA PRODUK
+        // ================================================================
         let products = [];
         let umkmList = [];
 
