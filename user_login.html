@@ -43,16 +43,34 @@
         <div class="register-link">Belum punya akun? <a href="user_register.html">Daftar di sini</a></div>
     </div>
     <script>
+        // Jika sudah login, langsung ke index
+        if (localStorage.getItem('userLoggedIn')) {
+            window.location.href = 'index.html';
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             const alertDiv = document.getElementById('alert');
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+            // Ambil data user dari localStorage
+            let users = [];
+            try {
+                users = JSON.parse(localStorage.getItem('users')) || [];
+            } catch(e) {
+                users = [];
+            }
+
+            // Cari user
+            const user = users.find(u => 
+                (u.username === username || u.email === username) && 
+                u.password === password
+            );
 
             if (user) {
+                // Simpan session
                 localStorage.setItem('userLoggedIn', JSON.stringify({
                     id: user.id,
                     fullname: user.fullname || user.username,
@@ -60,10 +78,8 @@
                     email: user.email,
                     role: user.role || 'user'
                 }));
-                // Setelah login, kembali ke halaman yang diminta (index.html)
-                const redirect = localStorage.getItem('redirectAfterLogin') || 'index.html';
-                localStorage.removeItem('redirectAfterLogin');
-                window.location.href = redirect;
+                // Redirect ke index
+                window.location.href = 'index.html';
             } else {
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Username/email atau password salah!';
