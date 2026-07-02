@@ -63,9 +63,6 @@
                 users = [];
             }
 
-            console.log('🔍 Data users:', users); // Debug
-            console.log('🔍 Mencari user:', username, password); // Debug
-
             // Cari user
             const user = users.find(u => 
                 (u.username === username || u.email === username) && 
@@ -73,7 +70,6 @@
             );
 
             if (user) {
-                console.log('✅ User ditemukan:', user); // Debug
                 // Simpan session
                 localStorage.setItem('userLoggedIn', JSON.stringify({
                     id: user.id,
@@ -82,11 +78,9 @@
                     email: user.email,
                     role: user.role || 'user'
                 }));
-                console.log('✅ Session tersimpan:', localStorage.getItem('userLoggedIn')); // Debug
                 // Redirect ke index
                 window.location.href = 'index.html';
             } else {
-                console.log('❌ User tidak ditemukan'); // Debug
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Username/email atau password salah!';
                 document.getElementById('password').value = '';
