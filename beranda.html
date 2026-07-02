@@ -20,8 +20,10 @@
         .nav-links a.active { color: #2c5f2d; font-weight: 600; border-bottom: 3px solid #2c5f2d; }
         .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
         .btn-outline:hover { background: #2c5f2d; color: white !important; }
-        .btn-logout-user { background: #f44336; color: white !important; padding: 8px 20px; border-radius: 25px; border: none; cursor: pointer; font-weight: 500; }
-        .btn-logout-user:hover { background: #d32f2f; }
+        .btn-logout-user { background: #f44336; color: white !important; padding: 8px 20px; border-radius: 25px; border: none; cursor: pointer; font-weight: 500; transition: 0.3s; }
+        .btn-logout-user:hover { background: #d32f2f; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(244,67,54,0.3); }
+        .user-name { font-size: 15px; color: #2c5f2d; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+        .user-name i { font-size: 22px; }
         .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 50px 5%; text-align: center; }
         .hero h1 { font-size: 2em; margin-bottom: 15px; }
         .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 30px; flex-wrap: wrap; }
@@ -69,7 +71,7 @@
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-            <!-- User info akan muncul di sini -->
+            <!-- User Info: nama + ikon + logout -->
             <div id="userNav" style="display:inline-flex;align-items:center;gap:10px;"></div>
         </div>
     </nav>
@@ -109,26 +111,30 @@
 
     <script>
         // ================================================================
-        // WAJIB LOGIN UNTUK MENGAKSES HALAMAN INI
+        // 1. WAJIB LOGIN UNTUK MENGAKSES HALAMAN INI
         // ================================================================
         const userData = localStorage.getItem('userLoggedIn');
         if (!userData) {
+            // Jika belum login, arahkan ke halaman login user
             window.location.href = 'user_login.html';
         }
 
         // ================================================================
-        // TAMPILKAN USER NAV (hanya ikon + logout)
+        // 2. TAMPILKAN USER NAV (NAMA + IKON + LOGOUT)
         // ================================================================
         function showUserNav() {
             const userNav = document.getElementById('userNav');
             try {
                 const user = JSON.parse(userData);
-                // Tampilkan hanya tombol Logout dan ikon avatar di sebelah kanan
+                // Tampilkan: Nama User + Ikon Avatar + Tombol Logout
                 userNav.innerHTML = `
+                    <span class="user-name">
+                        <i class="fas fa-user-circle"></i> ${user.fullname || user.username || 'User'}
+                    </span>
                     <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                    <span style="font-size:24px;color:#2c5f2d;margin-left:5px;"><i class="fas fa-user-circle"></i></span>
                 `;
             } catch (e) {
+                // Jika data rusak, redirect ke login
                 window.location.href = 'user_login.html';
             }
         }
@@ -141,7 +147,7 @@
         showUserNav();
 
         // ================================================================
-        // DATA PRODUK & UMKM
+        // 3. DATA PRODUK & UMKM
         // ================================================================
         let products = [];
         let umkmList = [];
@@ -242,7 +248,7 @@
         }
 
         // ================================================================
-        // EVENT LISTENERS
+        // 4. EVENT LISTENERS
         // ================================================================
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -252,7 +258,7 @@
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
         // ================================================================
-        // JALANKAN
+        // 5. JALANKAN
         // ================================================================
         loadData();
 
@@ -261,9 +267,13 @@
                 console.log('🔄 Data berubah dari tab lain, reload...');
                 loadData();
             }
+            if (e.key === 'userLoggedIn' && !e.newValue) {
+                // Jika user logout dari tab lain, redirect ke login
+                window.location.href = 'user_login.html';
+            }
         });
 
-        console.log('✅ Halaman beranda siap!');
+        console.log('✅ Halaman beranda siap (dilindungi login)');
     </script>
 </body>
 </html>
