@@ -55,8 +55,13 @@
         <div class="login-link">Sudah punya akun? <a href="user_login.html">Login di sini</a></div>
     </div>
     <script>
+        if (localStorage.getItem('userLoggedIn')) {
+            window.location.href = 'index.html';
+        }
+
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
             const fullname = document.getElementById('fullname').value.trim();
             const username = document.getElementById('username').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -75,7 +80,13 @@
                 return;
             }
 
-            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let users = [];
+            try {
+                users = JSON.parse(localStorage.getItem('users')) || [];
+            } catch(e) {
+                users = [];
+            }
+
             if (users.find(u => u.username === username)) {
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Username sudah terdaftar!';
@@ -103,6 +114,7 @@
             alertDiv.style.color = '#155724';
             alertDiv.innerHTML = '✅ Pendaftaran berhasil! Silakan login.';
             document.getElementById('registerForm').reset();
+
             setTimeout(() => {
                 window.location.href = 'user_login.html';
             }, 1500);
