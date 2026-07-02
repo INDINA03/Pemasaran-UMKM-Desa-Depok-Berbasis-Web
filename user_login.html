@@ -44,7 +44,7 @@
     </div>
     <script>
         // Jika sudah login, langsung ke index
-        if (localStorage.getItem('userLoggedIn')) {
+        if (localStorage.getItem('userLoggedIn') || sessionStorage.getItem('userLoggedIn')) {
             window.location.href = 'index.html';
         }
 
@@ -70,14 +70,16 @@
             );
 
             if (user) {
-                // Simpan session
-                localStorage.setItem('userLoggedIn', JSON.stringify({
+                // Simpan session di localStorage dan sessionStorage
+                const userData = JSON.stringify({
                     id: user.id,
                     fullname: user.fullname || user.username,
                     username: user.username,
                     email: user.email,
                     role: user.role || 'user'
-                }));
+                });
+                localStorage.setItem('userLoggedIn', userData);
+                sessionStorage.setItem('userLoggedIn', userData);
                 // Redirect ke index
                 window.location.href = 'index.html';
             } else {
