@@ -27,7 +27,7 @@
 <body>
     <div class="login-container">
         <h1>🔐 Login</h1>
-        <p>Masuk untuk memesan produk UMKM</p>
+        <p>Masuk untuk mengakses halaman utama</p>
         <div id="alert" class="alert"></div>
         <form id="loginForm">
             <div class="form-group">
@@ -55,12 +55,15 @@
             if (user) {
                 localStorage.setItem('userLoggedIn', JSON.stringify({
                     id: user.id,
-                    fullname: user.fullname,
+                    fullname: user.fullname || user.username,
                     username: user.username,
                     email: user.email,
                     role: user.role || 'user'
                 }));
-                window.location.href = 'index.html';
+                // Setelah login, kembali ke halaman yang diminta (index.html)
+                const redirect = localStorage.getItem('redirectAfterLogin') || 'index.html';
+                localStorage.removeItem('redirectAfterLogin');
+                window.location.href = redirect;
             } else {
                 alertDiv.style.display = 'block';
                 alertDiv.innerHTML = '❌ Username/email atau password salah!';
