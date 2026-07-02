@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* (style sama seperti sebelumnya, tidak perlu diubah) */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Poppins',sans-serif; background:#f0f4f8; }
         .navbar { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
@@ -24,6 +23,10 @@
         .btn-logout-user { background:#f44336; color:white !important; padding:8px 20px; border-radius:25px; border:none; cursor:pointer; font-weight:500; }
         .btn-logout-user:hover { background:#d32f2f; }
         .user-name { font-size:15px; color:#2c5f2d; font-weight:600; display:inline-flex; align-items:center; gap:8px; }
+        .btn-login-user { border:2px solid #2196f3; padding:8px 20px; border-radius:25px; background:transparent; color:#2196f3; cursor:pointer; font-weight:500; }
+        .btn-login-user:hover { background:#2196f3; color:white; }
+        .btn-register-user { background:#2196f3; padding:8px 20px; border-radius:25px; color:white; cursor:pointer; font-weight:500; border:none; }
+        .btn-register-user:hover { background:#1976d2; }
         .hero { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:50px 5%; text-align:center; }
         .hero h1 { font-size:2em; margin-bottom:15px; }
         .hero-stats { display:flex; justify-content:center; gap:50px; margin-top:30px; flex-wrap:wrap; }
@@ -69,6 +72,7 @@
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
+            <!-- User Login/Daftar akan muncul di sini (untuk navigasi manual) -->
             <div id="userNav" style="display:inline-flex;align-items:center;gap:10px;"></div>
         </div>
     </nav>
@@ -104,19 +108,34 @@
         // ============================================
         const userData = localStorage.getItem('userLoggedIn');
         if (!userData) {
+            // Belum login -> langsung redirect ke login
             window.location.href = 'user_login.html';
         }
 
+        // ============================================
+        // TAMPILKAN NAVBAR USER (Login/Daftar atau Logout)
+        // ============================================
         function showUserNav() {
             const userNav = document.getElementById('userNav');
-            try {
-                const user = JSON.parse(userData);
+            const isLoggedIn = localStorage.getItem('userLoggedIn');
+            
+            if (isLoggedIn) {
+                try {
+                    const user = JSON.parse(isLoggedIn);
+                    userNav.innerHTML = `
+                        <span class="user-name"><i class="fas fa-user-circle"></i> ${user.fullname || user.username || 'User'}</span>
+                        <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    `;
+                } catch(e) {
+                    // Jika data rusak, redirect ke login
+                    window.location.href = 'user_login.html';
+                }
+            } else {
+                // Belum login -> tampilkan tombol Login dan Daftar
                 userNav.innerHTML = `
-                    <span class="user-name"><i class="fas fa-user-circle"></i> ${user.fullname || user.username || 'User'}</span>
-                    <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <a href="user_login.html" class="btn-login-user"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="user_register.html" class="btn-register-user"><i class="fas fa-user-plus"></i> Daftar</a>
                 `;
-            } catch(e) {
-                window.location.href = 'user_login.html';
             }
         }
 
@@ -196,7 +215,10 @@
 
         window.addEventListener('storage', function(e) {
             if (e.key === 'umkm_products' || e.key === 'umkm_list') loadData();
-            if (e.key === 'userLoggedIn' && !e.newValue) window.location.href = 'user_login.html';
+            if (e.key === 'userLoggedIn') {
+                showUserNav();
+                if (!e.newValue) window.location.href = 'user_login.html';
+            }
         });
         console.log('✅ index.html siap');
     </script>
