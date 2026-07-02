@@ -55,8 +55,7 @@
         <div class="login-link">Sudah punya akun? <a href="user_login.html">Login di sini</a></div>
     </div>
     <script>
-        // Jika sudah login, langsung ke index
-        if (localStorage.getItem('userLoggedIn')) {
+        if (localStorage.getItem('userLoggedIn') || sessionStorage.getItem('userLoggedIn')) {
             window.location.href = 'index.html';
         }
 
