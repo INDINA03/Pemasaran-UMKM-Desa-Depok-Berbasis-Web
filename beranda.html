@@ -102,10 +102,14 @@
     </footer>
 
     <script>
+        // ================================================================
+        // DATA PRODUK & UMKM - BACA DARI LOCALSTORAGE
+        // ================================================================
         let products = [];
         let umkmList = [];
 
         function loadData() {
+            // Load produk
             try {
                 const stored = localStorage.getItem('umkm_products');
                 if (stored) {
@@ -118,6 +122,7 @@
                 products = [];
             }
 
+            // Load UMKM
             try {
                 const storedUmkm = localStorage.getItem('umkm_list');
                 if (storedUmkm) {
@@ -137,13 +142,24 @@
             displayProducts(products);
         }
 
+        // ================================================================
+        // UPDATE STATISTIK
+        // ================================================================
         function updateStats() {
+            // Total Produk
             document.getElementById('totalProducts').innerText = products.length || 0;
+
+            // Total UMKM (dari data umkm_list, BUKAN dari produk)
             document.getElementById('totalUMKM').innerText = umkmList.length || 0;
+
+            // Total Kategori (dari produk)
             const uniqueCat = new Set(products.map(p => p.category_name)).size;
             document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
+        // ================================================================
+        // TAMPILKAN PRODUK - DIPERBAIKI
+        // ================================================================
         function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
             if (!grid) return;
@@ -160,13 +176,13 @@
             }
 
             grid.innerHTML = productsToShow.map(p => {
-                // CEK APAKAH ADA GAMBAR (BASE64)
+                // Cek apakah ada gambar (base64)
                 const hasImage = p.image && typeof p.image === 'string' && p.image.startsWith('data:image');
                 
                 return `
                 <div class="product-card">
                     <div class="product-image">
-                        ${hasImage ? <img src="${p.image}" alt="${p.name}"> : <span class="no-image">${p.icon || '📦'}</span>}
+                        ${hasImage ? `<img src="${p.image}" alt="${p.name}">` : `<span class="no-image">${p.icon || '📦'}</span>`}
                     </div>
                     <div class="product-info">
                         <h3>${p.name || 'Produk'}</h3>
@@ -175,12 +191,15 @@
                         <div class="umkm-name"><i class="fas fa-store"></i> ${p.umkm_name || '-'}</div>
                         <div class="contact"><i class="fab fa-whatsapp"></i> ${p.contact || '-'}</div>
                         <div class="category-tag"><i class="fas fa-tag"></i> ${p.category_name || 'Umum'}</div>
-                        ${p.contact ? <a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a> : ''}
+                        ${p.contact ? `<a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a>` : ''}
                     </div>
                 </div>
             `}).join('');
         }
 
+        // ================================================================
+        // FILTER PRODUK (Pencarian)
+        // ================================================================
         function filterProducts() {
             const search = document.getElementById('searchInput').value.toLowerCase().trim();
             if (!search) {
@@ -195,6 +214,9 @@
             displayProducts(filtered);
         }
 
+        // ================================================================
+        // EVENT LISTENERS
+        // ================================================================
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             filterProducts();
@@ -202,8 +224,12 @@
 
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
+        // ================================================================
+        // JALANKAN
+        // ================================================================
         loadData();
 
+        // Sinkron jika ada perubahan dari tab lain
         window.addEventListener('storage', function(e) {
             if (e.key === 'umkm_products' || e.key === 'umkm_list') {
                 console.log('🔄 Data berubah dari tab lain, reload...');
