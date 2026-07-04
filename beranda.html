@@ -3,55 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMKM Desa Depok</title>
+    <title>UMKM Desa Depok - Kandeman, Batang</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Poppins',sans-serif; background:#f0f4f8; }
-        .navbar { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-        .logo { display:flex; align-items:center; gap:10px; }
-        .logo-icon { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); width:45px; height:45px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:24px; }
-        .logo-text h2 { font-size:1.2em; color:#2c5f2d; }
-        .logo-text p { font-size:0.7em; color:#666; }
-        .nav-links { display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
-        .nav-links a { text-decoration:none; color:#333; font-weight:500; transition:0.3s; padding-bottom:5px; }
-        .nav-links a:hover { color:#2c5f2d; }
-        .nav-links a.active { color:#2c5f2d; font-weight:600; border-bottom:3px solid #2c5f2d; }
-        .btn-outline { border:2px solid #2c5f2d; padding:8px 20px; border-radius:25px; background:transparent; }
-        .btn-outline:hover { background:#2c5f2d; color:white !important; }
-        .btn-logout-user { background:#f44336; color:white !important; padding:8px 20px; border-radius:25px; border:none; cursor:pointer; font-weight:500; }
-        .btn-logout-user:hover { background:#d32f2f; }
-        .user-name { font-size:15px; color:#2c5f2d; font-weight:600; display:inline-flex; align-items:center; gap:8px; }
-        .hero { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:50px 5%; text-align:center; }
-        .hero h1 { font-size:2em; margin-bottom:15px; }
-        .hero-stats { display:flex; justify-content:center; gap:50px; margin-top:30px; flex-wrap:wrap; }
-        .stat-number { font-size:2em; font-weight:700; }
-        .container { max-width:1200px; margin:0 auto; padding:40px 5%; }
-        .search-section { background:white; border-radius:20px; padding:25px; box-shadow:0 5px 15px rgba(0,0,0,0.05); margin-top:-30px; position:relative; z-index:10; }
-        .search-form { display:flex; gap:15px; flex-wrap:wrap; }
-        .search-wrapper { flex:3; position:relative; }
-        .search-wrapper i { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:#999; }
-        .search-wrapper input { width:100%; padding:14px 15px 14px 45px; border:2px solid #e0e0e0; border-radius:12px; font-size:16px; }
-        .btn-search { background:linear-gradient(135deg,#2c5f2d,#1a3b1a); color:white; padding:14px 35px; border:none; border-radius:12px; font-weight:600; cursor:pointer; }
-        .section-title { text-align:center; margin:40px 0 30px; }
-        .section-title .badge { background:#e8f5e9; color:#2c5f2d; padding:5px 15px; border-radius:20px; display:inline-block; margin-bottom:15px; }
-        .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:25px; }
-        .product-card { background:white; border-radius:20px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.08); transition:0.3s; }
-        .product-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1); }
-        .product-image { width:100%; display:flex; align-items:center; justify-content:center; background:#f5f5f5; overflow:hidden; }
-        .product-image img { width:100%; height:auto; display:block; }
-        .product-image .no-image { width:100%; height:200px; display:flex; align-items:center; justify-content:center; font-size:64px; color:#ccc; background:#f5f5f5; }
-        .product-info { padding:20px; }
-        .product-info h3 { font-size:1.2em; color:#1a3b1a; }
-        .price { font-size:1.4em; color:#2c5f2d; font-weight:700; margin:10px 0; }
-        .description { color:#666; font-size:0.85em; margin:10px 0; line-height:1.5; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
-        .umkm-name, .contact { font-size:0.85em; margin:5px 0; display:flex; align-items:center; gap:5px; }
-        .category-tag { display:inline-block; background:#e8f5e9; color:#2c5f2d; padding:4px 10px; border-radius:20px; font-size:0.7em; margin-top:10px; }
-        .whatsapp-btn { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:white; padding:8px 18px; border-radius:30px; text-decoration:none; margin-top:12px; font-size:0.85em; font-weight:600; transition:0.3s; }
-        .whatsapp-btn:hover { background:#128C7E; transform:scale(1.03); }
-        .footer { background:#1a1a2e; color:white; text-align:center; padding:30px 5% 15px; margin-top:50px; }
-        @media (max-width:768px){ .hero h1 { font-size:1.3em; } .search-form { flex-direction:column; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f0f4f8; }
+        .navbar { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+        .logo-text h2 { font-size: 1.2em; color: #2c5f2d; }
+        .logo-text p { font-size: 0.7em; color: #666; }
+        .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 500; transition: 0.3s; padding-bottom: 5px; }
+        .nav-links a:hover { color: #2c5f2d; }
+        .nav-links a.active { color: #2c5f2d; font-weight: 600; border-bottom: 3px solid #2c5f2d; }
+        .btn-outline { border: 2px solid #2c5f2d; padding: 8px 20px; border-radius: 25px; background: transparent; }
+        .btn-outline:hover { background: #2c5f2d; color: white !important; }
+        .hero { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 50px 5%; text-align: center; }
+        .hero h1 { font-size: 2em; margin-bottom: 15px; }
+        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 30px; flex-wrap: wrap; }
+        .stat-number { font-size: 2em; font-weight: 700; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        .search-section { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-top: -30px; position: relative; z-index: 10; }
+        .search-form { display: flex; gap: 15px; flex-wrap: wrap; }
+        .search-wrapper { flex: 3; position: relative; }
+        .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #999; }
+        .search-wrapper input { width: 100%; padding: 14px 15px 14px 45px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; }
+        .btn-search { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; padding: 14px 35px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .section-title { text-align: center; margin: 40px 0 30px; }
+        .section-title .badge { background: #e8f5e9; color: #2c5f2d; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px; }
+        .section-title h2 { font-size: 1.8em; color: #1a3b1a; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .product-image .no-image { font-size: 60px; color: #ccc; }
+        .product-info { padding: 20px; }
+        .product-info h3 { font-size: 1.2em; color: #1a3b1a; }
+        .price { font-size: 1.4em; color: #2c5f2d; font-weight: 700; margin: 10px 0; }
+        .description { color: #666; font-size: 0.85em; margin: 10px 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .umkm-name, .contact { font-size: 0.85em; margin: 5px 0; display: flex; align-items: center; gap: 5px; }
+        .category-tag { display: inline-block; background: #e8f5e9; color: #2c5f2d; padding: 4px 10px; border-radius: 20px; font-size: 0.7em; margin-top: 10px; }
+        .whatsapp-btn { display: inline-flex; align-items: center; gap: 5px; background: #25D366; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; margin-top: 12px; font-size: 0.8em; }
+        .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
+        @media (max-width: 768px) { .hero h1 { font-size: 1.3em; } .search-form { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -68,7 +65,6 @@
             <a href="tentang.html">Tentang</a>
             <a href="kontak.html">Kontak</a>
             <a href="login.html" class="btn-outline"><i class="fas fa-lock"></i> Login Admin</a>
-            <div id="userNav" style="display:inline-flex;align-items:center;gap:10px;"></div>
         </div>
     </nav>
 
@@ -84,164 +80,138 @@
     <div class="container">
         <div class="search-section">
             <form class="search-form" id="searchForm">
-                <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Cari produk..."></div>
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari produk...">
+                </div>
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i> Cari Produk</button>
             </form>
         </div>
-        <div class="section-title"><span class="badge"><i class="fas fa-fire"></i> Menu Pilihan</span><h2>Produk Kuliner UMKM Desa Depok</h2></div>
+
+        <div class="section-title">
+            <span class="badge"><i class="fas fa-fire"></i> Menu Pilihan</span>
+            <h2>Produk Kuliner UMKM Desa Depok</h2>
+        </div>
+
         <div class="product-grid" id="productGrid"></div>
     </div>
 
     <footer class="footer">
         <p>&copy; 2026 Sistem Informasi Pemasaran UMKM Desa Depok | Kecamatan Kandeman | Kabupaten Batang</p>
-        <p style="margin-top:10px;"><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
+        <p style="margin-top: 10px;"><i class="fas fa-phone"></i> 0857-4871-0963 | <i class="fas fa-envelope"></i> umkm@desadepok.id</p>
     </footer>
 
     <script>
-        // ================================================================
-        // 1. CEK LOGIN DENGAN MEKANISME DOUBLE CHECK
-        // ================================================================
-        (function checkLogin() {
-            // Cek dari localStorage
-            let isLoggedIn = localStorage.getItem('userLoggedIn');
-            
-            // Jika tidak ada di localStorage, cek sessionStorage (cadangan)
-            if (!isLoggedIn) {
-                isLoggedIn = sessionStorage.getItem('userLoggedIn');
-                if (isLoggedIn) {
-                    // Pindahkan ke localStorage agar konsisten
-                    localStorage.setItem('userLoggedIn', isLoggedIn);
-                }
-            }
-
-            // Jika tetap tidak ada, redirect ke login
-            if (!isLoggedIn) {
-                window.location.href = 'user_login.html';
-                return;
-            }
-
-            // Validasi data JSON
-            try {
-                const user = JSON.parse(isLoggedIn);
-                if (!user.username) {
-                    throw new Error('Data user tidak valid');
-                }
-            } catch (e) {
-                // Data rusak, hapus dan redirect
-                localStorage.removeItem('userLoggedIn');
-                sessionStorage.removeItem('userLoggedIn');
-                window.location.href = 'user_login.html';
-            }
-        })();
-
-        // ================================================================
-        // 2. TAMPILKAN NAVBAR
-        // ================================================================
-        function showUserNav() {
-            const userNav = document.getElementById('userNav');
-            const userData = localStorage.getItem('userLoggedIn') || sessionStorage.getItem('userLoggedIn');
-            
-            if (userData) {
-                try {
-                    const user = JSON.parse(userData);
-                    userNav.innerHTML = `
-                        <span class="user-name"><i class="fas fa-user-circle"></i> ${user.fullname || user.username || 'User'}</span>
-                        <button onclick="logoutUser()" class="btn-logout-user"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                    `;
-                } catch(e) {
-                    userNav.innerHTML = `<a href="user_login.html" style="border:2px solid #2196f3;padding:8px 20px;border-radius:25px;background:transparent;color:#2196f3;text-decoration:none;font-weight:500;">Login</a>`;
-                }
-            } else {
-                userNav.innerHTML = `
-                    <a href="user_login.html" style="border:2px solid #2196f3;padding:8px 20px;border-radius:25px;background:transparent;color:#2196f3;text-decoration:none;font-weight:500;">Login</a>
-                    <a href="user_register.html" style="background:#2196f3;padding:8px 20px;border-radius:25px;color:white;text-decoration:none;font-weight:500;">Daftar</a>
-                `;
-            }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('userLoggedIn');
-            sessionStorage.removeItem('userLoggedIn');
-            window.location.href = 'user_login.html';
-        }
-
-        showUserNav();
-
-        // ================================================================
-        // 3. DATA PRODUK
-        // ================================================================
         let products = [];
         let umkmList = [];
 
         function loadData() {
             try {
                 const stored = localStorage.getItem('umkm_products');
-                products = stored ? JSON.parse(stored) : [];
-            } catch(e) { products = []; }
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    products = Array.isArray(parsed) ? parsed : [];
+                } else {
+                    products = [];
+                }
+            } catch (e) {
+                products = [];
+            }
+
             try {
                 const storedUmkm = localStorage.getItem('umkm_list');
-                umkmList = storedUmkm ? JSON.parse(storedUmkm) : [];
-            } catch(e) { umkmList = []; }
+                if (storedUmkm) {
+                    const parsed = JSON.parse(storedUmkm);
+                    umkmList = Array.isArray(parsed) ? parsed : [];
+                } else {
+                    umkmList = [];
+                }
+            } catch (e) {
+                umkmList = [];
+            }
+
+            console.log('📦 Produk:', products.length);
+            console.log('🏪 UMKM:', umkmList.length);
+
             updateStats();
             displayProducts(products);
         }
 
         function updateStats() {
-            document.getElementById('totalProducts').innerText = products.length;
-            document.getElementById('totalUMKM').innerText = umkmList.length;
+            document.getElementById('totalProducts').innerText = products.length || 0;
+            document.getElementById('totalUMKM').innerText = umkmList.length || 0;
             const uniqueCat = new Set(products.map(p => p.category_name)).size;
-            document.getElementById('totalCategories').innerText = uniqueCat;
+            document.getElementById('totalCategories').innerText = uniqueCat || 0;
         }
 
-        function displayProducts(data) {
+        function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
-            if (!data || data.length===0) {
-                grid.innerHTML = `<div style="text-align:center;padding:50px;background:white;border-radius:20px;grid-column:1/-1;"><i class="fas fa-box-open" style="font-size:60px;color:#ccc;margin-bottom:20px;"></i><h3>Belum ada produk</h3><p>Silakan tambahkan produk melalui admin.</p></div>`;
+            if (!grid) return;
+
+            if (!productsToShow || productsToShow.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align:center;padding:50px;background:white;border-radius:20px;grid-column:1/-1;">
+                        <i class="fas fa-box-open" style="font-size:60px;color:#ccc;margin-bottom:20px;"></i>
+                        <h3 style="color:#555;">Belum ada produk</h3>
+                        <p style="color:#999;">Silakan tambahkan produk melalui halaman admin.</p>
+                    </div>
+                `;
                 return;
             }
-            grid.innerHTML = data.map(p => {
-                const hasImage = p.image && p.image.length>10 && p.image!=='📦';
-                let waLink = '#';
-                if (p.contact) {
-                    const clean = p.contact.replace(/\D/g,'');
-                    const final = clean.startsWith('62') ? clean : '62'+clean;
-                    waLink = `https://wa.me/${final}?text=${encodeURIComponent('Halo, saya mau pesan '+p.name)}`;
-                }
-                return `<div class="product-card">
-                    <div class="product-image">${hasImage ? `<img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>${p.icon||'📦'}</div>'">` : `<div class="no-image">${p.icon||'📦'}</div>`}</div>
-                    <div class="product-info">
-                        <h3>${p.name}</h3>
-                        <div class="price">Rp ${(p.price||0).toLocaleString('id-ID')}</div>
-                        <div class="description">${p.description||'Deskripsi tidak tersedia'}</div>
-                        <div class="umkm-name"><i class="fas fa-store"></i> ${p.umkm_name||'-'}</div>
-                        <div class="contact"><i class="fab fa-whatsapp"></i> ${p.contact||'-'}</div>
-                        <div class="category-tag"><i class="fas fa-tag"></i> ${p.category_name||'Umum'}</div>
-                        ${p.contact ? `<a href="${waLink}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a>` : ''}
+
+            grid.innerHTML = productsToShow.map(p => {
+                // CEK APAKAH ADA GAMBAR (BASE64)
+                const hasImage = p.image && typeof p.image === 'string' && p.image.startsWith('data:image');
+                
+                return `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${hasImage ? <img src="${p.image}" alt="${p.name}"> : <span class="no-image">${p.icon || '📦'}</span>}
                     </div>
-                </div>`;
-            }).join('');
+                    <div class="product-info">
+                        <h3>${p.name || 'Produk'}</h3>
+                        <div class="price">Rp ${(p.price || 0).toLocaleString('id-ID')}</div>
+                        <div class="description">${p.description || 'Deskripsi produk tidak tersedia'}</div>
+                        <div class="umkm-name"><i class="fas fa-store"></i> ${p.umkm_name || '-'}</div>
+                        <div class="contact"><i class="fab fa-whatsapp"></i> ${p.contact || '-'}</div>
+                        <div class="category-tag"><i class="fas fa-tag"></i> ${p.category_name || 'Umum'}</div>
+                        ${p.contact ? <a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a> : ''}
+                    </div>
+                </div>
+            `}).join('');
         }
 
         function filterProducts() {
-            const s = document.getElementById('searchInput').value.toLowerCase().trim();
-            if (!s) { displayProducts(products); return; }
-            const filtered = products.filter(p => (p.name||'').toLowerCase().includes(s) || (p.umkm_name||'').toLowerCase().includes(s) || (p.description||'').toLowerCase().includes(s));
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!search) {
+                displayProducts(products);
+                return;
+            }
+            const filtered = products.filter(p => 
+                (p.name || '').toLowerCase().includes(search) ||
+                (p.umkm_name || '').toLowerCase().includes(search) ||
+                (p.description || '').toLowerCase().includes(search)
+            );
             displayProducts(filtered);
         }
 
-        document.getElementById('searchForm').addEventListener('submit', e => { e.preventDefault(); filterProducts(); });
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterProducts();
+        });
+
         document.getElementById('searchInput').addEventListener('input', filterProducts);
 
         loadData();
 
         window.addEventListener('storage', function(e) {
-            if (e.key === 'umkm_products' || e.key === 'umkm_list') loadData();
-            if (e.key === 'userLoggedIn') {
-                showUserNav();
-                if (!e.newValue) window.location.href = 'user_login.html';
+            if (e.key === 'umkm_products' || e.key === 'umkm_list') {
+                console.log('🔄 Data berubah dari tab lain, reload...');
+                loadData();
             }
         });
-        console.log('✅ index.html siap');
+
+        console.log('✅ Halaman beranda siap - menampilkan data dari localStorage');
     </script>
 </body>
 </html>
