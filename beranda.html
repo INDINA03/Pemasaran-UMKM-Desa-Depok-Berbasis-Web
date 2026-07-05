@@ -38,9 +38,6 @@
         .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         
-        /* ================================================================ */
-        /* GAMBAR FULL LEBAR DAN TERLIHAT SEMUA */
-        /* ================================================================ */
         .product-image { 
             width: 100%; 
             display: flex;
@@ -71,7 +68,34 @@
         .description { color: #666; font-size: 0.85em; margin: 10px 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .umkm-name, .contact { font-size: 0.85em; margin: 5px 0; display: flex; align-items: center; gap: 5px; }
         .category-tag { display: inline-block; background: #e8f5e9; color: #2c5f2d; padding: 4px 10px; border-radius: 20px; font-size: 0.7em; margin-top: 10px; }
-        .whatsapp-btn { display: inline-flex; align-items: center; gap: 5px; background: #25D366; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; margin-top: 12px; font-size: 0.8em; }
+        
+        /* ================================================================ */
+        /* TOMBOL WHATSAPP - PASTI BERFUNGSI */
+        /* ================================================================ */
+        .whatsapp-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            background: #25D366; 
+            color: white; 
+            padding: 8px 18px; 
+            border-radius: 30px; 
+            text-decoration: none; 
+            margin-top: 12px; 
+            font-size: 0.85em; 
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-btn:hover { 
+            background: #128C7E; 
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-btn i {
+            font-size: 1.2em;
+        }
         .footer { background: #1a1a2e; color: white; text-align: center; padding: 30px 5% 15px; margin-top: 50px; }
         @media (max-width: 768px) { .hero h1 { font-size: 1.3em; } .search-form { flex-direction: column; } }
     </style>
@@ -173,7 +197,7 @@
         }
 
         // ================================================================
-        // TAMPILKAN PRODUK - GAMBAR FULL LEBAR & TERLIHAT SEMUA
+        // TAMPILKAN PRODUK - TOMBOL WA PASTI BERFUNGSI
         // ================================================================
         function displayProducts(productsToShow) {
             const grid = document.getElementById('productGrid');
@@ -194,6 +218,20 @@
                 // Cek apakah ada gambar
                 const hasImage = p.image && typeof p.image === 'string' && p.image.length > 10 && p.image !== '📦';
                 
+                // ============================================================
+                // TOMBOL WHATSAPP - DENGAN PESAN OTOMATIS
+                // ============================================================
+                let waLink = '#';
+                if (p.contact) {
+                    // Bersihkan nomor (hapus semua karakter non-digit)
+                    const cleanNumber = p.contact.replace(/[^0-9]/g, '');
+                    // Pastikan nomor diawali 62 (Indonesia)
+                    const finalNumber = cleanNumber.startsWith('62') ? cleanNumber : '62' + cleanNumber;
+                    // Pesan otomatis
+                    const message = encodeURIComponent(`Halo, saya mau pesan ${p.name}`);
+                    waLink = `https://wa.me/${finalNumber}?text=${message}`;
+                }
+                
                 return `
                 <div class="product-card">
                     <div class="product-image">
@@ -206,7 +244,7 @@
                         <div class="umkm-name"><i class="fas fa-store"></i> ${p.umkm_name || '-'}</div>
                         <div class="contact"><i class="fab fa-whatsapp"></i> ${p.contact || '-'}</div>
                         <div class="category-tag"><i class="fas fa-tag"></i> ${p.category_name || 'Umum'}</div>
-                        ${p.contact ? `<a href="https://wa.me/${p.contact.replace(/[^0-9]/g, '')}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a>` : ''}
+                        ${p.contact ? `<a href="${waLink}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Pesan Sekarang</a>` : ''}
                     </div>
                 </div>
             `}).join('');
