@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin | UMKM Desa Depok</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #2c5f2d, #1a3b1a); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-container { background: white; border-radius: 20px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .login-header { text-align: center; margin-bottom: 30px; }
+        .login-icon { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 30px; }
+        .login-header h1 { color: #2c5f2d; font-size: 1.5em; }
+        .login-header p { color: #666; font-size: 0.9em; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-family: inherit; transition: 0.3s; }
+        .form-group input:focus { outline: none; border-color: #2c5f2d; }
+        .btn-login { background: linear-gradient(135deg, #2c5f2d, #1a3b1a); color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 16px; }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(44,95,45,0.3); }
+        .error { background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
+        .success { background: #e8f5e9; color: #2c5f2d; padding: 10px; border-radius: 8px; margin-bottom: 20px; text-align: center; display: none; }
+        .back-link { text-align: center; margin-top: 20px; }
+        .back-link a { color: #2c5f2d; text-decoration: none; }
+        .back-link a:hover { text-decoration: underline; }
+
+        /* ===== PERBAIKAN REGISTER LINK ===== */
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.95em;
+        }
+        .register-link span {
+            color: #555;
+        }
+        .register-link a {
+            color: #2c5f2d;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .register-link a:hover {
+            color: #1a3b1a;
+        }
+        .register-link i {
+            margin-right: 5px;
+            color: #2c5f2d;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-icon"><i class="fas fa-store"></i></div>
+            <h1>Login Admin</h1>
+            <p>Sistem Informasi UMKM Desa Depok</p>
+        </div>
+        <div id="errorMsg" class="error"></div>
+        <div id="successMsg" class="success"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </form>
+        <div class="back-link">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+        </div>
+        <!-- ===== REGISTER LINK YANG DIPERBAIKI ===== -->
+        <div class="register-link">
+            <span><i class="fas fa-user-plus"></i> Belum punya akun? </span>
+            <a href="register.html">Daftar di sini</a>
+        </div>
+    </div>
+
+    <script>
+        // === BUAT AKUN DEFAULT JIKA BELUM ADA ===
+        function createDefaultAdmin() {
+            const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
+            const adminExists = users.some(u => u.username === 'admin');
+            if (!adminExists) {
+                users.push({
+                    username: 'admin',
+                    fullname: 'Administrator Desa Depok',
+                    email: 'admin@desadepok.id',
+                    phone: '08123456789',
+                    password: 'admin123',
+                    registeredAt: new Date().toISOString(),
+                    role: 'admin'
+                });
+                localStorage.setItem('umkm_users', JSON.stringify(users));
+            }
+        }
+        createDefaultAdmin();
+
+        // === FORM LOGIN ===
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+
+            const users = JSON.parse(localStorage.getItem('umkm_users')) || [];
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                localStorage.setItem('admin_logged_in', 'true');
+                localStorage.setItem('admin_username', username);
+                window.location.href = 'dashboard.html';
+            } else {
+                const userExists = users.find(u => u.username === username);
+                if (userExists) {
+                    errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Password salah!';
+                } else {
+                    errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Username tidak ditemukan! Silakan daftar terlebih dahulu.';
+                }
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            document.getElementById('successMsg').innerHTML = '<i class="fas fa-check-circle"></i> Pendaftaran berhasil! Silakan login.';
+            document.getElementById('successMsg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
